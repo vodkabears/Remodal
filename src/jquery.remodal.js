@@ -77,8 +77,6 @@
 		this.addEventListeners();
 		this.index = instances.push(this) - 1;
 		this.busy = false;
-
-        this.open();
 	}
 
 	/**
