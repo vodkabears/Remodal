@@ -38,6 +38,7 @@ body.remodal_active .remodal-bg {
 /* Anti FOUC(begin) */
 .remodal, [data-remodal-id] {
     display: none;
+    visibility: hidden;
 }
 
 /* Anti FOUC(end)*/
