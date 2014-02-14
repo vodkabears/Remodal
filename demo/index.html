@@ -9,16 +9,14 @@
 <html class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<meta name="description" content="">
+	<title>Remodal example</title>
+	<meta name="description" content="Remodal example">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" href="../src/jquery.remodal.css">
 </head>
 <body>
 <div class="remodal-bg">
-    <!-- Add your site or application content here -->
     <a href="#modal">Click</a>
     <br><br>
 
@@ -42,19 +40,19 @@
 <script src="../src/jquery.remodal.js"></script>
 <script>
     $(document).on('open', '.remodal', function () {
-        alert('open');
+        console.log('open');
     });
 
     $(document).on('opened', '.remodal', function () {
-        alert('opened');
+        console.log('opened');
     });
 
     $(document).on('close', '.remodal', function () {
-        alert('close');
+        console.log('close');
     });
 
     $(document).on('closed', '.remodal', function () {
-        alert('closed');
+        console.log('closed');
     });
 
     $(document).on('confirm', '.remodal', function () {
