@@ -92,6 +92,7 @@
             this.modal.addClass(pluginName);
         }
 
+        this.modal.css("visibility", "visible");
         this.modal.append(this.modalClose);
         this.overlay.append(this.modal);
         this.body.append(this.overlay);
