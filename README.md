@@ -5,6 +5,13 @@ Flat, responsive, lightweight, fast, easy customizable modal window plugin with 
 
 Minified version size: ~4kb
 
+## Notes
+All modern browsers are supported.
+
+Only webkit browsers has a blur effect in the default css theme. If you want a blur for another kind of browsers use: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
+
+IE9+
+
 ## Start
 
 That's very simple too start using Remodal.
@@ -17,6 +24,13 @@ Add this in the head section:
 Add this before the `</body>`(or in the head):
 ```html
 <script src="path/to/your/jquery.remodal.min.js"></script>
+```
+
+Define the background container for the modal(for effects like a blur). It could be any simple content wrapper:
+```html
+<div class="remodal-bg">
+...All your content...
+</div>
 ```
 
 And now create a modal dialog:
