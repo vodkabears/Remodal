@@ -56,17 +56,17 @@ So, now you can call it with a hash:
 
 You can pass additional options by the data-remodal-options attribute. Data must be valid JSON.
 ```html
-    <div class="remodal" data-remodal-id="modal"
+<div class="remodal" data-remodal-id="modal"
     data-remodal-options='{ "hashTracking": false }'>
-        <h1>Remodal</h1>
-        <p>
-          Flat, responsive, lightweight, fast, easy customizable modal window plugin
-          with declarative state notation and hash tracking.
-        </p>
-        <br>
-        <a class="remodal-cancel" href="#">Cancel</a>
-        <a class="remodal-confirm" href="#">OK</a>
-    </div>
+    <h1>Remodal</h1>
+    <p>
+      Flat, responsive, lightweight, fast, easy customizable modal window plugin
+      with declarative state notation and hash tracking.
+    </p>
+    <br>
+    <a class="remodal-cancel" href="#">Cancel</a>
+    <a class="remodal-confirm" href="#">OK</a>
+</div>
 ```
 
 #### hashTracking
