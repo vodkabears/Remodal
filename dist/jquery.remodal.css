@@ -1,7 +1,6 @@
 /*! Remodal - v0.9 - 2014-02-14
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
-
 /* Fonts */
 @import url(http://fonts.googleapis.com/css?family=Exo+2:700,400&subset=latin,cyrillic);
 
@@ -9,6 +8,7 @@
 html.remodal_lock, body.remodal_lock {
     overflow: hidden;
 }
+
 /* Lock screen(end) */
 
 /* Background for effects(begin) */
@@ -32,37 +32,39 @@ body.remodal_active .remodal-bg {
     -ms-filter: blur(5px);
     filter: blur(5px);
 }
+
 /* Background for effects(end) */
 
 /* Anti FOUC(begin) */
 .remodal, [data-remodal-id] {
-	display: none;
+    display: none;
 }
+
 /* Anti FOUC(end)*/
 
 /* Remodal overlay(begin) */
 .remodal-overlay {
-	display: none;
+    display: none;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 10000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
 
     text-align: center;
 
-	opacity: 0;
-	background: rgba(33, 36, 46, 0.95);
+    opacity: 0;
+    background: rgba(33, 36, 46, 0.95);
     /* IE6–IE8 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = #EE21242E, endColorstr = #EE21242E);
-	zoom: 1;
-	-webkit-transition: opacity 0.2s linear;
-	-moz-transition: opacity 0.2s linear;
-	-o-transition: opacity 0.2s linear;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EE21242E, endColorstr=#EE21242E);
+    zoom: 1;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
     transition: opacity 0.2s linear;
 }
 
@@ -71,18 +73,19 @@ body.remodal_active .remodal-bg {
 }
 
 .remodal-overlay:after {
-	display: inline-block;
+    display: inline-block;
 
-	height: 100%;
-	margin-left: -0.05em;
+    height: 100%;
+    margin-left: -0.05em;
 
-	content: '';
-	vertical-align: middle;
+    content: '';
+    vertical-align: middle;
 }
 
 body.remodal_active .remodal-overlay {
-	opacity: 1;
+    opacity: 1;
 }
+
 /* Remodal overlay(end) */
 
 /* Remodal window(begin) */
@@ -95,53 +98,54 @@ body.remodal_active .remodal-overlay {
 
     position: relative;
 
-	display: inline-block;
+    display: inline-block;
 
     width: 100%;
     min-height: 100%;
-	padding: 35px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+    padding: 35px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 
-	vertical-align: middle;
+    vertical-align: middle;
 
-	background: #f4f4f4;
-	background-clip: padding-box;
+    background: #f4f4f4;
+    background-clip: padding-box;
     color: #182a3c;
     -webkit-box-shadow: 0px 0px 8px #171a24;
     box-shadow: 0px 0px 8px #171a24;
 
     -webkit-transform: scale(0.95);
-	-moz-transform: scale(0.95);
-	-ms-transform: scale(0.95);
-	-o-transform: scale(0.95);
-	transform: scale(0.95);
-	-webkit-transition: -webkit-transform 0.2s linear;
-	-moz-transition: -moz-transform 0.2s linear;
-	-o-transition: -o-transform 0.2s linear;
-	transition: transform 0.2s linear;
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    transform: scale(0.95);
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
+    transition: transform 0.2s linear;
 }
 
 body.remodal_active .remodal {
-	-webkit-transform: scale(1);
-	-moz-transform: scale(1);
-	-ms-transform: scale(1);
-	-o-transform: scale(1);
-	transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
 }
+
 /* Remodal window(end) */
 
 /* Remodal window close button(begin) */
 .remodal-close {
-	position: absolute;
-	top: 5px;
-	left: 5px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
 
-	width: 28px;
-	height: 28px;
+    width: 28px;
+    height: 28px;
 
-	text-decoration: none;
+    text-decoration: none;
 
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -154,10 +158,10 @@ body.remodal_active .remodal {
 
 .remodal-close:after {
     display: block;
-	font-size: 28px;
+    font-size: 28px;
     font-family: Arial, 'Helvetica CY', 'Nimbus Sans L', sans-serif !important;
 
-	content: "×";
+    content: "×";
     line-height: 28px;
     cursor: pointer;
     text-decoration: none;
@@ -173,9 +177,11 @@ body.remodal_active .remodal {
 .remodal-close:hover, .remodal-close:active {
     background: #3e5368;
 }
+
 .remodal-close:hover.remodal-close:after, .remodal-close:active.remodal-close:after {
     color: #f4f4f4;
 }
+
 /* Remodal window close button(end) */
 
 /* Remodal buttons(begin) */
@@ -206,6 +212,7 @@ body.remodal_active .remodal {
     background: #f4f4f4;
     color: #16a085;
 }
+
 .remodal-confirm:hover, .remodal-confirm:active {
     background: #16a085;
     color: #f4f4f4;
@@ -216,10 +223,12 @@ body.remodal_active .remodal {
     background: #f4f4f4;
     color: #c0392b;
 }
+
 .remodal-cancel:hover, .remodal-cancel:active {
     background: #c0392b;
     color: #f4f4f4;
 }
+
 /* Remodal buttons(end) */
 
 /************** Media queries **************/
