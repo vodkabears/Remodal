@@ -8,15 +8,21 @@ module.exports = function (grunt) {
             },
             remodal: {
                 files: {
-                    'build/jquery.remodal.min.js': ['src/jquery.remodal.js']
+                    'dist/jquery.remodal.min.js': ['src/jquery.remodal.js']
                 }
             }
         },
 
         copy: {
             remodal: {
-                src: 'src/jquery.remodal.css',
-                dest: 'build/jquery.remodal.css'
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/',
+                        src: ['jquery.remodal.css', 'jquery.remodal.js'],
+                        dest: 'dist/'
+                    }
+                ]
             }
         }
     });

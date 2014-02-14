@@ -24,17 +24,18 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <a href="#modal1">With hash tracking</a>
+    <a href="#modal">Click</a>
     <br><br>
 
-    <div class="remodal" data-remodal-id="modal1">
-        <h1>Bootstrap</h1>
-        <p>Twitter Bootstrap — свободный набор инструментов для создания сайтов и веб-приложений. Включает в себя HTML и CSS
-            шаблоны оформления для типографики, веб-форм, кнопок, меток, блоков навигации и прочих компонентов
-            веб-интерфейсов, включая JavaScript расширения.</p>
-        <p>Twitter Bootstrap — свободный набор инструментов для создания сайтов и веб-приложений. Включает в себя HTML и CSS
-            шаблоны оформления для типографики, веб-форм, кнопок, меток, блоков навигации и прочих компонентов
-            веб-интерфейсов, включая JavaScript расширения.</p>
+    <div class="remodal" data-remodal-id="modal">
+        <h1>Remodal</h1>
+        <p>
+            Flat, responsive, lightweight, fast, easy customizable modal window plugin
+            with declarative state notation and hash tracking.
+        </p>
+        <p>
+            Minified version size: ~4kb
+        </p>
         <br>
         <a class="remodal-cancel" href="#">Cancel</a>
         <a class="remodal-confirm" href="#">OK</a>
@@ -45,7 +46,7 @@
 <script src="../src/jquery.remodal.js"></script>
 <script>
     $(document).on('open', '.remodal', function () {
-        alert('open');
+        var modal = $(this);
     });
 
     $(document).on('opened', '.remodal', function () {
@@ -60,11 +61,11 @@
         alert('closed');
     });
 
-    $(document).on('confirm', '[data-remodal-id=modal1]', function () {
+    $(document).on('confirm', '.remodal', function () {
         alert('confirm');
     });
 
-    $(document).on('cancel', '[data-remodal-id=modal1]', function () {
+    $(document).on('cancel', '.remodal', function () {
         alert('cancel');
     });
 </script>
