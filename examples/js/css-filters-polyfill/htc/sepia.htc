@@ -1,0 +1,24 @@
+<component>
+<attach event="onfilterchange" onevent="update()" />
+<script type="text/javascript">
+
+var self_active = false;
+
+function update(){
+	if(event && event.type && event.type === 'filterchange' && !self_active){
+		self_active = true;
+		for(key in element.filters){
+			if(key === 'DXImageTransform.Microsoft.Light'){
+				element.filters.item('DXImageTransform.Microsoft.Light').clear();
+				element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 240, 200, 100);
+				break;
+			}
+		}
+		window.setTimeout(function(){
+			self_active = false;
+		},100);
+	}
+}
+
+</script>
+</component>

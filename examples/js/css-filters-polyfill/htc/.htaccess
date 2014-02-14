@@ -1,0 +1,8 @@
+#We make sure that .htc files are served with the proper MIME type, which is critical for XP SP2
+AddType text/x-component .htc
+
+#We add logn term caching so that the IEs experience less of a slowdown
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault "access plus 1 month"
+</IfModule>

@@ -1,0 +1,60 @@
+<component>
+<attach event="onfilterchange" onevent="update()" />
+<script type="text/javascript">
+
+var self_active = false;
+
+function update(){
+	if(event && event.type && event.type === 'filterchange' && !self_active){
+		if(element.style.polyfilter){
+			var filters = element.style.polyfilter.split(/\)\s+/);
+			for(var i = 0; i < filters.length; i++){
+				var filter =  filters[i] + ')';
+				var fmatch = filter.match(/(brightness)\(([0-9\.]+)%\)/i);
+				if(fmatch !== null){
+					var amount = parseFloat(fmatch[2],10);
+	
+					if(amount >= 100){
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Light'){
+								element.filters.item('DXImageTransform.Microsoft.Light').clear();
+								while(amount > 100){
+									element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, 100);
+									amount -= 100;
+								}
+								element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, amount);
+							}
+						}
+					}
+					else {
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Light'){
+								element.filters.item('DXImageTransform.Microsoft.Light').clear();
+								element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, amount);
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		// IE7 fallback
+		else {
+			for(key in element.filters){
+				if(key === 'DXImageTransform.Microsoft.Light'){
+					element.filters.item('DXImageTransform.Microsoft.Light').clear();
+					element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, 100);
+					element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, 50);
+					element.filters.item('DXImageTransform.Microsoft.Light').addAmbient(255, 255, 255, 50);
+					break;
+				}
+			}
+		}
+		window.setTimeout(function(){
+			self_active = false;
+		},100);
+	}
+}
+
+</script>
+</component>

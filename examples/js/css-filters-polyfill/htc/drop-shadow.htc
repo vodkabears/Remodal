@@ -1,0 +1,110 @@
+<component>
+<attach event="onfilterchange" onevent="update()" />
+<script type="text/javascript">
+
+var self_active = false;
+
+function update(){
+	if(event && event.type && event.type === 'filterchange' && !self_active){
+		self_active = true;
+		if(element.style.polyfilter){
+			var filters = element.style.polyfilter.split(/\)\s+/);
+			for(var i = 0; i < filters.length; i++){
+				var filter =  filters[i] + ')';
+				var fmatch = filter.match(/(drop\-shadow)\(([0-9]+)[px]*\s+([0-9]+)[px]*\s+([0-9]+)[px]*\s+([#0-9]+)\)/i);
+				if(fmatch !== null){
+					var offsetX = parseInt(fmatch[2],10),
+						offsetY = parseInt(fmatch[3],10),
+						radius = parseInt(fmatch[4],10),
+						color = fmatch[5];
+					
+					if(offsetX === 0 && offsetY === 0){
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Shadow'){
+								element.filters.item('DXImageTransform.Microsoft.Shadow').Enabled = false;
+							}
+						}
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Glow'){
+								element.filters.item('DXImageTransform.Microsoft.Glow').Enabled = true;
+								element.filters.item('DXImageTransform.Microsoft.Glow').Color = color;
+								element.filters.item('DXImageTransform.Microsoft.Glow').Strength = radius;
+							}
+						}
+					}
+					else {
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Glow'){
+								element.filters.item('DXImageTransform.Microsoft.Glow').Enabled = false;
+							}
+						}
+						for(key in element.filters){
+							if(key === 'DXImageTransform.Microsoft.Shadow'){
+								element.filters.item('DXImageTransform.Microsoft.Shadow').Enabled = true;
+								element.filters.item('DXImageTransform.Microsoft.Shadow').Color = color;
+								element.filters.item('DXImageTransform.Microsoft.Shadow').Strength = radius;
+	
+								if(offsetX === 0 && offsetY < 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 0;
+								}
+	
+								if(offsetX > 0 && offsetY < 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 45;
+								}
+	
+								if(offsetX > 0 && offsetY === 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 90;
+								}
+	
+								if(offsetX > 0 && offsetY > 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 135;
+								}
+	
+								if(offsetX === 0 && offsetY > 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 180;
+								}
+	
+								if(offsetX < 0 && offsetY > 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 225;
+								}
+	
+								if(offsetX < 0 && offsetY === 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 270;
+								}
+	
+								if(offsetX < 0 && offsetY < 0) {
+									element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 315;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		// IE7
+		else {
+			for(key in element.filters){
+				if(key === 'DXImageTransform.Microsoft.Glow'){
+					element.filters.item('DXImageTransform.Microsoft.Glow').Enabled = false;
+					break;
+				}
+			}
+			for(key in element.filters){
+				if(key === 'DXImageTransform.Microsoft.Shadow'){
+					element.filters.item('DXImageTransform.Microsoft.Shadow').Enabled = true;
+					element.filters.item('DXImageTransform.Microsoft.Shadow').Color = '#000000';
+					element.filters.item('DXImageTransform.Microsoft.Shadow').Strength = 2;
+					element.filters.item('DXImageTransform.Microsoft.Shadow').Direction = 135;
+					break;
+				}
+			}
+		}
+		window.setTimeout(function(){
+			self_active = false;
+		},100);
+	}
+}
+
+</script>
+</component>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../src/jquery.remodal.css">
+</head>
+<body>
+<div class="remodal-bg">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <a href="#modal1">With hash tracking</a>
+    <br><br>
+
+    <div class="remodal" data-remodal-id="modal1">
+        <h1>Bootstrap</h1>
+        <p>Twitter Bootstrap — свободный набор инструментов для создания сайтов и веб-приложений. Включает в себя HTML и CSS
+            шаблоны оформления для типографики, веб-форм, кнопок, меток, блоков навигации и прочих компонентов
+            веб-интерфейсов, включая JavaScript расширения.</p>
+        <p>Twitter Bootstrap — свободный набор инструментов для создания сайтов и веб-приложений. Включает в себя HTML и CSS
+            шаблоны оформления для типографики, веб-форм, кнопок, меток, блоков навигации и прочих компонентов
+            веб-интерфейсов, включая JavaScript расширения.</p>
+        <br>
+        <a class="remodal-cancel" href="#">Cancel</a>
+        <a class="remodal-confirm" href="#">OK</a>
+    </div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="../src/jquery.remodal.js"></script>
+<script>
+    $(document).on('open', '.remodal', function () {
+        alert('open');
+    });
+
+    $(document).on('opened', '.remodal', function () {
+        alert('opened');
+    });
+
+    $(document).on('close', '.remodal', function () {
+        alert('close');
+    });
+
+    $(document).on('closed', '.remodal', function () {
+        alert('closed');
+    });
+
+    $(document).on('confirm', '[data-remodal-id=modal1]', function () {
+        alert('confirm');
+    });
+
+    $(document).on('cancel', '[data-remodal-id=modal1]', function () {
+        alert('cancel');
+    });
+</script>
+</body>
+</html>
