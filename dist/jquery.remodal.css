@@ -1,4 +1,4 @@
-/*! Remodal - v0.9 - 2014-02-14
+/*! Remodal - v0.9 - 2014-02-15
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 /* Fonts */
@@ -13,12 +13,6 @@ html.remodal_lock, body.remodal_lock {
 
 /* Background for effects(begin) */
 .remodal-bg {
-    -webkit-filter: blur(0px);
-    -moz-filter: blur(0px);
-    -o-filter: blur(0px);
-    -ms-filter: blur(0px);
-    filter: blur(0px);
-
     -webkit-transition: -webkit-filter 0.2s linear;
     -moz-transition: -moz-filter 0.2s linear;
     -o-transition: -o-filter 0.2s linear;
