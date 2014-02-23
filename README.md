@@ -6,11 +6,10 @@ Flat, responsive, lightweight, fast, easy customizable modal window plugin with 
 Minified version size: ~4kb
 
 ## Notes
-All modern browsers are supported.
-
-Only webkit browsers has a blur effect in the default css theme. If you want a blur for another kind of browsers use: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
-
-IE9+
+* All modern browsers are supported.
+* Only webkit browsers has a blur effect in the default css theme. If you want a blur for another kind of browsers use: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
+* IE9+
+* Zepto support
 
 ## Start
 
