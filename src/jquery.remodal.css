@@ -20,11 +20,11 @@ html.remodal_lock, body.remodal_lock {
 }
 
 body.remodal_active .remodal-bg {
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
 }
 
 /* Background for effects(end) */
