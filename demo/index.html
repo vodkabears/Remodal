@@ -18,6 +18,7 @@
 <body>
 <div class="remodal-bg">
     <a href="#modal">Click</a>
+    <a href="#modal2">Click</a>
     <br><br>
 
     <div class="remodal" data-remodal-id="modal">
@@ -33,11 +34,32 @@
         <a class="remodal-cancel" href="#">Cancel</a>
         <a class="remodal-confirm" href="#">OK</a>
     </div>
+
+    <div class="remodal" data-remodal-id="modal2">
+        <h1>Remodal</h1>
+        <p>
+            Flat, responsive, lightweight, fast, easy customizable modal window plugin
+            with declarative state notation and hash tracking.
+        </p>
+        <p>
+            Minified version size: ~4kb
+        </p>
+        <br>
+        <a class="remodal-cancel" href="#">Cancel</a>
+        <a class="remodal-confirm" href="#">OK</a>
+    </div>
 </div>
 
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.0.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="js/jquery-2.1.0.min.js"><\/script>')</script>
+
+<!-- Instead of JQuery, you can use zepto now! -->
+<!--<script src="js/zepto.min.js"></script>-->
+
 <script src="../src/jquery.remodal.js"></script>
+
+<!-- Events -->
 <script>
     $(document).on('open', '.remodal', function () {
         console.log('open');
