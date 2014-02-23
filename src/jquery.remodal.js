@@ -68,6 +68,22 @@
     };
 
     /**
+     * Lock screen
+     */
+    var lockScreen = function () {
+        $("html, body").addClass(pluginName + "_lock");
+        $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+    };
+
+    /**
+     * Unlock screen
+     */
+    var unlockScreen = function () {
+        $("html, body").removeClass(pluginName + "_lock");
+        $(document.body).css("padding-right", "-=" + getScrollbarWidth());
+    };
+
+    /**
      * Remodal constructor
      */
     function Remodal(modal, options) {
@@ -144,22 +160,6 @@
     };
 
     /**
-     * Lock screen
-     */
-    Remodal.prototype.lockScreen = function () {
-        $("html, body").addClass(pluginName + "_lock");
-        this.body.css("padding-right", "+=" + getScrollbarWidth());
-    };
-
-    /**
-     * Unlock screen
-     */
-    Remodal.prototype.unlockScreen = function () {
-        $("html, body").removeClass(pluginName + "_lock");
-        this.body.css("padding-right", "-=" + getScrollbarWidth());
-    };
-
-    /**
      * Open modal window
      */
     Remodal.prototype.open = function () {
@@ -182,7 +182,7 @@
         }
         current = this;
 
-        this.lockScreen();
+        lockScreen();
         this.overlay.show();
         setTimeout(function () {
             this.body.addClass(pluginName + "_active");
@@ -217,7 +217,7 @@
 
         setTimeout(function () {
             this.overlay.hide();
-            this.unlockScreen();
+            unlockScreen();
 
             this.busy = false;
             this.modal.trigger("closed");
