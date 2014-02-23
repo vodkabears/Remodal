@@ -1,4 +1,4 @@
-/*! Remodal - v0.1.0 - 2014-02-15
+/*! Remodal - v0.1.1 - 2014-02-23
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 ;(function ($) {

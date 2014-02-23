@@ -1,8 +1,7 @@
-/*! Remodal - v0.1.0 - 2014-02-15
+/*! Remodal - v0.1.1 - 2014-02-23
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
-;
-(function ($) {
+;(function ($) {
     "use strict";
 
     /**
@@ -29,17 +28,17 @@
      * @return {Number}
      */
     var getTransitionDuration = function ($elem) {
-        var duration = $elem.css('transitionDuration') ||
-            $elem.css('webkitTransitionDuration') ||
-            $elem.css('mozTransitionDuration') ||
-            $elem.css('oTransitionDuration') ||
-            $elem.css('msTransitionDuration') ||
+        var duration = $elem.css('transition-duration') ||
+            $elem.css('-webkit-transition-duration') ||
+            $elem.css('-moz-transition-duration') ||
+            $elem.css('-o-transition-duration') ||
+            $elem.css('-ms-transition-duration') ||
             0;
-        var delay = $elem.css('transitionDelay') ||
-            $elem.css('webkitTransitionDelay') ||
-            $elem.css('mozTransitionDelay') ||
-            $elem.css('oTransitionDelay') ||
-            $elem.css('msTransitionDelay') ||
+        var delay = $elem.css('transition-delay') ||
+            $elem.css('-webkit-transition-delay') ||
+            $elem.css('-moz-transition-delay') ||
+            $elem.css('-o-transition-delay') ||
+            $elem.css('-ms-transition-delay') ||
             0;
 
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
@@ -66,6 +65,22 @@
         outer.parentNode.removeChild(outer);
 
         return widthNoScroll - widthWithScroll;
+    };
+
+    /**
+     * Lock screen
+     */
+    var lockScreen = function () {
+        $("html, body").addClass(pluginName + "_lock");
+        $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+    };
+
+    /**
+     * Unlock screen
+     */
+    var unlockScreen = function () {
+        $("html, body").removeClass(pluginName + "_lock");
+        $(document.body).css("padding-right", "-=" + getScrollbarWidth());
     };
 
     /**
@@ -145,22 +160,6 @@
     };
 
     /**
-     * Lock screen
-     */
-    Remodal.prototype.lockScreen = function () {
-        $("html, body").addClass(pluginName + "_lock");
-        this.body.css("padding-right", "+=" + getScrollbarWidth());
-    };
-
-    /**
-     * Unlock screen
-     */
-    Remodal.prototype.unlockScreen = function () {
-        $("html, body").removeClass(pluginName + "_lock");
-        this.body.css("padding-right", "-=" + getScrollbarWidth());
-    };
-
-    /**
      * Open modal window
      */
     Remodal.prototype.open = function () {
@@ -183,7 +182,7 @@
         }
         current = this;
 
-        this.lockScreen();
+        lockScreen();
         this.overlay.show();
         setTimeout(function () {
             this.body.addClass(pluginName + "_active");
@@ -214,10 +213,11 @@
         }
 
         this.body.removeClass(pluginName + "_active");
+        console.log(this.td);
 
         setTimeout(function () {
             this.overlay.hide();
-            this.unlockScreen();
+            unlockScreen();
 
             this.busy = false;
             this.modal.trigger("closed");
@@ -228,9 +228,9 @@
         $["fn"][pluginName] = function (opts) {
             return this["each"](function (i, e) {
                 var $e = $(e);
-                if (!$e.data(pluginName) || !$e.data(pluginName).open) {
+                if (!$e.data(pluginName)) {
                     var instance = new Remodal($e, opts);
-                    $e.data(pluginName, instance);
+                    $e.data(pluginName, instance.index);
                 }
             });
         };
@@ -246,7 +246,7 @@
             id = elem.getAttribute("data-" + pluginName + "-target"),
             $target = $("[data-" + pluginName + "-id=" + id + "]");
 
-        $target.data(pluginName).open();
+        instances[$target.data(pluginName)].open();
     });
 
     /**
@@ -287,9 +287,9 @@
             var $elem = $("[data-" + pluginName + "-id=" + id + "]");
 
             if ($elem.length) {
-                var data = $elem.data(pluginName);
-                if (data && data.settings.hashTracking) {
-                    data.open();
+                var instance = instances[$elem.data(pluginName)];
+                if (instance && instance.settings.hashTracking) {
+                    instance.open();
                 }
             }
 
@@ -297,4 +297,4 @@
     };
     $(window).bind("hashchange." + pluginName, hashHandler);
     hashHandler(null, false);
-})(window["jQuery"]);
+})(window["jQuery"] || window["Zepto"]);
