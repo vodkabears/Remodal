@@ -106,11 +106,24 @@ $(document).on('cancel', '.remodal', function () {
 
 ## Cool bro! But i don't like declarative style!
 
-Ok:
+Ok, don't set class attribute and write something like this:
 ```html
 <script>
     var options = {...};
-    $('[data-remodal-id=modal]').remodal(options);
+    $('[data-remodal-id=modal]').remodal(options).open();
 </script>
 ```
 Don't use `id` attribute, if you don't want browser scrolling to the anchor point.
+
+## Methods
+
+Get an instance of modal and call a method:
+```js
+var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
+
+// open a modal
+inst.open();
+
+// close a modal
+inst.close();
+```
