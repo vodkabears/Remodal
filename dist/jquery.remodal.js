@@ -1,4 +1,4 @@
-/*! Remodal - v0.1.1 - 2014-02-23
+/*! Remodal - v0.1.2 - 2014-03-05
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 ;(function ($) {
@@ -13,10 +13,12 @@
         };
 
     /**
-     * Instances of modal windows.
-     * @type {Array}
+     * Special plugin object for instances.
+     * @type {Object}
      */
-    var instances = [];
+    $[pluginName] = {
+        lookup: []
+    };
 
     /**
      * Current modal
@@ -44,6 +46,10 @@
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
     };
 
+    /**
+     * Get a scrollbar width
+     * @return {Number}
+     */
     var getScrollbarWidth = function () {
         var outer = document.createElement("div");
         outer.style.visibility = "hidden";
@@ -91,7 +97,7 @@
         this.modal = modal;
         this.buildDOM();
         this.addEventListeners();
-        this.index = instances.push(this) - 1;
+        this.index = $[pluginName].lookup.push(this) - 1;
         this.busy = false;
     }
 
@@ -213,7 +219,6 @@
         }
 
         this.body.removeClass(pluginName + "_active");
-        console.log(this.td);
 
         setTimeout(function () {
             this.overlay.hide();
@@ -226,13 +231,21 @@
 
     if ($) {
         $["fn"][pluginName] = function (opts) {
-            return this["each"](function (i, e) {
+            var instance;
+            this["each"](function (i, e) {
                 var $e = $(e);
                 if (!$e.data(pluginName)) {
-                    var instance = new Remodal($e, opts);
+                    instance = new Remodal($e, opts);
                     $e.data(pluginName, instance.index);
+
+                    if (instance.settings.hashTracking &&
+                        $e.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+                        instance.open();
+                    }
                 }
             });
+
+            return instance;
         };
     }
 
@@ -246,7 +259,7 @@
             id = elem.getAttribute("data-" + pluginName + "-target"),
             $target = $("[data-" + pluginName + "-id=" + id + "]");
 
-        instances[$target.data(pluginName)].open();
+        $[pluginName].lookup[$target.data(pluginName)].open();
     });
 
     /**
@@ -287,7 +300,8 @@
             var $elem = $("[data-" + pluginName + "-id=" + id + "]");
 
             if ($elem.length) {
-                var instance = instances[$elem.data(pluginName)];
+                var instance = $[pluginName].lookup[$elem.data(pluginName)];
+
                 if (instance && instance.settings.hashTracking) {
                     instance.open();
                 }
@@ -296,5 +310,4 @@
         }
     };
     $(window).bind("hashchange." + pluginName, hashHandler);
-    hashHandler(null, false);
 })(window["jQuery"] || window["Zepto"]);
