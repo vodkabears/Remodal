@@ -46,6 +46,10 @@
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
     };
 
+    /**
+     * Get a scrollbar width
+     * @return {Number}
+     */
     var getScrollbarWidth = function () {
         var outer = document.createElement("div");
         outer.style.visibility = "hidden";
