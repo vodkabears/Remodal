@@ -13,10 +13,12 @@
         };
 
     /**
-     * Instances of modal windows.
-     * @type {Array}
+     * Special plugin object for instances.
+     * @type {Object}
      */
-    var instances = [];
+    $[pluginName] = {
+        lookup: []
+    };
 
     /**
      * Current modal
@@ -91,7 +93,7 @@
         this.modal = modal;
         this.buildDOM();
         this.addEventListeners();
-        this.index = instances.push(this) - 1;
+        this.index = $[pluginName].lookup.push(this) - 1;
         this.busy = false;
     }
 
@@ -246,7 +248,7 @@
             id = elem.getAttribute("data-" + pluginName + "-target"),
             $target = $("[data-" + pluginName + "-id=" + id + "]");
 
-        instances[$target.data(pluginName)].open();
+        $[pluginName].lookup[$target.data(pluginName)].open();
     });
 
     /**
@@ -287,7 +289,7 @@
             var $elem = $("[data-" + pluginName + "-id=" + id + "]");
 
             if ($elem.length) {
-                var instance = instances[$elem.data(pluginName)];
+                var instance = $[pluginName].lookup[$elem.data(pluginName)];
                 if (instance && instance.settings.hashTracking) {
                     instance.open();
                 }
