@@ -227,13 +227,21 @@
 
     if ($) {
         $["fn"][pluginName] = function (opts) {
-            return this["each"](function (i, e) {
+            var instance;
+            this["each"](function (i, e) {
                 var $e = $(e);
                 if (!$e.data(pluginName)) {
-                    var instance = new Remodal($e, opts);
+                    instance = new Remodal($e, opts);
                     $e.data(pluginName, instance.index);
+
+                    if (instance.settings.hashTracking &&
+                        $e.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+                        instance.open();
+                    }
                 }
             });
+
+            return instance;
         };
     }
 
@@ -289,6 +297,7 @@
 
             if ($elem.length) {
                 var instance = $[pluginName].lookup[$elem.data(pluginName)];
+
                 if (instance && instance.settings.hashTracking) {
                     instance.open();
                 }
@@ -297,5 +306,4 @@
         }
     };
     $(window).bind("hashchange." + pluginName, hashHandler);
-    hashHandler(null, false);
 })(window["jQuery"] || window["Zepto"]);

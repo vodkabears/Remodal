@@ -33,6 +33,15 @@
         <a class="remodal-cancel" href="#">Cancel</a>
         <a class="remodal-confirm" href="#">OK</a>
     </div>
+
+    <div data-remodal-id="modal2">
+        <h1>Another one window</h1>
+        <p>
+            Hello!
+        </p>
+        <br>
+        <a class="remodal-confirm" href="#">Hello!</a>
+    </div>
 </div>
 
 
@@ -70,8 +79,14 @@
         console.log('cancel');
     });
 
-    var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
-    inst.open();
+    // You can open or close it like this:
+    // var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
+    // inst.open();
+    // inst.close();
+
+    // Or init in this way:
+    var inst = $('[data-remodal-id=modal2]').remodal();
+    // inst.open();
 </script>
 </body>
 </html>
