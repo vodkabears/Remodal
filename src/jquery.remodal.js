@@ -215,7 +215,6 @@
         }
 
         this.body.removeClass(pluginName + "_active");
-        console.log(this.td);
 
         setTimeout(function () {
             this.overlay.hide();
