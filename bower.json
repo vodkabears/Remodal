@@ -1,6 +1,6 @@
 {
     "name": "remodal",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "homepage": "http://vodkabears.github.io/remodal/",
     "authors": [
         "Ilya Makarov <dfrost.00@gmail.com>"
@@ -18,7 +18,8 @@
         "dialog",
         "popin",
         "lightbox",
-        "ui"
+        "ui",
+        "zepto"
     ],
     "license": "MIT"
 }
