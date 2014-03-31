@@ -1,4 +1,4 @@
-/*! Remodal - v0.1.2 - 2014-03-05
+/*! Remodal - v0.1.3 - 2014-03-31
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 ;(function ($) {
@@ -20,10 +20,8 @@
         lookup: []
     };
 
-    /**
-     * Current modal
-     */
-    var current;
+    var current, // current modal
+        scrollTop; // scroll position
 
     /**
      * Get transition duration in ms
@@ -179,6 +177,7 @@
 
         var id = this.modal.attr("data-" + pluginName + "-id");
         if (id && this.settings.hashTracking) {
+            scrollTop = $(window).scrollTop();
             location.hash = id;
         }
 
@@ -214,8 +213,8 @@
 
         if (this.settings.hashTracking &&
             this.modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
-            // save current scroll position
             location.hash = "";
+            $(window).scrollTop(scrollTop);
         }
 
         this.body.removeClass(pluginName + "_active");
