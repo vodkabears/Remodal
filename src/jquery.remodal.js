@@ -130,28 +130,30 @@
      * Add event listeners to the current modal window
      */
     Remodal.prototype.addEventListeners = function () {
+        var self = this;
+
         this.modalClose.bind("click." + pluginName, function (e) {
             e.preventDefault();
-            this.close();
-        }.bind(this));
+            self.close();
+        });
 
         this.cancel.bind("click." + pluginName, function (e) {
             e.preventDefault();
-            this.modal.trigger("cancel");
-            this.close();
-        }.bind(this));
+            self.modal.trigger("cancel");
+            self.close();
+        });
 
         this.confirm.bind("click." + pluginName, function (e) {
             e.preventDefault();
-            this.modal.trigger("confirm");
-            this.close();
-        }.bind(this));
+            self.modal.trigger("confirm");
+            self.close();
+        });
 
         $(document).bind('keyup.' + pluginName, function (e) {
             if (e.keyCode === 27) {
-                this.close();
+                self.close();
             }
-        }.bind(this));
+        });
 
         this.overlay.bind("click." + pluginName, function (e) {
             var $target = $(e.target);
@@ -159,8 +161,8 @@
                 return;
             }
 
-            this.close();
-        }.bind(this));
+            self.close();
+        });
     };
 
     /**
@@ -189,14 +191,16 @@
 
         lockScreen();
         this.overlay.show();
+
+        var self = this;
         setTimeout(function () {
-            this.body.addClass(pluginName + "_active");
+            self.body.addClass(pluginName + "_active");
 
             setTimeout(function () {
-                this.busy = false;
-                this.modal.trigger("opened");
-            }.bind(this), this.td + 50);
-        }.bind(this), 25);
+                self.busy = false;
+                self.modal.trigger("opened");
+            }, self.td + 50);
+        }, 25);
     };
 
     /**
@@ -219,13 +223,14 @@
 
         this.body.removeClass(pluginName + "_active");
 
+        var self = this;
         setTimeout(function () {
-            this.overlay.hide();
+            self.overlay.hide();
             unlockScreen();
 
-            this.busy = false;
-            this.modal.trigger("closed");
-        }.bind(this), this.td + 50);
+            self.busy = false;
+            self.modal.trigger("closed");
+        }, self.td + 50);
     };
 
     if ($) {
