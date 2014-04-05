@@ -1,3 +1,6 @@
+### 0.1.4
+* Works in the old android, ios browsers and other.
+
 ### 0.1.3
 * Fix page scrolling bug
 * Refactor CSS
