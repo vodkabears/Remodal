@@ -49,6 +49,10 @@
      * @return {Number}
      */
     var getScrollbarWidth = function () {
+        if ($("body").height() <= $(window).height()) {
+            return 0;
+        }
+
         var outer = document.createElement("div");
         outer.style.visibility = "hidden";
         outer.style.width = "100px";
