@@ -1,3 +1,7 @@
+### 0.1.5
+* Support for trailing slashes in URL.
+* Fix unnecessary body padding.
+
 ### 0.1.4
 * Works in the old android, ios browsers and other.
 

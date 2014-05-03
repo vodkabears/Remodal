@@ -1,4 +1,4 @@
-/*! Remodal - v0.1.4 - 2014-04-06
+/*! Remodal - v0.1.4 - 2014-05-03
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 ;(function ($) {
@@ -49,7 +49,7 @@
      * @return {Number}
      */
     var getScrollbarWidth = function () {
-        if ($("body").height() <= $(window).height()) {
+        if ($(document.body).height() <= $(window).height()) {
             return 0;
         }
 
