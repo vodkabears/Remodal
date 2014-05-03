@@ -305,7 +305,7 @@
                 }
             }
         } else {
-            var $elem = $("[data-" + pluginName + "-id=" + id + "]");
+            var $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
 
             if ($elem.length) {
                 var instance = $[pluginName].lookup[$elem.data(pluginName)];
