@@ -16,6 +16,8 @@ Minified version size: ~4kb
 
 That's very simple too start using Remodal.
 
+[Download it](https://github.com/VodkaBears/Remodal/archive/master.zip). You can use bower: `bower install remodal`
+
 Add this in the head section:
 ```html
 <link rel="stylesheet" href="path/to/your/jquery.remodal.css">
