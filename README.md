@@ -21,7 +21,7 @@ Add this in the head section:
 <link rel="stylesheet" href="path/to/your/jquery.remodal.css">
 ```
 
-Add this before the `</body>`:
+Add this before the `</body>` or in the head:
 ```html
 <script src="path/to/your/jquery.remodal.min.js"></script>
 ```

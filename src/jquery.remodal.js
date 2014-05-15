@@ -257,34 +257,36 @@
         };
     }
 
-    /**
-     * data-remodal-target opens a modal window with a special id without hash change.
-     */
-    $(document).on("click", "[data-" + pluginName + "-target]", function (e) {
-        e.preventDefault();
+    $(document).ready(function () {
+        /**
+         * data-remodal-target opens a modal window with a special id without hash change.
+         */
+        $(document).on("click", "[data-" + pluginName + "-target]", function (e) {
+            e.preventDefault();
 
-        var elem = e.currentTarget,
-            id = elem.getAttribute("data-" + pluginName + "-target"),
-            $target = $("[data-" + pluginName + "-id=" + id + "]");
+            var elem = e.currentTarget,
+                id = elem.getAttribute("data-" + pluginName + "-target"),
+                $target = $("[data-" + pluginName + "-id=" + id + "]");
 
-        $[pluginName].lookup[$target.data(pluginName)].open();
-    });
+            $[pluginName].lookup[$target.data(pluginName)].open();
+        });
 
-    /**
-     * Auto initialization of modal windows.
-     * They should have the 'data-remodal' attribute.
-     * Also you can pass params into the modal throw the data-remodal-options attribute.
-     * data-remodal-options must be a JSON string without brackets.
-     */
-    $(document).find("." + pluginName).each(function (i, container) {
-        var $container = $(container),
-            options = $container.data(pluginName + "-options");
+        /**
+         * Auto initialization of modal windows.
+         * They should have the 'data-remodal' attribute.
+         * Also you can pass params into the modal throw the data-remodal-options attribute.
+         * data-remodal-options must be a JSON string without brackets.
+         */
+        $(document).find("." + pluginName).each(function (i, container) {
+            var $container = $(container),
+                options = $container.data(pluginName + "-options");
 
-        if (!options) {
-            options = {};
-        }
+            if (!options) {
+                options = {};
+            }
 
-        $container[pluginName](options);
+            $container[pluginName](options);
+        });
     });
 
     /**
