@@ -1,5 +1,6 @@
 Remodal
 =======
+[![Twitter](http://img.shields.io/badge/twitter-@vodkabears-green.svg?style=flat)](https://twitter.com/vodkabears)
 
 Flat, responsive, lightweight, fast, easy customizable modal window plugin with declarative state notation and hash tracking.
 
