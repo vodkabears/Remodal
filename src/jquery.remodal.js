@@ -279,9 +279,9 @@
 
         /**
          * Auto initialization of modal windows.
-         * They should have the 'data-remodal' attribute.
+         * They should have the 'remodal' class attribute.
          * Also you can pass params into the modal throw the data-remodal-options attribute.
-         * data-remodal-options must be a JSON string without brackets.
+         * data-remodal-options must be a valid JSON string.
          */
         $(document).find("." + pluginName).each(function (i, container) {
             var $container = $(container),
