@@ -9,7 +9,9 @@
      */
     var pluginName = "remodal",
         defaults = {
-            hashTracking: true
+            hashTracking: true,
+            closeOnConfirm: true,
+            closeOnCancel: true
         };
 
     /**
@@ -144,13 +146,17 @@
         this.cancel.bind("click." + pluginName, function (e) {
             e.preventDefault();
             self.modal.trigger("cancel");
-            self.close();
+            if (self.settings.closeOnCancel) {
+                self.close();
+            }
         });
 
         this.confirm.bind("click." + pluginName, function (e) {
             e.preventDefault();
             self.modal.trigger("confirm");
-            self.close();
+            if (self.settings.closeOnConfirm) {
+                self.close();
+            }
         });
 
         $(document).bind('keyup.' + pluginName, function (e) {
@@ -242,7 +248,7 @@
             var instance;
             this["each"](function (i, e) {
                 var $e = $(e);
-                if (!$e.data(pluginName)) {
+                if ($e.data(pluginName) == null) {
                     instance = new Remodal($e, opts);
                     $e.data(pluginName, instance.index);
 
