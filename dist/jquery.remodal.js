@@ -1,4 +1,4 @@
-/*! Remodal - v0.1.6 - 2014-05-16
+/*! Remodal - v0.1.7 - 2014-07-14
  * https://github.com/VodkaBears/remodal
  * Copyright (c) 2014 VodkaBears; */
 ;(function ($) {
@@ -9,7 +9,9 @@
      */
     var pluginName = "remodal",
         defaults = {
-            hashTracking: true
+            hashTracking: true,
+            closeOnConfirm: true,
+            closeOnCancel: true
         };
 
     /**
@@ -144,13 +146,17 @@
         this.cancel.bind("click." + pluginName, function (e) {
             e.preventDefault();
             self.modal.trigger("cancel");
-            self.close();
+            if (self.settings.closeOnCancel) {
+                self.close();
+            }
         });
 
         this.confirm.bind("click." + pluginName, function (e) {
             e.preventDefault();
             self.modal.trigger("confirm");
-            self.close();
+            if (self.settings.closeOnConfirm) {
+                self.close();
+            }
         });
 
         $(document).bind('keyup.' + pluginName, function (e) {
@@ -242,7 +248,7 @@
             var instance;
             this["each"](function (i, e) {
                 var $e = $(e);
-                if (!$e.data(pluginName)) {
+                if ($e.data(pluginName) == null) {
                     instance = new Remodal($e, opts);
                     $e.data(pluginName, instance.index);
 
@@ -273,9 +279,9 @@
 
         /**
          * Auto initialization of modal windows.
-         * They should have the 'data-remodal' attribute.
+         * They should have the 'remodal' class attribute.
          * Also you can pass params into the modal throw the data-remodal-options attribute.
-         * data-remodal-options must be a JSON string without brackets.
+         * data-remodal-options must be a valid JSON string.
          */
         $(document).find("." + pluginName).each(function (i, container) {
             var $container = $(container),
@@ -307,9 +313,14 @@
                 }
             }
         } else {
-            var $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+            var $elem;
 
-            if ($elem.length) {
+            // Catch syntax error if your hash is bad
+            try {
+                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+            } catch (e) {}
+
+            if ($elem && $elem.length) {
                 var instance = $[pluginName].lookup[$elem.data(pluginName)];
 
                 if (instance && instance.settings.hashTracking) {
