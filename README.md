@@ -86,12 +86,12 @@ To open a modal without a hash, use `data-remodal-target` attribute.
 #### closeOnConfirm
 `Default: true`
 
-If set to true, closes modal window after clicking confirm button.
+If set to true, closes a modal window after clicking confirm button.
 
 #### closeOnCancel
 `Default: true`
 
-If set to true, closes modal window after clicking cancel button.
+If set to true, closes a modal window after clicking cancel button.
 
 
 ## Events
