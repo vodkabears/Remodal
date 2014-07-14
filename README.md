@@ -83,6 +83,17 @@ To open a modal without a hash, use `data-remodal-target` attribute.
 <a data-remodal-target="modal" href="#modal">Call the modal with data-remodal-id="modal"</a>
 ```
 
+#### closeOnConfirm
+`Default: true`
+
+If set to true, closes modal window after clicking confirm button.
+
+#### closeOnCancel
+`Default: true`
+
+If set to true, closes modal window after clicking cancel button.
+
+
 ## Events
 
 ```js
