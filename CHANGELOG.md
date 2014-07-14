@@ -1,3 +1,10 @@
+### 0.1.7
+* Catch syntax error if the hash is bad.
+* Add 'closeOnConfirm', 'closeOnCancel' options.
+
+### 0.1.6
+* Fix #14, #11
+
 ### 0.1.5
 * Support for trailing slashes in URL.
 * Fix unnecessary body padding.
