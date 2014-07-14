@@ -313,9 +313,14 @@
                 }
             }
         } else {
-            var $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+            var $elem;
 
-            if ($elem.length) {
+            // Catch syntax error if your hash is bad
+            try {
+                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+            } catch (e) {}
+
+            if ($elem && $elem.length) {
                 var instance = $[pluginName].lookup[$elem.data(pluginName)];
 
                 if (instance && instance.settings.hashTracking) {
