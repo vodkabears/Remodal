@@ -81,16 +81,16 @@
      * Lock screen
      */
     var lockScreen = function () {
-        $("html, body").addClass(pluginName + "_lock");
         $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+        $("html, body").addClass(pluginName + "_lock");
     };
 
     /**
      * Unlock screen
      */
     var unlockScreen = function () {
-        $("html, body").removeClass(pluginName + "_lock");
         $(document.body).css("padding-right", "-=" + getScrollbarWidth());
+        $("html, body").removeClass(pluginName + "_lock");
     };
 
     /**
