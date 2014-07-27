@@ -2,6 +2,21 @@ module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
+        // Import package manifest
+        pkg: grunt.file.readJSON("remodal.jquery.json"),
+
+        // Banner definitions
+        meta: {
+            banner: "/*\n" +
+                " *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n" +
+                " *  <%= pkg.description %>\n" +
+                " *  <%= pkg.homepage %>\n" +
+                " *\n" +
+                " *  Made by <%= pkg.author.name %>\n" +
+                " *  Under <%= pkg.licenses[0].type %> License\n" +
+                " */\n"
+        },
+
         // Lint definitions
         jshint: {
             gruntfile: {
@@ -15,36 +30,37 @@ module.exports = function (grunt) {
             }
         },
 
-        uglify: {
-            options: {
-                preserveComments: "some"
-            },
-            remodal: {
+        // Concat definitions
+        concat: {
+            dist: {
                 files: {
-                    "dist/jquery.remodal.min.js": ["src/jquery.remodal.js"]
+                    "dist/jquery.remodal.js": ["src/jquery.remodal.js"],
+                    "dist/jquery.remodal.css": ["src/jquery.remodal.css"]
+                },
+                options: {
+                    banner: "<%= meta.banner %>"
                 }
             }
         },
 
-        copy: {
+        // Minify definitions
+        uglify: {
             remodal: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: "src/",
-                        src: ["jquery.remodal.css", "jquery.remodal.js"],
-                        dest: "dist/"
-                    }
-                ]
+                files: {
+                    "dist/jquery.remodal.min.js": ["src/jquery.remodal.js"]
+                }
+            },
+            options: {
+                banner: "<%= meta.banner %>"
             }
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-uglify");
-    grunt.loadNpmTasks("grunt-contrib-copy");
 
     // Default task(s).
     grunt.registerTask("test", ["jshint"]);
-    grunt.registerTask("default", ["jshint", "uglify", "copy"]);
+    grunt.registerTask("default", ["jshint", "concat", "uglify"]);
 };
