@@ -57,6 +57,11 @@ So, now you can call it with a hash:
 ```html
 <a href="#modal">Call the modal with data-remodal-id="modal"</a>
 ```
+Or:
+```html
+<a data-remodal-target="modal">Call the modal with data-remodal-id="modal"</a>
+```
+
 
 ## Options
 
