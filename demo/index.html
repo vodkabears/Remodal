@@ -1,19 +1,11 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html lang="en" class="no-js">
 <head>
-	<meta charset="utf-8">
-	<title>Remodal example</title>
-	<meta name="description" content="Remodal example">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link rel="stylesheet" href="../src/jquery.remodal.css">
+    <meta charset="utf-8">
+    <title>Remodal example</title>
+    <meta name="description" content="Remodal example">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../src/jquery.remodal.css">
 </head>
 <body>
 <div class="remodal-bg">
@@ -84,38 +76,33 @@
         Minified version size: ~4kb
     </p>
     <br>
-
-    <div class="remodal" data-remodal-id="modal">
-        <h1>Remodal</h1>
-        <p>
-            Flat, responsive, lightweight, fast, easy customizable modal window plugin
-            with declarative state notation and hash tracking.
-        </p>
-        <p>
-            Minified version size: ~4kb
-        </p>
-        <br>
-        <a class="remodal-cancel" href="#">Cancel</a>
-        <a class="remodal-confirm" href="#">OK</a>
-    </div>
-
-    <div data-remodal-id="modal2">
-        <h1>Another one window</h1>
-        <p>
-            Hello!
-        </p>
-        <br>
-        <a class="remodal-confirm" href="#">Hello!</a>
-    </div>
 </div>
 
+<div class="remodal" data-remodal-id="modal">
+    <h1>Remodal</h1>
+    <p>
+        Flat, responsive, lightweight, fast, easy customizable modal window plugin
+        with declarative state notation and hash tracking.
+    </p>
+    <p>
+        Minified version size: ~4kb
+    </p>
+    <br>
+    <a class="remodal-cancel" href="#">Cancel</a>
+    <a class="remodal-confirm" href="#">OK</a>
+</div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+<div data-remodal-id="modal2">
+    <h1>Another one window</h1>
+    <p>
+        Hello!
+    </p>
+    <br>
+    <a class="remodal-confirm" href="#">Hello!</a>
+</div>
 
-<!-- Instead of JQuery, you can use zepto now! -->
-<!--<script src="js/zepto.min.js"></script>-->
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../libs/jquery/jquery-1.11.1.min.js"><\/script>')</script>
 <script src="../src/jquery.remodal.js"></script>
 
 <!-- Events -->
@@ -144,16 +131,16 @@
         console.log('cancel');
     });
 
-//    You can open or close it like this:
-//    $(function () {
-//        // var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
-//        // inst.open();
-//        // inst.close();
-//    });
+    //    You can open or close it like this:
+    //    $(function () {
+    //        // var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
+    //        // inst.open();
+    //        // inst.close();
+    //    });
 
-//  Or init in this way:
+    //  Or init in this way:
     var inst = $('[data-remodal-id=modal2]').remodal();
-//  inst.open();
+    //  inst.open();
 </script>
 </body>
 </html>

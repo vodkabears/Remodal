@@ -1,19 +1,11 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html lang="en" class="no-js">
 <head>
-	<meta charset="utf-8">
-	<title>Remodal example</title>
-	<meta name="description" content="Remodal example">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link rel="stylesheet" href="../src/jquery.remodal.css">
+    <meta charset="utf-8">
+    <title>Remodal example</title>
+    <meta name="description" content="Remodal example">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../src/jquery.remodal.css">
 </head>
 <body>
 <div class="remodal-bg">
@@ -109,12 +101,7 @@
     <a class="remodal-confirm" href="#">Hello!</a>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
-
-<!-- Instead of JQuery, you can use zepto now! -->
-<!--<script src="js/zepto.min.js"></script>-->
-
+<script src="../libs/zepto/zepto.min.js"></script>
 <script src="../src/jquery.remodal.js"></script>
 
 <!-- Events -->
@@ -143,16 +130,16 @@
         console.log('cancel');
     });
 
-//    You can open or close it like this:
-//    $(function () {
-//        // var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
-//        // inst.open();
-//        // inst.close();
-//    });
+    //    You can open or close it like this:
+    //    $(function () {
+    //        // var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
+    //        // inst.open();
+    //        // inst.close();
+    //    });
 
-//  Or init in this way:
+    //  Or init in this way:
     var inst = $('[data-remodal-id=modal2]').remodal();
-//  inst.open();
+    //  inst.open();
 </script>
 </body>
 </html>
