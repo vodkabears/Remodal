@@ -30,17 +30,17 @@
      * @return {Number}
      */
     var getTransitionDuration = function ($elem) {
-        var duration = $elem.css('transition-duration') ||
-            $elem.css('-webkit-transition-duration') ||
-            $elem.css('-moz-transition-duration') ||
-            $elem.css('-o-transition-duration') ||
-            $elem.css('-ms-transition-duration') ||
+        var duration = $elem.css("transition-duration") ||
+            $elem.css("-webkit-transition-duration") ||
+            $elem.css("-moz-transition-duration") ||
+            $elem.css("-o-transition-duration") ||
+            $elem.css("-ms-transition-duration") ||
             0;
-        var delay = $elem.css('transition-delay') ||
-            $elem.css('-webkit-transition-delay') ||
-            $elem.css('-moz-transition-delay') ||
-            $elem.css('-o-transition-delay') ||
-            $elem.css('-ms-transition-delay') ||
+        var delay = $elem.css("transition-delay") ||
+            $elem.css("-webkit-transition-delay") ||
+            $elem.css("-moz-transition-delay") ||
+            $elem.css("-o-transition-delay") ||
+            $elem.css("-ms-transition-delay") ||
             0;
 
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
@@ -159,7 +159,7 @@
             }
         });
 
-        $(document).bind('keyup.' + pluginName, function (e) {
+        $(document).bind("keyup." + pluginName, function (e) {
             if (e.keyCode === 27) {
                 self.close();
             }
@@ -244,9 +244,9 @@
     };
 
     if ($) {
-        $["fn"][pluginName] = function (opts) {
+        $.fn[pluginName] = function (opts) {
             var instance;
-            this["each"](function (i, e) {
+            this.each(function (i, e) {
                 var $e = $(e);
                 if ($e.data(pluginName) == null) {
                     instance = new Remodal($e, opts);
@@ -317,7 +317,7 @@
 
             // Catch syntax error if your hash is bad
             try {
-                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp("/", "g"), "\\/") + "]");
             } catch (e) {}
 
             if ($elem && $elem.length) {
@@ -331,4 +331,4 @@
         }
     };
     $(window).bind("hashchange." + pluginName, hashHandler);
-})(window["jQuery"] || window["Zepto"]);
+})(window.jQuery || window.Zepto);
