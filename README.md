@@ -1,3 +1,4 @@
+![Travis](https://travis-ci.org/VodkaBears/Remodal.svg?branch=master)
 Remodal
 =======
 Flat, responsive, lightweight, fast, easy customizable modal window plugin with declarative state notation and hash tracking.
