@@ -1,6 +1,11 @@
-/*! Remodal - v0.1.7 - 2014-07-14
- * https://github.com/VodkaBears/remodal
- * Copyright (c) 2014 VodkaBears; */
+/*
+ *  Remodal - v0.2.0
+ *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
+ *  http://vodkabears.github.io/remodal/
+ *
+ *  Made by Ilya Makarov
+ *  Under MIT License
+ */
 ;(function ($) {
     "use strict";
 
@@ -30,17 +35,17 @@
      * @return {Number}
      */
     var getTransitionDuration = function ($elem) {
-        var duration = $elem.css('transition-duration') ||
-            $elem.css('-webkit-transition-duration') ||
-            $elem.css('-moz-transition-duration') ||
-            $elem.css('-o-transition-duration') ||
-            $elem.css('-ms-transition-duration') ||
+        var duration = $elem.css("transition-duration") ||
+            $elem.css("-webkit-transition-duration") ||
+            $elem.css("-moz-transition-duration") ||
+            $elem.css("-o-transition-duration") ||
+            $elem.css("-ms-transition-duration") ||
             0;
-        var delay = $elem.css('transition-delay') ||
-            $elem.css('-webkit-transition-delay') ||
-            $elem.css('-moz-transition-delay') ||
-            $elem.css('-o-transition-delay') ||
-            $elem.css('-ms-transition-delay') ||
+        var delay = $elem.css("transition-delay") ||
+            $elem.css("-webkit-transition-delay") ||
+            $elem.css("-moz-transition-delay") ||
+            $elem.css("-o-transition-delay") ||
+            $elem.css("-ms-transition-delay") ||
             0;
 
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
@@ -81,16 +86,50 @@
      * Lock screen
      */
     var lockScreen = function () {
-        $("html, body").addClass(pluginName + "_lock");
         $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+        $("html, body").addClass(pluginName + "_lock");
     };
 
     /**
      * Unlock screen
      */
     var unlockScreen = function () {
-        $("html, body").removeClass(pluginName + "_lock");
         $(document.body).css("padding-right", "-=" + getScrollbarWidth());
+        $("html, body").removeClass(pluginName + "_lock");
+    };
+
+    /**
+     * Parse string with options
+     * @param str
+     * @returns {Object}
+     */
+    var parseOptions = function (str) {
+        var obj = {}, clearedStr, arr;
+
+        // remove spaces before and after delimiters
+        clearedStr = str.replace(/\s*:\s*/g, ":").replace(/\s*,\s*/g, ",");
+
+        // parse string
+        arr = clearedStr.split(",");
+        var i, len, val;
+        for (i = 0, len = arr.length; i < len; i++) {
+            arr[i] = arr[i].split(":");
+            val = arr[i][1];
+
+            // convert string value if it is like a boolean
+            if (typeof val === "string" || val instanceof String) {
+                val = val === "true" || (val === "false" ? false : val);
+            }
+
+            // convert string value if it is like a number
+            if (typeof val === "string" || val instanceof String) {
+                val = !isNaN(val) ? +val : val;
+            }
+
+            obj[arr[i][0]] = val;
+        }
+
+        return obj;
     };
 
     /**
@@ -159,7 +198,7 @@
             }
         });
 
-        $(document).bind('keyup.' + pluginName, function (e) {
+        $(document).bind("keyup." + pluginName, function (e) {
             if (e.keyCode === 27) {
                 self.close();
             }
@@ -244,9 +283,9 @@
     };
 
     if ($) {
-        $["fn"][pluginName] = function (opts) {
+        $.fn[pluginName] = function (opts) {
             var instance;
-            this["each"](function (i, e) {
+            this.each(function (i, e) {
                 var $e = $(e);
                 if ($e.data(pluginName) == null) {
                     instance = new Remodal($e, opts);
@@ -289,6 +328,8 @@
 
             if (!options) {
                 options = {};
+            } else if (typeof options === "string" || options instanceof String) {
+                options = parseOptions(options);
             }
 
             $container[pluginName](options);
@@ -317,7 +358,7 @@
 
             // Catch syntax error if your hash is bad
             try {
-                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp('/', 'g'), "\\/") + "]");
+                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp("/", "g"), "\\/") + "]");
             } catch (e) {}
 
             if ($elem && $elem.length) {
@@ -331,4 +372,4 @@
         }
     };
     $(window).bind("hashchange." + pluginName, hashHandler);
-})(window["jQuery"] || window["Zepto"]);
+})(window.jQuery || window.Zepto);
