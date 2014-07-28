@@ -1,3 +1,9 @@
+### 0.2.0
+* Fix safari ghost padding bug(#26).
+* Add parsing of non-json strings with options. Read docs.
+* Fix jshint errors.
+* Update examples.
+
 ### 0.1.7
 * Catch syntax error if the hash is bad.
 * Add 'closeOnConfirm', 'closeOnCancel' options.
