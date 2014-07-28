@@ -1,12 +1,14 @@
 {
-    "name": "Remodal",
-    "devDependencies": {
-        "grunt": "~0.4.2",
-        "grunt-contrib-uglify": "~0.3.2",
-        "grunt-contrib-jshint": "~0.10.0",
-        "grunt-contrib-concat": "~0.5.0"
-    },
-    "scripts": {
-        "test": "grunt test"
-    }
+  "name": "Remodal",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-qunit": "~0.5.2",
+    "grunt-contrib-connect": "~0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
 }

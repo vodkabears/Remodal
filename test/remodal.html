@@ -7,14 +7,38 @@
     <script src="../libs/jquery-loader.js"></script>
     <!-- Load local QUnit. -->
     <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+    <link rel="stylesheet" href="../src/jquery.remodal.css">
     <script src="../libs/qunit/qunit.js"></script>
     <!-- Load local lib and tests. -->
     <script src="../src/jquery.remodal.js"></script>
     <script src="remodal_test.js"></script>
     <script>window._$ = jQuery.noConflict(true);</script>
+    <style>
+        .remodal-overlay {
+            -webkit-transition: opacity 0.25s 0.05s linear;
+            -moz-transition: opacity 0.25s 0.05s linear;
+            -o-transition: opacity 0.25s 0.05s linear;
+            transition: opacity 0.25s 0.05s linear;
+
+        }
+    </style>
 </head>
 <body>
+
 <div id="qunit"></div>
-<div id="qunit-fixture"></div>
+
+<a href="#" data-remodal-target="modal">Call</a>
+<div class="remodal" data-remodal-id="modal">
+    <a class="remodal-cancel" href="#">Cancel</a>
+    <a class="remodal-confirm" href="#">OK</a>
+</div>
+
+<div class="remodal" data-remodal-id="modal2" data-remodal-options="hashTracking: false,closeOnConfirm:false,closeOnCancel:   false">
+    <a class="remodal-cancel" href="#">Cancel</a>
+    <a class="remodal-confirm" href="#">OK</a>
+</div>
+
+<div data-remodal-id="modal3">
+</div>
 </body>
 </html>
