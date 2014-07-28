@@ -320,7 +320,7 @@
 
             if (!options) {
                 options = {};
-            } else if (typeof options == "string" || options instanceof String) {
+            } else if (typeof options === "string" || options instanceof String) {
                 options = parseOptions(options);
             }
 
