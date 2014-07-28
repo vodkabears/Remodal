@@ -91,6 +91,40 @@
     };
 
     /**
+     * Parse string with options
+     * @param str
+     * @returns {Object}
+     */
+    var parseOptions = function (str) {
+        var obj = {}, clearedStr, arr;
+
+        // remove spaces before and after delimiters
+        clearedStr = str.replace(/\s*:\s*/g, ":").replace(/\s*,\s*/g, ",");
+
+        // parse string
+        arr = clearedStr.split(",");
+        var i, len, val;
+        for (i = 0, len = arr.length; i < len; i++) {
+            arr[i] = arr[i].split(":");
+            val = arr[i][1];
+
+            // convert string value if it is like a boolean
+            if (typeof val === "string" || val instanceof String) {
+                val = val === "true" || (val === "false" ? false : val);
+            }
+
+            // convert string value if it is like a number
+            if (typeof val === "string" || val instanceof String) {
+                val = !isNaN(val) ? +val : val;
+            }
+
+            obj[arr[i][0]] = val;
+        }
+
+        return obj;
+    };
+
+    /**
      * Remodal constructor
      */
     function Remodal(modal, options) {
@@ -286,6 +320,8 @@
 
             if (!options) {
                 options = {};
+            } else if (typeof options == "string" || options instanceof String) {
+                options = parseOptions(options);
             }
 
             $container[pluginName](options);
