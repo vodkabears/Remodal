@@ -65,10 +65,10 @@ Or:
 
 ## Options
 
-You can pass additional options by the data-remodal-options attribute. Data must be valid JSON.
+You can pass additional options by the data-remodal-options attribute.
 ```html
 <div class="remodal" data-remodal-id="modal"
-    data-remodal-options='{ "hashTracking": false }'>
+    data-remodal-options="hashTracking": false">
     <h1>Remodal</h1>
     <p>
       Flat, responsive, lightweight, fast, easy customizable modal window plugin
@@ -103,27 +103,27 @@ If set to true, closes a modal window after clicking cancel button.
 
 ```js
 $(document).on('open', '.remodal', function () {
-    var modal = $(this);
+    console.log('open');
 });
 
 $(document).on('opened', '.remodal', function () {
-    var modal = $(this);
+    console.log('opened');
 });
 
 $(document).on('close', '.remodal', function () {
-    var modal = $(this);
+    console.log('close');
 });
 
 $(document).on('closed', '.remodal', function () {
-    var modal = $(this);
+    console.log('closed');
 });
 
 $(document).on('confirm', '.remodal', function () {
-    var modal = $(this);
+    console.log('confirm');
 });
 
 $(document).on('cancel', '.remodal', function () {
-    var modal = $(this);
+    console.log('cancel');
 });
 ```
 
