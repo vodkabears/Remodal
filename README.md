@@ -69,7 +69,7 @@ Or:
 You can pass additional options by the data-remodal-options attribute.
 ```html
 <div class="remodal" data-remodal-id="modal"
-    data-remodal-options="hashTracking": false">
+    data-remodal-options="hashTracking: false">
     <h1>Remodal</h1>
     <p>
       Flat, responsive, lightweight, fast, easy customizable modal window plugin
