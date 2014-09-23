@@ -151,3 +151,21 @@ inst.open();
 // close a modal
 inst.close();
 ```
+
+## A mix of 2 worlds
+To change the default settings (without modified the source) but still use the data-remodal-target functionality, just define ...
+
+```js
+function remodalSetDefaults
+{
+    // override all/some options
+    return {
+        hashTracking : false
+    }
+}
+```
+... and then include the plugin.
+
+```html
+<script type="text/javascript" src="/path/to/jquery.remodal.js"></script>
+```
