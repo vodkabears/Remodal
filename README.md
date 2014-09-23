@@ -153,7 +153,7 @@ inst.close();
 ```
 
 ## A mix of 2 worlds
-To change the default settings (without modified the source) but still use the data-remodal-target functionality, just define ...
+To change the default settings (without modifying the source) but still use the data-remodal-target functionality, just define ...
 
 ```js
 function remodalSetDefaults
