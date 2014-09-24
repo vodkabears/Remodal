@@ -5,6 +5,7 @@
      * Remodal settings
      */
     var pluginName = "remodal",
+        initFunction = pluginName + "SetDefaults",
         defaults = {
             hashTracking: true,
             closeOnConfirm: true,
@@ -295,6 +296,12 @@
     }
 
     $(document).ready(function () {
+        /**
+         * look for defaults override
+         */
+        if ("function" === typeof window[initFunction]) {
+            $.extend(true, defaults, window[initFunction]());
+        }
         /**
          * data-remodal-target opens a modal window with a special id without hash change.
          */
