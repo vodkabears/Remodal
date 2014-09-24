@@ -299,7 +299,7 @@
         /**
          * look for defaults override
          */
-        if ("function" == typeof window[initFunction]) {
+        if ("function" === typeof window[initFunction]) {
             $.extend(true, defaults, window[initFunction]());
         }
         /**
