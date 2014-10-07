@@ -247,3 +247,27 @@ body.remodal_active .remodal {
         border-radius: 6px;
     }
 }
+
+/* IE8
+   ========================================================================== */
+
+html.lt-ie9{
+    min-height:100%;
+    overflow: auto !important;
+    margin: 0;
+}
+
+html.lt-ie9 body{
+    min-height:100%;
+    overflow: auto !important;
+    margin: 0;
+}
+
+.lt-ie9 .remodal-overlay {
+    background: url(img/overlay-ie8.png);
+}
+
+.lt-ie9 .remodal.remodel-comments{
+    width: 500px;
+    min-height: auto;
+}
