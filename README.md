@@ -99,6 +99,15 @@ If set to true, closes a modal window after clicking confirm button.
 
 If set to true, closes a modal window after clicking cancel button.
 
+#### closeOnEscape
+`Default: true`
+
+If set to true, closes a modal window after press ESC button.
+
+#### closeOnAnyClick
+`Default: true`
+
+If set to true, closes a modal window by clicking anywhere on the page.
 
 ## Events
 

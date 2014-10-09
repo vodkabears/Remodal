@@ -220,7 +220,9 @@
         propEqual($inst2.settings, {
             hashTracking: false,
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: false,
+            closeOnEscape: true,
+            closeOnAnyClick: true
         });
     });
 

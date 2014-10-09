@@ -8,7 +8,9 @@
         defaults = {
             hashTracking: true,
             closeOnConfirm: true,
-            closeOnCancel: true
+            closeOnCancel: true,
+            closeOnEscape: true,
+            closeOnAnyClick: true
         };
 
     /**
@@ -191,7 +193,7 @@
         });
 
         $(document).bind("keyup." + pluginName, function (e) {
-            if (e.keyCode === 27) {
+            if (e.keyCode === 27 && self.settings.closeOnEscape) {
                 self.close();
             }
         });
@@ -202,7 +204,9 @@
                 return;
             }
 
-            self.close();
+            if (self.settings.closeOnAnyClick) {
+                self.close();
+            }
         });
     };
 
