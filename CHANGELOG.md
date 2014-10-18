@@ -1,3 +1,10 @@
+### 0.2.1
+* Moved @import to the top of the file. Meteor requires the @import to be at the top.
+* Adding some basic CSS support for IE8.
+* Added CloseOnEscape and CloseOnAnyClick options.
+* Updated README.md.
+* Updated tests.
+
 ### 0.2.0
 * Fix safari ghost padding bug(#26).
 * Add parsing of non-json strings with options. Read docs.
