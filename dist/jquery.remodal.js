@@ -1,5 +1,5 @@
 /*
- *  Remodal - v0.2.0
+ *  Remodal - v0.2.1
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -16,7 +16,9 @@
         defaults = {
             hashTracking: true,
             closeOnConfirm: true,
-            closeOnCancel: true
+            closeOnCancel: true,
+            closeOnEscape: true,
+            closeOnAnyClick: true
         };
 
     /**
@@ -199,7 +201,7 @@
         });
 
         $(document).bind("keyup." + pluginName, function (e) {
-            if (e.keyCode === 27) {
+            if (e.keyCode === 27 && self.settings.closeOnEscape) {
                 self.close();
             }
         });
@@ -210,7 +212,9 @@
                 return;
             }
 
-            self.close();
+            if (self.settings.closeOnAnyClick) {
+                self.close();
+            }
         });
     };
 

@@ -1,11 +1,12 @@
 /*
- *  Remodal - v0.2.0
+ *  Remodal - v0.2.1
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
  *  Made by Ilya Makarov
  *  Under MIT License
  */
+@import url(http://fonts.googleapis.com/css?family=Exo+2:700,400&subset=latin,cyrillic);
 
 /* ==========================================================================
    Remodal necessary styles
@@ -67,8 +68,6 @@ html.remodal_lock, body.remodal_lock {
    ========================================================================== */
 
 /* Default theme font */
-
-@import url(http://fonts.googleapis.com/css?family=Exo+2:700,400&subset=latin,cyrillic);
 
 .remodal, .remodal * {
     font-family: 'Exo 2', sans-serif;
