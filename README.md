@@ -1,4 +1,4 @@
-![Travis](https://travis-ci.org/VodkaBears/Remodal.svg?branch=master)
+[![Travis](https://travis-ci.org/VodkaBears/Remodal.svg?branch=master)](https://travis-ci.org/VodkaBears/Remodal)
 Remodal
 =======
 Flat, responsive, lightweight, fast, easy customizable modal window plugin with declarative state notation and hash tracking.
@@ -13,13 +13,12 @@ If your page body requires `height: 100%`, your page will scroll to the top([#20
 ## Notes
 * All modern browsers are supported.
 * Only webkit browsers has a blur effect in the default css theme. If you want a blur for another kind of browsers use: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
-* IE9+
-* JS code works in IE8 too, but css styles on your own, i don't want to pollute it.
+* IE8+. To enable IE8 styles set `lt-ie9` class for the `html` element, as modernizr does.
 * Zepto support.
 
 ## Start
 
-That's very simple too start using Remodal.
+That's very simple to start using Remodal.
 
 [Download it](https://github.com/VodkaBears/Remodal/archive/master.zip). You can use bower: `bower install remodal`
 
