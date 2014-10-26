@@ -43,8 +43,8 @@ html.remodal_lock, body.remodal_lock {
 
 /* Fix iPad, iPhone glitches */
 
-.remodal-overlay > * {
-    -webkit-transform: translateZ(0px);
+.remodal-overlay {
+    -webkit-backface-visibility: hidden;
 }
 
 /* Modal dialog necessary styles */
