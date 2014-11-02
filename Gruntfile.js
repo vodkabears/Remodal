@@ -112,7 +112,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-jscs");
 
     // Tasks.
-    grunt.registerTask("lint", [ "jshint", "jscs" ]);
+    grunt.registerTask("lint", [ "jshint", "jscs", "csscomb" ]);
     grunt.registerTask("test", [ "connect", "lint", "qunit" ]);
     grunt.registerTask("default", [ "connect", "csscomb", "jshint", "qunit", "concat", "uglify" ]);
 };
