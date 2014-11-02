@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
@@ -17,7 +17,6 @@ module.exports = function (grunt) {
                 " */\n"
         },
 
-        // Connect server definitions
         connect: {
             server: {
                 options: {
@@ -26,19 +25,33 @@ module.exports = function (grunt) {
             }
         },
 
-        // Lint definitions
         jshint: {
             gruntfile: {
                 src: "Gruntfile.js"
             },
             src: {
-                src: ["src/**/*.js"]
+                src: "src/**/*.js"
             },
             test: {
-                src: ["test/**/*.js"]
+                src: "test/**/*.js"
             },
             options: {
                 jshintrc: ".jshintrc"
+            }
+        },
+
+        jscs: {
+            gruntfile: {
+                src: "Gruntfile.js"
+            },
+            src: {
+                src: "src/**/*.js"
+            },
+            test: {
+                src: "test/**/*.js"
+            },
+            options: {
+                preset: "jquery"
             }
         },
 
@@ -50,23 +63,27 @@ module.exports = function (grunt) {
             }
         },
 
-        // QUnit definitions
         qunit: {
             all: {
                 options: {
-                    urls: ["jquery/jquery-1.11.1.js", "jquery/jquery-2.1.1.js", "zepto/zepto.js"].map(function (library) {
-                        return "http://localhost:<%= connect.server.options.port %>/test/remodal.html?lib=" + library;
+                    urls: [
+                        "jquery/jquery-1.11.1.js",
+                        "jquery/jquery-2.1.1.js",
+                        "zepto/zepto.js"
+                    ].map(function(library) {
+                        return "http://localhost:" +
+                            "<%= connect.server.options.port %>" +
+                            "/test/remodal.html?lib=" + library;
                     })
                 }
             }
         },
 
-        // Concat definitions
         concat: {
             dist: {
                 files: {
-                    "dist/jquery.remodal.js": ["src/jquery.remodal.js"],
-                    "dist/jquery.remodal.css": ["src/jquery.remodal.css"]
+                    "dist/jquery.remodal.js": "src/jquery.remodal.js",
+                    "dist/jquery.remodal.css": "src/jquery.remodal.css"
                 },
                 options: {
                     banner: "<%= meta.banner %>"
@@ -74,11 +91,10 @@ module.exports = function (grunt) {
             }
         },
 
-        // Minify definitions
         uglify: {
             remodal: {
                 files: {
-                    "dist/jquery.remodal.min.js": ["src/jquery.remodal.js"]
+                    "dist/jquery.remodal.min.js": "src/jquery.remodal.js"
                 }
             },
             options: {
@@ -93,8 +109,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-qunit");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-csscomb");
+    grunt.loadNpmTasks("grunt-jscs");
 
-    // Default task(s).
-    grunt.registerTask("test", ["connect", "jshint", "qunit"]);
-    grunt.registerTask("default", ["connect", "csscomb", "jshint", "qunit", "concat", "uglify"]);
+    // Tasks.
+    grunt.registerTask("lint", [ "jshint", "jscs" ]);
+    grunt.registerTask("test", [ "connect", "lint", "qunit" ]);
+    grunt.registerTask("default", [ "connect", "csscomb", "jshint", "qunit", "concat", "uglify" ]);
 };
