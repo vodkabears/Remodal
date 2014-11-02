@@ -1,13 +1,15 @@
 {
+  "private": true,
   "name": "Remodal",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-uglify": "~0.3.2",
-    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-cli": "~0.1.13",
     "grunt-contrib-concat": "~0.5.0",
-    "grunt-contrib-qunit": "~0.5.2",
     "grunt-contrib-connect": "~0.8.0",
-    "grunt-cli": "~0.1.13"
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-qunit": "~0.5.2",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-csscomb": "^3.0.0"
   },
   "scripts": {
     "test": "grunt test"

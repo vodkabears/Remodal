@@ -42,6 +42,14 @@ module.exports = function (grunt) {
             }
         },
 
+        csscomb: {
+            all: {
+                files: {
+                    "src/jquery.remodal.css": "src/jquery.remodal.css"
+                }
+            }
+        },
+
         // QUnit definitions
         qunit: {
             all: {
@@ -79,13 +87,14 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-connect");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-qunit");
-    grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-csscomb");
 
     // Default task(s).
     grunt.registerTask("test", ["connect", "jshint", "qunit"]);
-    grunt.registerTask("default", ["connect", "jshint", "qunit", "concat", "uglify"]);
+    grunt.registerTask("default", ["connect", "csscomb", "jshint", "qunit", "concat", "uglify"]);
 };

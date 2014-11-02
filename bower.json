@@ -6,7 +6,7 @@
         "Ilya Makarov <dfrost.00@gmail.com>"
     ],
     "description": "Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.",
-    "main": [ "dist/jquery.remodal.js", "dist/jquery.remodal.min.js", "dist/jquery.remodal.css"],
+    "main": [ "dist/jquery.remodal.js", "dist/jquery.remodal.css" ],
     "keywords": [
         "jquery",
         "plugin",
