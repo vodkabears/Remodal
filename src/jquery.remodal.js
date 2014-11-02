@@ -355,7 +355,7 @@
             // Catch syntax error if your hash is bad
             try {
                 $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp("/", "g"), "\\/") + "]");
-            } catch (e) {}
+            } catch (err) {}
 
             if ($elem && $elem.length) {
                 var instance = $[pluginName].lookup[$elem.data(pluginName)];
