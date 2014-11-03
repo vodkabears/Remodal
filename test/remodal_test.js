@@ -73,8 +73,8 @@
     });
 
     QUnit.asyncTest("events", function(assert) {
-        var $confirmButton = $inst1.confirm,
-            $cancelButton = $inst1.cancel;
+        var $confirmButton = $inst1.$confirmButton,
+            $cancelButton = $inst1.$cancelButton;
 
        $document.one("open", "[data-remodal-id=modal]", function() {
             assert.ok(true, "opening");
@@ -115,7 +115,7 @@
     });
 
     QUnit.asyncTest("Confirm button click", function(assert) {
-        var $confirmButton = $inst1.confirm;
+        var $confirmButton = $inst1.$confirmButton;
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
             $confirmButton.click();
@@ -133,7 +133,7 @@
     });
 
     QUnit.asyncTest("Cancel button click", function(assert) {
-        var $cancelButton = $inst1.cancel;
+        var $cancelButton = $inst1.$cancelButton;
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
             $cancelButton.click();
@@ -151,7 +151,7 @@
     });
 
     QUnit.asyncTest("Close button click", function(assert) {
-        var $closeButton = $inst1.modalClose;
+        var $closeButton = $inst1.$closeButton;
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
             $closeButton.click();
@@ -166,7 +166,7 @@
     });
 
     QUnit.asyncTest("Overlay click", function(assert) {
-        var $overlay = $inst1.overlay;
+        var $overlay = $inst1.$overlay;
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
             $overlay.click();
@@ -234,18 +234,18 @@
 
         $document.one("confirm", "[data-remodal-id=modal2]", function() {
             setTimeout(function() {
-                assert.ok($inst2.overlay.css("display") === "block");
+                assert.ok($inst2.$overlay.css("display") === "block");
             }, $inst2.td + 100);
         });
 
         $document.one("cancel", "[data-remodal-id=modal2]", function() {
             setTimeout(function() {
-                assert.ok($inst2.overlay.css("display") === "block");
+                assert.ok($inst2.$overlay.css("display") === "block");
                 QUnit.start();
             }, $inst2.td + 100);
         });
 
-        $inst2.confirm.click();
-        $inst2.cancel.click();
+        $inst2.$confirmButton.click();
+        $inst2.$cancelButton.click();
     });
 }(jQuery, location, document));
