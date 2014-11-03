@@ -98,7 +98,8 @@
      * @returns {Object}
      */
     function parseOptions(str) {
-        var obj = {}, arr, i, len, val;
+        var obj = {},
+            arr, len, val, i;
 
         // Remove spaces before and after delimiters
         str = str.replace(/\s*:\s*/g, ":").replace(/\s*,\s*/g, ",");
@@ -141,7 +142,9 @@
      * Build required DOM
      */
     Remodal.prototype.buildDOM = function() {
-        var tdOverlay, tdModal, tdBg;
+        var tdOverlay,
+            tdModal,
+            tdBg;
 
         this.body = $(document.body);
         this.bg = $("." + pluginName + "-bg");
@@ -176,11 +179,13 @@
 
         remodal.modalClose.bind("click." + pluginName, function(e) {
             e.preventDefault();
+
             remodal.close();
         });
 
         remodal.cancel.bind("click." + pluginName, function(e) {
             e.preventDefault();
+
             remodal.modal.trigger("cancel");
 
             if (remodal.settings.closeOnCancel) {
@@ -190,6 +195,7 @@
 
         remodal.confirm.bind("click." + pluginName, function(e) {
             e.preventDefault();
+            
             remodal.modal.trigger("confirm");
 
             if (remodal.settings.closeOnConfirm) {
@@ -304,7 +310,8 @@
      * @constructor
      */
     $.fn[pluginName] = function(opts) {
-        var instance, $elem;
+        var instance,
+            $elem;
 
         this.each(function(index, elem) {
             $elem = $(elem);
@@ -362,7 +369,8 @@
      */
     function hashHandler(e, closeOnEmptyHash) {
         var id = location.hash.replace("#", ""),
-            $elem, instance;
+            instance,
+            $elem;
 
         if (typeof closeOnEmptyHash === "undefined") {
             closeOnEmptyHash = true;
