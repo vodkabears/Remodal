@@ -67,8 +67,8 @@ module.exports = function(grunt) {
             all: {
                 options: {
                     urls: [
-                        "jquery/jquery-1.11.1.js",
-                        "jquery/jquery-2.1.1.js",
+                        "jquery/dist/jquery.js",
+                        "jquery2/dist/jquery.js",
                         "zepto/zepto.js"
                     ].map(function(library) {
                         return "http://localhost:" +

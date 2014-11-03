@@ -248,4 +248,4 @@
         $inst2.$confirmButton.click();
         $inst2.$cancelButton.click();
     });
-}(jQuery, location, document));
+}(window.jQuery || window.Zepto, location, document));
