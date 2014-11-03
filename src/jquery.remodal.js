@@ -172,46 +172,46 @@
      * Add event listeners to the current modal window
      */
     Remodal.prototype.addEventListeners = function() {
-        var self = this;
+        var remodal = this;
 
-        this.modalClose.bind("click." + pluginName, function(e) {
+        remodal.modalClose.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.close();
+            remodal.close();
         });
 
-        this.cancel.bind("click." + pluginName, function(e) {
+        remodal.cancel.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.modal.trigger("cancel");
+            remodal.modal.trigger("cancel");
 
-            if (self.settings.closeOnCancel) {
-                self.close();
+            if (remodal.settings.closeOnCancel) {
+                remodal.close();
             }
         });
 
-        this.confirm.bind("click." + pluginName, function(e) {
+        remodal.confirm.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.modal.trigger("confirm");
+            remodal.modal.trigger("confirm");
 
-            if (self.settings.closeOnConfirm) {
-                self.close();
+            if (remodal.settings.closeOnConfirm) {
+                remodal.close();
             }
         });
 
         $(document).bind("keyup." + pluginName, function(e) {
-            if (e.keyCode === 27 && self.settings.closeOnEscape) {
-                self.close();
+            if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
+                remodal.close();
             }
         });
 
-        this.overlay.bind("click." + pluginName, function(e) {
+        remodal.overlay.bind("click." + pluginName, function(e) {
             var $target = $(e.target);
 
             if (!$target.hasClass(pluginName + "-overlay")) {
                 return;
             }
 
-            if (self.settings.closeOnAnyClick) {
-                self.close();
+            if (remodal.settings.closeOnAnyClick) {
+                remodal.close();
             }
         });
     };
@@ -225,33 +225,36 @@
             return;
         }
 
-        this.busy = true;
-        this.modal.trigger("open");
+        var remodal = this,
+            id;
 
-        var self = this,
-            id = this.modal.attr("data-" + pluginName + "-id");
+        remodal.busy = true;
+        remodal.modal.trigger("open");
 
-        if (id && this.settings.hashTracking) {
+        id = remodal.modal.attr("data-" + pluginName + "-id");
+
+        if (id && remodal.settings.hashTracking) {
             scrollTop = $(window).scrollTop();
             location.hash = id;
         }
 
-        if (current && current !== this) {
+        if (current && current !== remodal) {
             current.overlay.hide();
             current.body.removeClass(pluginName + "_active");
         }
-        current = this;
+
+        current = remodal;
 
         lockScreen();
-        this.overlay.show();
+        remodal.overlay.show();
 
         setTimeout(function() {
-            self.body.addClass(pluginName + "_active");
+            remodal.body.addClass(pluginName + "_active");
 
             setTimeout(function() {
-                self.busy = false;
-                self.modal.trigger("opened");
-            }, self.td + 50);
+                remodal.busy = false;
+                remodal.modal.trigger("opened");
+            }, remodal.td + 50);
         }, 25);
     };
 
@@ -267,23 +270,23 @@
         this.busy = true;
         this.modal.trigger("close");
 
-        var self = this;
+        var remodal = this;
 
-        if (this.settings.hashTracking &&
-            this.modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+        if (remodal.settings.hashTracking &&
+            remodal.modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
             location.hash = "";
             $(window).scrollTop(scrollTop);
         }
 
-        this.body.removeClass(pluginName + "_active");
+        remodal.body.removeClass(pluginName + "_active");
 
         setTimeout(function() {
-            self.overlay.hide();
+            remodal.overlay.hide();
             unlockScreen();
 
-            self.busy = false;
-            self.modal.trigger("closed");
-        }, self.td + 50);
+            remodal.busy = false;
+            remodal.modal.trigger("closed");
+        }, remodal.td + 50);
     };
 
     /**
