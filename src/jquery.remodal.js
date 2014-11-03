@@ -85,7 +85,12 @@
      * @private
      */
     function lockScreen() {
-        $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+        var $body = $(document.body),
+
+            // Zepto does not support '-=', '+=' in the `css` method
+            paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
+
+        $body.css("padding-right", paddingRight + "px");
         $("html, body").addClass(pluginName + "_lock");
     }
 
@@ -94,7 +99,12 @@
      * @private
      */
     function unlockScreen() {
-        $(document.body).css("padding-right", "-=" + getScrollbarWidth());
+        var $body = $(document.body),
+
+            // Zepto does not support '-=', '+=' in the `css` method
+            paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
+
+        $body.css("padding-right", paddingRight + "px");
         $("html, body").removeClass(pluginName + "_lock");
     }
 
