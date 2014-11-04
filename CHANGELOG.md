@@ -1,3 +1,13 @@
+### 0.3.0
+* Added font-size of inputs to prevent iOs zooming.
+* Convert image for IE8 to base64.
+* Fix tests.
+* Fix scrollbar padding for Zepto.
+* Code refactoring.
+* Improved code linting.
+* Cleaned up the repository.
+* Updated dependencies.
+
 ### 0.2.1
 * Moved @import to the top of the file. Meteor requires the @import to be at the top.
 * Added some basic CSS support for IE8.
