@@ -1,8 +1,9 @@
-;(function ($) {
+;(function($) {
     "use strict";
 
     /**
      * Remodal settings
+     * @private
      */
     var pluginName = "remodal",
         defaults = {
@@ -11,111 +12,127 @@
             closeOnCancel: true,
             closeOnEscape: true,
             closeOnAnyClick: true
-        };
+        },
+
+        // Current modal
+        current,
+
+        // Scroll position
+        scrollTop;
 
     /**
-     * Special plugin object for instances.
-     * @type {Object}
-     */
-    $[pluginName] = {
-        lookup: []
-    };
-
-    var current, // current modal
-        scrollTop; // scroll position
-
-    /**
-     * Get transition duration in ms
+     * Get a transition duration in ms
+     * @param {jQuery} $elem
      * @return {Number}
+     * @private
      */
-    var getTransitionDuration = function ($elem) {
+    function getTransitionDuration($elem) {
         var duration = $elem.css("transition-duration") ||
-            $elem.css("-webkit-transition-duration") ||
-            $elem.css("-moz-transition-duration") ||
-            $elem.css("-o-transition-duration") ||
-            $elem.css("-ms-transition-duration") ||
-            0;
-        var delay = $elem.css("transition-delay") ||
-            $elem.css("-webkit-transition-delay") ||
-            $elem.css("-moz-transition-delay") ||
-            $elem.css("-o-transition-delay") ||
-            $elem.css("-ms-transition-delay") ||
-            0;
+                $elem.css("-webkit-transition-duration") ||
+                $elem.css("-moz-transition-duration") ||
+                $elem.css("-o-transition-duration") ||
+                $elem.css("-ms-transition-duration") ||
+                0,
+
+            delay = $elem.css("transition-delay") ||
+                $elem.css("-webkit-transition-delay") ||
+                $elem.css("-moz-transition-delay") ||
+                $elem.css("-o-transition-delay") ||
+                $elem.css("-ms-transition-delay") ||
+                0;
 
         return (parseFloat(duration) + parseFloat(delay)) * 1000;
-    };
+    }
 
     /**
      * Get a scrollbar width
      * @return {Number}
+     * @private
      */
-    var getScrollbarWidth = function () {
+    function getScrollbarWidth() {
         if ($(document.body).height() <= $(window).height()) {
             return 0;
         }
 
-        var outer = document.createElement("div");
+        var outer = document.createElement("div"),
+            inner = document.createElement("div"),
+            widthNoScroll,
+            widthWithScroll;
+
         outer.style.visibility = "hidden";
         outer.style.width = "100px";
         document.body.appendChild(outer);
 
-        var widthNoScroll = outer.offsetWidth;
-        // force scrollbars
+        widthNoScroll = outer.offsetWidth;
+
+        // Force scrollbars
         outer.style.overflow = "scroll";
 
-        // add innerdiv
-        var inner = document.createElement("div");
+        // Add innerdiv
         inner.style.width = "100%";
         outer.appendChild(inner);
 
-        var widthWithScroll = inner.offsetWidth;
+        widthWithScroll = inner.offsetWidth;
 
-        // remove divs
+        // Remove divs
         outer.parentNode.removeChild(outer);
 
         return widthNoScroll - widthWithScroll;
-    };
+    }
 
     /**
      * Lock screen
+     * @private
      */
-    var lockScreen = function () {
-        $(document.body).css("padding-right", "+=" + getScrollbarWidth());
+    function lockScreen() {
+        var $body = $(document.body),
+
+            // Zepto does not support '-=', '+=' in the `css` method
+            paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
+
+        $body.css("padding-right", paddingRight + "px");
         $("html, body").addClass(pluginName + "_lock");
-    };
+    }
 
     /**
      * Unlock screen
+     * @private
      */
-    var unlockScreen = function () {
-        $(document.body).css("padding-right", "-=" + getScrollbarWidth());
+    function unlockScreen() {
+        var $body = $(document.body),
+
+            // Zepto does not support '-=', '+=' in the `css` method
+            paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
+
+        $body.css("padding-right", paddingRight + "px");
         $("html, body").removeClass(pluginName + "_lock");
-    };
+    }
 
     /**
      * Parse string with options
      * @param str
      * @returns {Object}
+     * @private
      */
-    var parseOptions = function (str) {
-        var obj = {}, clearedStr, arr;
+    function parseOptions(str) {
+        var obj = {},
+            arr, len, val, i;
 
-        // remove spaces before and after delimiters
-        clearedStr = str.replace(/\s*:\s*/g, ":").replace(/\s*,\s*/g, ",");
+        // Remove spaces before and after delimiters
+        str = str.replace(/\s*:\s*/g, ":").replace(/\s*,\s*/g, ",");
 
-        // parse string
-        arr = clearedStr.split(",");
-        var i, len, val;
+        // Parse string
+        arr = str.split(",");
         for (i = 0, len = arr.length; i < len; i++) {
             arr[i] = arr[i].split(":");
             val = arr[i][1];
 
-            // convert string value if it is like a boolean
+            // Convert string value if it is like a boolean
             if (typeof val === "string" || val instanceof String) {
                 val = val === "true" || (val === "false" ? false : val);
             }
 
-            // convert string value if it is like a number
+            // Convert string value if it is like a number
             if (typeof val === "string" || val instanceof String) {
                 val = !isNaN(val) ? +val : val;
             }
@@ -124,185 +141,211 @@
         }
 
         return obj;
-    };
-
-    /**
-     * Remodal constructor
-     */
-    function Remodal(modal, options) {
-        this.settings = $.extend({}, defaults, options);
-        this.modal = modal;
-        this.buildDOM();
-        this.addEventListeners();
-        this.index = $[pluginName].lookup.push(this) - 1;
-        this.busy = false;
     }
 
     /**
-     * Build required DOM
+     * Remodal constructor
+     * @param {jQuery} $modal
+     * @param {Object} options
+     * @constructor
      */
-    Remodal.prototype.buildDOM = function () {
-        this.body = $(document.body);
-        this.bg = $("." + pluginName + "-bg");
-        this.modalClose = $("<a href='#'>").addClass(pluginName + "-close");
-        this.overlay = $("<div>").addClass(pluginName + "-overlay");
-        if (!this.modal.hasClass(pluginName)) {
-            this.modal.addClass(pluginName);
-        }
+    function Remodal($modal, options) {
+        var remodal = this,
+            tdOverlay,
+            tdModal,
+            tdBg;
 
-        this.modal.css("visibility", "visible");
-        this.modal.append(this.modalClose);
-        this.overlay.append(this.modal);
-        this.body.append(this.overlay);
+        remodal.settings = $.extend({}, defaults, options);
 
-        this.confirm = this.modal.find("." + pluginName + "-confirm");
-        this.cancel = this.modal.find("." + pluginName + "-cancel");
+        // Build DOM
+        remodal.$body = $(document.body);
+        remodal.$bg = $("." + pluginName + "-bg");
+        remodal.$closeButton = $("<a href='#'>").addClass(pluginName + "-close");
+        remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+        remodal.$modal = $modal;
+        remodal.$modal.addClass(pluginName);
+        remodal.$modal.css("visibility", "visible");
+        remodal.$modal.append(remodal.$closeButton);
+        remodal.$overlay.append(remodal.$modal);
+        remodal.$body.append(remodal.$overlay);
+        remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
+        remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
 
-        var tdOverlay = getTransitionDuration(this.overlay),
-            tdModal = getTransitionDuration(this.modal),
-            tdBg = getTransitionDuration(this.bg);
-        this.td = tdModal > tdOverlay ? tdModal : tdOverlay;
-        this.td = tdBg > this.td ? tdBg : this.td;
-    };
+        // Calculate timeouts
+        tdOverlay = getTransitionDuration(remodal.$overlay);
+        tdModal = getTransitionDuration(remodal.$modal);
+        tdBg = getTransitionDuration(remodal.$bg);
+        remodal.td = tdModal > tdOverlay ? tdModal : tdOverlay;
+        remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
-    /**
-     * Add event listeners to the current modal window
-     */
-    Remodal.prototype.addEventListeners = function () {
-        var self = this;
-
-        this.modalClose.bind("click." + pluginName, function (e) {
+        // Add close button event listener
+        remodal.$closeButton.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.close();
+
+            remodal.close();
         });
 
-        this.cancel.bind("click." + pluginName, function (e) {
+        // Add cancel button event listener
+        remodal.$cancelButton.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.modal.trigger("cancel");
-            if (self.settings.closeOnCancel) {
-                self.close();
+
+            remodal.$modal.trigger("cancel");
+
+            if (remodal.settings.closeOnCancel) {
+                remodal.close();
             }
         });
 
-        this.confirm.bind("click." + pluginName, function (e) {
+        // Add confirm button event listener
+        remodal.$confirmButton.bind("click." + pluginName, function(e) {
             e.preventDefault();
-            self.modal.trigger("confirm");
-            if (self.settings.closeOnConfirm) {
-                self.close();
+
+            remodal.$modal.trigger("confirm");
+
+            if (remodal.settings.closeOnConfirm) {
+                remodal.close();
             }
         });
 
-        $(document).bind("keyup." + pluginName, function (e) {
-            if (e.keyCode === 27 && self.settings.closeOnEscape) {
-                self.close();
+        // Add keyboard event listener
+        $(document).bind("keyup." + pluginName, function(e) {
+            if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
+                remodal.close();
             }
         });
 
-        this.overlay.bind("click." + pluginName, function (e) {
+        // Add overlay event listener
+        remodal.$overlay.bind("click." + pluginName, function(e) {
             var $target = $(e.target);
+
             if (!$target.hasClass(pluginName + "-overlay")) {
                 return;
             }
 
-            if (self.settings.closeOnAnyClick) {
-                self.close();
+            if (remodal.settings.closeOnAnyClick) {
+                remodal.close();
             }
         });
-    };
+
+        remodal.index = $[pluginName].lookup.push(remodal) - 1;
+        remodal.busy = false;
+    }
 
     /**
-     * Open modal window
+     * Open the modal window
+     * @public
      */
-    Remodal.prototype.open = function () {
-        // check if animation is complete
+    Remodal.prototype.open = function() {
+        // Check if animation is complete
         if (this.busy) {
             return;
         }
-        this.busy = true;
 
-        this.modal.trigger("open");
+        var remodal = this,
+            id;
 
-        var id = this.modal.attr("data-" + pluginName + "-id");
-        if (id && this.settings.hashTracking) {
+        remodal.busy = true;
+        remodal.$modal.trigger("open");
+
+        id = remodal.$modal.attr("data-" + pluginName + "-id");
+
+        if (id && remodal.settings.hashTracking) {
             scrollTop = $(window).scrollTop();
             location.hash = id;
         }
 
-        if (current && current !== this) {
-            current.overlay.hide();
-            current.body.removeClass(pluginName + "_active");
+        if (current && current !== remodal) {
+            current.$overlay.hide();
+            current.$body.removeClass(pluginName + "_active");
         }
-        current = this;
+
+        current = remodal;
 
         lockScreen();
-        this.overlay.show();
+        remodal.$overlay.show();
 
-        var self = this;
-        setTimeout(function () {
-            self.body.addClass(pluginName + "_active");
+        setTimeout(function() {
+            remodal.$body.addClass(pluginName + "_active");
 
-            setTimeout(function () {
-                self.busy = false;
-                self.modal.trigger("opened");
-            }, self.td + 50);
+            setTimeout(function() {
+                remodal.busy = false;
+                remodal.$modal.trigger("opened");
+            }, remodal.td + 50);
         }, 25);
     };
 
     /**
-     * Close modal window
+     * Close the modal window
+     * @public
      */
-    Remodal.prototype.close = function () {
-        // check if animation is complete
+    Remodal.prototype.close = function() {
+        // Check if animation is complete
         if (this.busy) {
             return;
         }
+
         this.busy = true;
+        this.$modal.trigger("close");
 
-        this.modal.trigger("close");
+        var remodal = this;
 
-        if (this.settings.hashTracking &&
-            this.modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+        if (remodal.settings.hashTracking &&
+            remodal.$modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
             location.hash = "";
             $(window).scrollTop(scrollTop);
         }
 
-        this.body.removeClass(pluginName + "_active");
+        remodal.$body.removeClass(pluginName + "_active");
 
-        var self = this;
-        setTimeout(function () {
-            self.overlay.hide();
+        setTimeout(function() {
+            remodal.$overlay.hide();
             unlockScreen();
 
-            self.busy = false;
-            self.modal.trigger("closed");
-        }, self.td + 50);
+            remodal.busy = false;
+            remodal.$modal.trigger("closed");
+        }, remodal.td + 50);
     };
 
-    if ($) {
-        $.fn[pluginName] = function (opts) {
-            var instance;
-            this.each(function (i, e) {
-                var $e = $(e);
-                if ($e.data(pluginName) == null) {
-                    instance = new Remodal($e, opts);
-                    $e.data(pluginName, instance.index);
+    /**
+     * Special plugin object for instances.
+     * @type {Object}
+     * @public
+     */
+    $[pluginName] = {
+        lookup: []
+    };
 
-                    if (instance.settings.hashTracking &&
-                        $e.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
-                        instance.open();
-                    }
+    /**
+     * Plugin constructor
+     * @param {Object} options
+     * @returns {JQuery}
+     * @constructor
+     */
+    $.fn[pluginName] = function(opts) {
+        var instance,
+            $elem;
+
+        this.each(function(index, elem) {
+            $elem = $(elem);
+
+            if ($elem.data(pluginName) == null) {
+                instance = new Remodal($elem, opts);
+                $elem.data(pluginName, instance.index);
+
+                if (instance.settings.hashTracking &&
+                    $elem.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+                    instance.open();
                 }
-            });
+            }
+        });
 
-            return instance;
-        };
-    }
+        return instance;
+    };
 
-    $(document).ready(function () {
-        /**
-         * data-remodal-target opens a modal window with a special id without hash change.
-         */
-        $(document).on("click", "[data-" + pluginName + "-target]", function (e) {
+    $(document).ready(function() {
+
+        // data-remodal-target opens a modal window with the special Id.
+        $(document).on("click", "[data-" + pluginName + "-target]", function(e) {
             e.preventDefault();
 
             var elem = e.currentTarget,
@@ -312,13 +355,10 @@
             $[pluginName].lookup[$target.data(pluginName)].open();
         });
 
-        /**
-         * Auto initialization of modal windows.
-         * They should have the 'remodal' class attribute.
-         * Also you can pass params into the modal throw the data-remodal-options attribute.
-         * data-remodal-options must be a valid JSON string.
-         */
-        $(document).find("." + pluginName).each(function (i, container) {
+        // Auto initialization of modal windows.
+        // They should have the 'remodal' class attribute.
+        // Also you can write `data-remodal-options` attribute to pass params into the modal.
+        $(document).find("." + pluginName).each(function(i, container) {
             var $container = $(container),
                 options = $container.data(pluginName + "-options");
 
@@ -333,10 +373,15 @@
     });
 
     /**
-     * Hashchange handling to show a modal with a special id.
+     * Hashchange handler
+     * @param {Event} e
+     * @param {Boolean} [closeOnEmptyHash=true]
+     * @private
      */
-    var hashHandler = function (e, closeOnEmptyHash) {
-        var id = location.hash.replace("#", "");
+    function hashHandler(e, closeOnEmptyHash) {
+        var id = location.hash.replace("#", ""),
+            instance,
+            $elem;
 
         if (typeof closeOnEmptyHash === "undefined") {
             closeOnEmptyHash = true;
@@ -344,21 +389,24 @@
 
         if (!id) {
             if (closeOnEmptyHash) {
-                // check if we have currently opened modal and animation is complete
+
+                // Check if we have currently opened modal and animation is complete
                 if (current && !current.busy && current.settings.hashTracking) {
                     current.close();
                 }
             }
         } else {
-            var $elem;
 
             // Catch syntax error if your hash is bad
             try {
-                $elem = $("[data-" + pluginName + "-id=" + id.replace(new RegExp("/", "g"), "\\/") + "]");
-            } catch (e) {}
+                $elem = $(
+                    "[data-" + pluginName + "-id=" +
+                    id.replace(new RegExp("/", "g"), "\\/") + "]"
+                );
+            } catch (err) {}
 
             if ($elem && $elem.length) {
-                var instance = $[pluginName].lookup[$elem.data(pluginName)];
+                instance = $[pluginName].lookup[$elem.data(pluginName)];
 
                 if (instance && instance.settings.hashTracking) {
                     instance.open();
@@ -366,6 +414,8 @@
             }
 
         }
-    };
+    }
+
     $(window).bind("hashchange." + pluginName, hashHandler);
+
 })(window.jQuery || window.Zepto);

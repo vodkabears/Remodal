@@ -2,24 +2,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Vide Test Suite</title>
-    <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
+    <title>Remodal Test Suite</title>
+    
+    <!-- Load local jQuery -->
     <script src="../libs/jquery-loader.js"></script>
-    <!-- Load local QUnit. -->
-    <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+    
+    <!-- Load local QUnit -->
+    <link rel="stylesheet" href="../libs/qunit/qunit/qunit.css" media="screen">
+    <script src="../libs/qunit/qunit/qunit.js"></script>
+    
+    <!-- Load local lib and tests -->
     <link rel="stylesheet" href="../src/jquery.remodal.css">
-    <script src="../libs/qunit/qunit.js"></script>
-    <!-- Load local lib and tests. -->
     <script src="../src/jquery.remodal.js"></script>
     <script src="remodal_test.js"></script>
-    <script>window._$ = jQuery.noConflict(true);</script>
     <style>
         .remodal-overlay {
             -webkit-transition: opacity 0.25s 0.05s linear;
             -moz-transition: opacity 0.25s 0.05s linear;
             -o-transition: opacity 0.25s 0.05s linear;
             transition: opacity 0.25s 0.05s linear;
-
         }
     </style>
 </head>
