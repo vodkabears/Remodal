@@ -10,6 +10,17 @@
     "dist/jquery.remodal.js",
     "dist/jquery.remodal.css"
   ],
+  "ignore": [
+    "**/.*",
+    "examples/",
+    "libs/",
+    "src/",
+    "test/",
+    "*.md",
+    "Gruntfile.js",
+    "package.json",
+    "remodal.jquery.json"
+  ],
   "keywords": [
     "jquery",
     "plugin",
