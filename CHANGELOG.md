@@ -1,6 +1,6 @@
 ### 0.2.1
 * Moved @import to the top of the file. Meteor requires the @import to be at the top.
-* Adding some basic CSS support for IE8.
+* Added some basic CSS support for IE8.
 * Added CloseOnEscape and CloseOnAnyClick options.
 * Updated README.md.
 * Updated tests.
