@@ -163,7 +163,7 @@
         remodal.$closeButton = $("<a href='#'>").addClass(pluginName + "-close");
         remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
         remodal.$modal = $modal;
-        remodal.$modal.hasClass(pluginName) && remodal.$modal.addClass(pluginName);
+        remodal.$modal.addClass(pluginName);
         remodal.$modal.css("visibility", "visible");
         remodal.$modal.append(remodal.$closeButton);
         remodal.$overlay.append(remodal.$modal);
