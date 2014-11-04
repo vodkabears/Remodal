@@ -12,7 +12,7 @@ If your page body requires `height: 100%`, your page will scroll to the top([#20
 
 ## Notes
 * All modern browsers are supported.
-* Only webkit browsers has a blur effect in the default css theme. If you want a blur for other browsers, use this: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
+* Only webkit browsers have a blur effect in the default css theme. If you want a blur for other browsers, use this: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
 * IE8+. To enable IE8 styles add `lt-ie9` class to the `html` element, as modernizr does.
 * Zepto support.
 
@@ -20,7 +20,7 @@ If your page body requires `height: 100%`, your page will scroll to the top([#20
 
 That's very simple to start using Remodal.
 
-[Download it](https://github.com/VodkaBears/Remodal/releases/latest). You can use bower: `bower install remodal`
+[Download it](https://github.com/VodkaBears/Remodal/releases/latest). You can use bower: `bower install remodal`.
 
 Add this in the head section:
 ```html
@@ -35,7 +35,7 @@ Add this before the `</body>` or in the head:
 Define the background container for the modal(for effects like a blur). It can be any simple content wrapper:
 ```html
 <div class="remodal-bg">
-...All your content...
+...Page content...
 </div>
 ```
 
@@ -138,25 +138,25 @@ $(document).on('cancel', '.remodal', function () {
 
 ## Cool bro! But i don't like declarative style!
 
-Ok, don't set class attribute and write something like this:
+Ok, don't set the class attribute and write something like this:
 ```html
 <script>
     var options = {...};
     $('[data-remodal-id=modal]').remodal(options).open();
 </script>
 ```
-Don't use `id` attribute, if you don't want browser scrolling to the anchor point.
+Don't use `id` attribute, if you want to avoid the anchor jump.
 
 ## Methods
 
-Get an instance of modal and call a method:
+Get the instance of the modal and call a method:
 ```js
 var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
 
-// open a modal
+// open the modal
 inst.open();
 
-// close a modal
+// close the modal
 inst.close();
 ```
 
