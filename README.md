@@ -5,24 +5,22 @@ Remodal
 =======
 Flat, responsive, lightweight, fast, easy customizable modal window plugin with declarative state notation and hash tracking.
 
-Minified version size: ~4kb
-
 #IMPORTANT!
-If your page body requires `height: 100%`, your page will scroll to the top([#20](https://github.com/VodkaBears/Remodal/issues/20), [#21](https://github.com/VodkaBears/Remodal/issues/21)), because remodal sets `overflow: hidden` to the html and body when opening to hide a scrollbar. There is no problem if your content doesn't overflow your full height body container, otherwise you should do something of this:
+If your page body requires `height: 100%`, your page will scroll to the top([#20](https://github.com/VodkaBears/Remodal/issues/20), [#21](https://github.com/VodkaBears/Remodal/issues/21)), because remodal sets `overflow: hidden` to the html and body to hide the scrollbar. There is no problem if your content doesn't overflow your full height body container, otherwise you should do something of this:
 * Try to set `min-height: 100%` instead of `height: 100%`. If it doesn't help, read next.
 * Set `html, body { overflow: auto !important; margin: 0; }`. Your page won't be locked and will be scrollable always.
 
 ## Notes
 * All modern browsers are supported.
-* Only webkit browsers has a blur effect in the default css theme. If you want a blur for another kind of browsers use: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
-* IE8+. To enable IE8 styles set `lt-ie9` class for the `html` element, as modernizr does.
+* Only webkit browsers has a blur effect in the default css theme. If you want a blur for other browsers, use this: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
+* IE8+. To enable IE8 styles add `lt-ie9` class to the `html` element, as modernizr does.
 * Zepto support.
 
 ## Start
 
 That's very simple to start using Remodal.
 
-[Download it](https://github.com/VodkaBears/Remodal/archive/master.zip). You can use bower: `bower install remodal`
+[Download it](https://github.com/VodkaBears/Remodal/releases/latest). You can use bower: `bower install remodal`
 
 Add this in the head section:
 ```html
@@ -34,14 +32,14 @@ Add this before the `</body>` or in the head:
 <script src="path/to/your/jquery.remodal.min.js"></script>
 ```
 
-Define the background container for the modal(for effects like a blur). It could be any simple content wrapper:
+Define the background container for the modal(for effects like a blur). It can be any simple content wrapper:
 ```html
 <div class="remodal-bg">
 ...All your content...
 </div>
 ```
 
-And now create a modal dialog:
+And now create the modal dialog:
 ```html
 <div class="remodal" data-remodal-id="modal">
     <h1>Remodal</h1>
@@ -55,7 +53,7 @@ And now create a modal dialog:
 </div>
 ```
 
-So, now you can call it with a hash:
+So, now you can call it with the hash:
 ```html
 <a href="#modal">Call the modal with data-remodal-id="modal"</a>
 ```
@@ -67,7 +65,7 @@ Or:
 
 ## Options
 
-You can pass additional options by the data-remodal-options attribute.
+You can pass additional options by the `data-remodal-options` attribute.
 ```html
 <div class="remodal" data-remodal-id="modal"
     data-remodal-options="hashTracking: false">
@@ -85,7 +83,7 @@ You can pass additional options by the data-remodal-options attribute.
 #### hashTracking
 `Default: true`
 
-To open a modal without a hash, use `data-remodal-target` attribute. 
+To open the modal without the hash, use `data-remodal-target` attribute. 
 ```html
 <a data-remodal-target="modal" href="#modal">Call the modal with data-remodal-id="modal"</a>
 ```
@@ -103,7 +101,7 @@ If set to true, closes a modal window after clicking cancel button.
 #### closeOnEscape
 `Default: true`
 
-If set to true, closes a modal window after press ESC button.
+If set to true, closes a modal window after pressing ESC button.
 
 #### closeOnAnyClick
 `Default: true`
