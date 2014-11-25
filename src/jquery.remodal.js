@@ -304,19 +304,19 @@
             remodal.busy = false;
             remodal.$modal.trigger("closed");
         }, remodal.td + 50);
-        
+
         this.executionist();
-        
+
     };
 
-    Remodal.prototype.executionist = function(){
+    Remodal.prototype.executionist = function() {
         console.log("reModal closed");
     };
 
     /**
      * function to execute after closure of the reModal.
      */
-    Remodal.prototype.onClose = function(func){
+    Remodal.prototype.onClose = function(func) {
         this.executionist = func;
     };
 
