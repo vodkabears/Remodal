@@ -310,7 +310,7 @@
     };
 
     Remodal.prototype.executionist = function(){
-        console.log('reModal closed');
+        console.log("reModal closed");
     };
 
     /**
