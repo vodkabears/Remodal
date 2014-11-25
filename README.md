@@ -158,6 +158,12 @@ inst.open();
 
 // close the modal
 inst.close();
+
+// on close modal callback
+inst.onClose(function(){
+    console.log('instance based closure callBack');
+});
+
 ```
 
 ## License
