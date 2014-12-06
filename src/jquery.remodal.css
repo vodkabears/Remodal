@@ -97,10 +97,10 @@ body.remodal-is-locked {
 /* Background for effects */
 
 .remodal-bg {
-    -webkit-transition: -webkit-filter 0.2s linear;
-    -moz-transition: -moz-filter 0.2s linear;
-    -o-transition: -o-filter 0.2s linear;
-    transition: filter 0.2s linear;
+    -webkit-transition: -webkit-filter 0.2s ease-out;
+    -moz-transition: -moz-filter 0.2s ease-out;
+    -o-transition: -o-filter 0.2s ease-out;
+    transition: filter 0.2s ease-out;
 }
 
 body.remodal-is-active .remodal-bg {
@@ -114,10 +114,10 @@ body.remodal-is-active .remodal-bg {
 /* Default theme styles of the overlay */
 
 .remodal-overlay {
-    -webkit-transition: opacity 0.2s linear;
-    -moz-transition: opacity 0.2s linear;
-    -o-transition: opacity 0.2s linear;
-    transition: opacity 0.2s linear;
+    -webkit-transition: opacity 0.2s ease-out;
+    -moz-transition: opacity 0.2s ease-out;
+    -o-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
 
     opacity: 0;
     background: rgba(33, 36, 46, 0.95);
@@ -139,10 +139,10 @@ body.remodal-is-active .remodal-overlay {
     min-height: 100%;
     padding: 35px;
 
-    -webkit-transition: -webkit-transform 0.2s linear, opacity 0.2s linear;
-    -moz-transition: -moz-transform 0.2s linear, opacity 0.2s linear;
-    -o-transition: -o-transform 0.2s linear, opacity 0.2s linear;
-    transition: transform 0.2s linear, opacity 0.2s linear;
+    -webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-out;
+    -moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-out;
+    -o-transition: -o-transform 0.2s ease-out, opacity 0.2s ease-out;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     -webkit-transform: scale(0.95);
     -moz-transform: scale(0.95);
     -ms-transform: scale(0.95);
@@ -153,8 +153,6 @@ body.remodal-is-active .remodal-overlay {
     color: #182a3c;
     background: #f4f4f4;
     background-clip: padding-box;
-    -webkit-box-shadow: 0 0 8px #171a24;
-    box-shadow: 0 0 8px #171a24;
 }
 
 body.remodal-is-active .remodal {
@@ -183,13 +181,12 @@ body.remodal-is-active .remodal {
     width: 28px;
     height: 28px;
 
-    -webkit-transition: background 0.2s linear;
-    -moz-transition: background 0.2s linear;
-    -o-transition: background 0.2s linear;
-    transition: background 0.2s linear;
+    -webkit-transition: background 0.2s ease-out;
+    -moz-transition: background 0.2s ease-out;
+    -o-transition: background 0.2s ease-out;
+    transition: background 0.2s ease-out;
     text-decoration: none;
 
-    border: 2px solid #3e5368;
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
@@ -203,10 +200,10 @@ body.remodal-is-active .remodal {
 
     content: "×";
     cursor: pointer;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
     text-decoration: none;
 
     color: #3e5368;
@@ -235,15 +232,15 @@ body.remodal-is-active .remodal {
     padding: 9px 0;
 
     cursor: pointer;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
     text-align: center;
     text-decoration: none;
 
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
     background-clip: padding-box;
 }
 
