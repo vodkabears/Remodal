@@ -91,7 +91,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").addClass(pluginName + "_lock");
+        $("html, body").addClass(pluginName + "-is-locked");
     }
 
     /**
@@ -105,7 +105,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").removeClass(pluginName + "_lock");
+        $("html, body").removeClass(pluginName + "-is-locked");
     }
 
     /**
@@ -256,7 +256,7 @@
 
         if (current && current !== remodal) {
             current.$overlay.hide();
-            current.$body.removeClass(pluginName + "_active");
+            current.$body.removeClass(pluginName + "-is-active");
         }
 
         current = remodal;
@@ -265,7 +265,7 @@
         remodal.$overlay.show();
 
         setTimeout(function() {
-            remodal.$body.addClass(pluginName + "_active");
+            remodal.$body.addClass(pluginName + "-is-active");
 
             setTimeout(function() {
                 remodal.busy = false;
@@ -295,7 +295,7 @@
             $(window).scrollTop(scrollTop);
         }
 
-        remodal.$body.removeClass(pluginName + "_active");
+        remodal.$body.removeClass(pluginName + "-is-active");
 
         setTimeout(function() {
             remodal.$overlay.hide();

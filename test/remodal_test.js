@@ -204,13 +204,13 @@
         $(document.body).css("height", "10000px");
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
-            assert.ok($("html, body").hasClass("remodal_lock"));
+            assert.ok($("html, body").hasClass("remodal-is-locked"));
             assert.ok(parseInt($(document.body).css("padding-right")) > 0);
             $inst1.close();
         });
 
         $document.one("closed", "[data-remodal-id=modal]", function() {
-            assert.ok(!$("html, body").hasClass("remodal_lock"));
+            assert.ok(!$("html, body").hasClass("remodal-is-locked"));
             assert.ok(parseInt($(document.body).css("padding-right")) === 0);
             QUnit.start();
         });

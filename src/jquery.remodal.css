@@ -6,8 +6,8 @@
 
 /* Hide scroll bar */
 
-html.remodal_lock,
-body.remodal_lock {
+html.remodal-is-locked,
+body.remodal-is-locked {
     overflow: hidden;
 }
 
@@ -90,7 +90,7 @@ body.remodal_lock {
     transition: filter 0.2s linear;
 }
 
-body.remodal_active .remodal-bg {
+body.remodal-is-active .remodal-bg {
     -webkit-filter: blur(3px);
     -ms-filter: blur(3px);
     filter: blur(3px);
@@ -110,7 +110,7 @@ body.remodal_active .remodal-bg {
     background: rgba(33, 36, 46, 0.95);
 }
 
-body.remodal_active .remodal-overlay {
+body.remodal-is-active .remodal-overlay {
     opacity: 1;
 }
 
@@ -143,7 +143,7 @@ body.remodal_active .remodal-overlay {
     box-shadow: 0 0 8px #171a24;
 }
 
-body.remodal_active .remodal {
+body.remodal-is-active .remodal {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
