@@ -18,9 +18,22 @@ body.remodal-is-locked {
     visibility: hidden;
 }
 
-/* Overlay necessary styles */
+/* Necessary styles of the overlay */
 
 .remodal-overlay {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: none;
+}
+
+/* Necessary styles of the wrapper */
+
+.remodal-wrapper {
     position: fixed;
     z-index: 10000;
     top: 0;
@@ -36,7 +49,7 @@ body.remodal-is-locked {
     -webkit-overflow-scrolling: touch;
 }
 
-.remodal-overlay:after {
+.remodal-wrapper:after {
     display: inline-block;
 
     height: 100%;
@@ -47,11 +60,11 @@ body.remodal-is-locked {
 
 /* Fix iPad, iPhone glitches */
 
-.remodal-overlay {
+.remodal-wrapper {
     -webkit-backface-visibility: hidden;
 }
 
-/* Modal dialog necessary styles */
+/* Necessary styles of the modal dialog */
 
 .remodal {
     position: relative;
@@ -59,7 +72,7 @@ body.remodal-is-locked {
     display: inline-block;
 }
 
-/* Remodal anti-zoom. Font-size should be >= 16px. */
+/* Anti-zoom. Font-size should be >= 16px. */
 
 .remodal select,
 .remodal textarea,
@@ -98,7 +111,7 @@ body.remodal-is-active .remodal-bg {
     -o-filter: blur(3px);
 }
 
-/* Overlay default theme styles */
+/* Default theme styles of the overlay */
 
 .remodal-overlay {
     -webkit-transition: opacity 0.2s linear;
@@ -114,7 +127,7 @@ body.remodal-is-active .remodal-overlay {
     opacity: 1;
 }
 
-/* Modal dialog default theme styles */
+/* Default theme styles of the modal dialog */
 
 .remodal {
     font-size: 16px;
@@ -126,15 +139,16 @@ body.remodal-is-active .remodal-overlay {
     min-height: 100%;
     padding: 35px;
 
-    -webkit-transition: -webkit-transform 0.2s linear;
-    -moz-transition: -moz-transform 0.2s linear;
-    -o-transition: -o-transform 0.2s linear;
-    transition: transform 0.2s linear;
+    -webkit-transition: -webkit-transform 0.2s linear, opacity 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear, opacity 0.2s linear;
+    -o-transition: -o-transform 0.2s linear, opacity 0.2s linear;
+    transition: transform 0.2s linear, opacity 0.2s linear;
     -webkit-transform: scale(0.95);
     -moz-transform: scale(0.95);
     -ms-transform: scale(0.95);
     -o-transform: scale(0.95);
     transform: scale(0.95);
+    opacity: 0;
 
     color: #182a3c;
     background: #f4f4f4;
@@ -149,12 +163,13 @@ body.remodal-is-active .remodal {
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1);
+    opacity: 1;
 }
 
-/* Modal dialog vertical align  */
+/* Vertical align of the modal dialog */
 
 .remodal,
-.remodal-overlay:after {
+.remodal-wrapper:after {
     vertical-align: middle;
 }
 

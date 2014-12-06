@@ -159,15 +159,23 @@
 
         // Build DOM
         remodal.$body = $(document.body);
+        remodal.$overlay = $("." + pluginName + "-overlay");
+
+        if (!remodal.$overlay.length) {
+            remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+            remodal.$body.append(remodal.$overlay);
+        }
+
         remodal.$bg = $("." + pluginName + "-bg");
         remodal.$closeButton = $("<a href='#'>").addClass(pluginName + "-close");
-        remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+        remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
         remodal.$modal = $modal;
         remodal.$modal.addClass(pluginName);
         remodal.$modal.css("visibility", "visible");
+
         remodal.$modal.append(remodal.$closeButton);
-        remodal.$overlay.append(remodal.$modal);
-        remodal.$body.append(remodal.$overlay);
+        remodal.$wrapper.append(remodal.$modal);
+        remodal.$body.append(remodal.$wrapper);
         remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
         remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
 
@@ -215,10 +223,10 @@
         });
 
         // Add overlay event listener
-        remodal.$overlay.bind("click." + pluginName, function(e) {
+        remodal.$wrapper.bind("click." + pluginName, function(e) {
             var $target = $(e.target);
 
-            if (!$target.hasClass(pluginName + "-overlay")) {
+            if (!$target.hasClass(pluginName + "-wrapper")) {
                 return;
             }
 
@@ -256,6 +264,7 @@
 
         if (current && current !== remodal) {
             current.$overlay.hide();
+            current.$wrapper.hide();
             current.$body.removeClass(pluginName + "-is-active");
         }
 
@@ -263,6 +272,7 @@
 
         lockScreen();
         remodal.$overlay.show();
+        remodal.$wrapper.show();
 
         setTimeout(function() {
             remodal.$body.addClass(pluginName + "-is-active");
@@ -299,6 +309,7 @@
 
         setTimeout(function() {
             remodal.$overlay.hide();
+            remodal.$wrapper.hide();
             unlockScreen();
 
             remodal.busy = false;
