@@ -342,8 +342,7 @@
         return instance;
     };
 
-    $(document).ready(function() {
-
+    var doc_ready = function() {
         // data-remodal-target opens a modal window with the special Id.
         $(document).on("click", "[data-" + pluginName + "-target]", function(e) {
             e.preventDefault();
@@ -370,7 +369,8 @@
 
             $container[pluginName](options);
         });
-    });
+    }
+    $(document).on('ready page:load', doc_ready); //Handle on page:load to make it work with Rails Turbolinks
 
     /**
      * Hashchange handler
