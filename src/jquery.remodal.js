@@ -32,16 +32,28 @@
                 $elem.css("-moz-transition-duration") ||
                 $elem.css("-o-transition-duration") ||
                 $elem.css("-ms-transition-duration") ||
-                0,
-
+                "0s",
             delay = $elem.css("transition-delay") ||
                 $elem.css("-webkit-transition-delay") ||
                 $elem.css("-moz-transition-delay") ||
                 $elem.css("-o-transition-delay") ||
                 $elem.css("-ms-transition-delay") ||
-                0;
+                "0s",
+            max, len, num, i;
 
-        return (parseFloat(duration) + parseFloat(delay)) * 1000;
+        duration = duration.split(", ");
+        delay = delay.split(", ");
+
+        // The duration length is the same as the delay length
+        for (i = 0, len = duration.length, max = Number.NEGATIVE_INFINITY; i < len; i++) {
+            num = parseFloat(duration[i]) + parseFloat(delay[i]);
+
+            if (num > max) {
+                max = num;
+            }
+        }
+
+        return num * 1000;
     }
 
     /**
