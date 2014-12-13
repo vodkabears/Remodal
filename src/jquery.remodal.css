@@ -23,10 +23,10 @@ body.remodal-is-locked {
 .remodal-overlay {
     position: fixed;
     z-index: 9999;
-    top: -10000px;
-    right: -10000px;
-    bottom: -10000px;
-    left: -10000px;
+    top: -5000px;
+    right: -5000px;
+    bottom: -5000px;
+    left: -5000px;
 
     display: none;
 }
@@ -60,8 +60,9 @@ body.remodal-is-locked {
 
 /* Fix iPad, iPhone glitches */
 
+.remodal-overlay,
 .remodal-wrapper {
-    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0px);
 }
 
 /* Necessary styles of the modal dialog */
