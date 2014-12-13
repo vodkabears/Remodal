@@ -23,10 +23,10 @@ body.remodal-is-locked {
 .remodal-overlay {
     position: fixed;
     z-index: 9999;
-    top: 0;
-    right: 0;
-    bottom: -100px;
-    left: 0;
+    top: -10000px;
+    right: -10000px;
+    bottom: -10000px;
+    left: -10000px;
 
     display: none;
 }
