@@ -25,7 +25,7 @@ body.remodal-is-locked {
     z-index: 9999;
     top: 0;
     right: 0;
-    bottom: 0;
+    bottom: -100px;
     left: 0;
 
     display: none;
