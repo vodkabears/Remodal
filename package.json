@@ -15,7 +15,7 @@
     "grunt-jscs": "^0.8.1"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/grunt githooks",
-    "test": "grunt test"
+    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/grunt githooks",
+    "test": "./node_modules/.bin/grunt test"
   }
 }
