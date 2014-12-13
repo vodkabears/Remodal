@@ -285,19 +285,28 @@ body.remodal-is-active .remodal {
 /* IE8
    ========================================================================== */
 
-html.lt-ie9,
-html.lt-ie9 body {
-    overflow: auto !important;
-
-    min-height: 100%;
-    margin: 0;
-}
-
 .lt-ie9 .remodal-overlay {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAQMAAAC3R49OAAAAA3NCSVQICAjb4U/gAAAABlBMVEX///8AAABVwtN+AAAAAnRSTlMAuyogpzwAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAGHRFWHRDcmVhdGlvbiBUaW1lADA2LzEwLzIwMTSCx1nsAAAAD0lEQVQImWP4//8DAxUxACnDOpkfX95WAAAAAElFTkSuQmCC);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F021242E, endColorstr=#F021242E);
 }
 
 .lt-ie9 .remodal {
-    width: 500px;
-    min-height: auto;
+    width: 700px;
+    min-height: 0;
+    margin: 20px auto;
+}
+
+.lt-ie9 .remodal-close:after {
+    margin: auto;
+
+    text-align: center;
+}
+
+.lt-ie9 .remodal-close:hover,
+.lt-ie9 .remodal-close:active {
+    background: transparent;
+}
+
+.lt-ie9 .remodal-close:hover.remodal-close:after,
+.lt-ie9 .remodal-close:active.remodal-close:after {
+    color: #3e5368;
 }

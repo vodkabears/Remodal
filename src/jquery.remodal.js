@@ -179,7 +179,7 @@
         }
 
         remodal.$bg = $("." + pluginName + "-bg");
-        remodal.$closeButton = $("<a href='#'>").addClass(pluginName + "-close");
+        remodal.$closeButton = $("<a href='#'></a>").addClass(pluginName + "-close");
         remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
         remodal.$modal = $modal;
         remodal.$modal.addClass(pluginName);
