@@ -1,3 +1,13 @@
+### 0.4.0
+This version has incompatible changes!
+
+* Changed CSS class names.
+* Shared overlay.
+* Changed visual styles.
+* Improved IE8 styles.
+* Updated dependencies.
+* Fixes.
+
 ### 0.3.0
 * Added font-size of inputs to prevent iOs zooming.
 * Convert image for IE8 to base64.

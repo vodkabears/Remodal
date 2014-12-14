@@ -1,4 +1,4 @@
-;(function($) {
+!(function($) {
     "use strict";
 
     /**
@@ -32,16 +32,28 @@
                 $elem.css("-moz-transition-duration") ||
                 $elem.css("-o-transition-duration") ||
                 $elem.css("-ms-transition-duration") ||
-                0,
-
+                "0s",
             delay = $elem.css("transition-delay") ||
                 $elem.css("-webkit-transition-delay") ||
                 $elem.css("-moz-transition-delay") ||
                 $elem.css("-o-transition-delay") ||
                 $elem.css("-ms-transition-delay") ||
-                0;
+                "0s",
+            max, len, num, i;
 
-        return (parseFloat(duration) + parseFloat(delay)) * 1000;
+        duration = duration.split(", ");
+        delay = delay.split(", ");
+
+        // The duration length is the same as the delay length
+        for (i = 0, len = duration.length, max = Number.NEGATIVE_INFINITY; i < len; i++) {
+            num = parseFloat(duration[i]) + parseFloat(delay[i]);
+
+            if (num > max) {
+                max = num;
+            }
+        }
+
+        return num * 1000;
     }
 
     /**
@@ -91,7 +103,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").addClass(pluginName + "_lock");
+        $("html, body").addClass(pluginName + "-is-locked");
     }
 
     /**
@@ -105,7 +117,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").removeClass(pluginName + "_lock");
+        $("html, body").removeClass(pluginName + "-is-locked");
     }
 
     /**
@@ -159,15 +171,23 @@
 
         // Build DOM
         remodal.$body = $(document.body);
+        remodal.$overlay = $("." + pluginName + "-overlay");
+
+        if (!remodal.$overlay.length) {
+            remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+            remodal.$body.append(remodal.$overlay);
+        }
+
         remodal.$bg = $("." + pluginName + "-bg");
-        remodal.$closeButton = $("<a href='#'>").addClass(pluginName + "-close");
-        remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+        remodal.$closeButton = $("<a href='#'></a>").addClass(pluginName + "-close");
+        remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
         remodal.$modal = $modal;
         remodal.$modal.addClass(pluginName);
         remodal.$modal.css("visibility", "visible");
+
         remodal.$modal.append(remodal.$closeButton);
-        remodal.$overlay.append(remodal.$modal);
-        remodal.$body.append(remodal.$overlay);
+        remodal.$wrapper.append(remodal.$modal);
+        remodal.$body.append(remodal.$wrapper);
         remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
         remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
 
@@ -215,10 +235,10 @@
         });
 
         // Add overlay event listener
-        remodal.$overlay.bind("click." + pluginName, function(e) {
+        remodal.$wrapper.bind("click." + pluginName, function(e) {
             var $target = $(e.target);
 
-            if (!$target.hasClass(pluginName + "-overlay")) {
+            if (!$target.hasClass(pluginName + "-wrapper")) {
                 return;
             }
 
@@ -256,16 +276,18 @@
 
         if (current && current !== remodal) {
             current.$overlay.hide();
-            current.$body.removeClass(pluginName + "_active");
+            current.$wrapper.hide();
+            current.$body.removeClass(pluginName + "-is-active");
         }
 
         current = remodal;
 
         lockScreen();
         remodal.$overlay.show();
+        remodal.$wrapper.show();
 
         setTimeout(function() {
-            remodal.$body.addClass(pluginName + "_active");
+            remodal.$body.addClass(pluginName + "-is-active");
 
             setTimeout(function() {
                 remodal.busy = false;
@@ -295,10 +317,11 @@
             $(window).scrollTop(scrollTop);
         }
 
-        remodal.$body.removeClass(pluginName + "_active");
+        remodal.$body.removeClass(pluginName + "-is-active");
 
         setTimeout(function() {
             remodal.$overlay.hide();
+            remodal.$wrapper.hide();
             unlockScreen();
 
             remodal.busy = false;

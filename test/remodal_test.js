@@ -1,4 +1,4 @@
-(function($, location, document) {
+!(function($, location, document) {
     /*
      ======== A Handy Little QUnit Reference ========
      http://api.qunitjs.com/
@@ -165,15 +165,15 @@
         location.hash = "#modal";
     });
 
-    QUnit.asyncTest("Overlay click", function(assert) {
-        var $overlay = $inst1.$overlay;
+    QUnit.asyncTest("Wrapper click", function(assert) {
+        var $wrapper = $inst1.$wrapper;
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
-            $overlay.click();
+            $wrapper.click();
         });
 
         $document.one("closed", "[data-remodal-id=modal]", function() {
-            assert.ok(true, "overlay click works");
+            assert.ok(true, "wrapper click works");
             QUnit.start();
         });
 
@@ -204,13 +204,13 @@
         $(document.body).css("height", "10000px");
 
         $document.one("opened", "[data-remodal-id=modal]", function() {
-            assert.ok($("html, body").hasClass("remodal_lock"));
+            assert.ok($("html, body").hasClass("remodal-is-locked"));
             assert.ok(parseInt($(document.body).css("padding-right")) > 0);
             $inst1.close();
         });
 
         $document.one("closed", "[data-remodal-id=modal]", function() {
-            assert.ok(!$("html, body").hasClass("remodal_lock"));
+            assert.ok(!$("html, body").hasClass("remodal-is-locked"));
             assert.ok(parseInt($(document.body).css("padding-right")) === 0);
             QUnit.start();
         });
@@ -234,13 +234,13 @@
 
         $document.one("confirm", "[data-remodal-id=modal2]", function() {
             setTimeout(function() {
-                assert.ok($inst2.$overlay.css("display") === "block");
+                assert.ok($inst2.$wrapper.css("display") === "block");
             }, $inst2.td + 100);
         });
 
         $document.one("cancel", "[data-remodal-id=modal2]", function() {
             setTimeout(function() {
-                assert.ok($inst2.$overlay.css("display") === "block");
+                assert.ok($inst2.$wrapper.css("display") === "block");
                 QUnit.start();
             }, $inst2.td + 100);
         });

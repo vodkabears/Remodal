@@ -12,10 +12,10 @@
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-csscomb": "^3.0.0",
     "grunt-githooks": "^0.3.1",
-    "grunt-jscs": "^0.8.1"
+    "grunt-jscs": "^1.0.0"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/grunt githooks",
-    "test": "grunt test"
+    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/grunt githooks",
+    "test": "./node_modules/.bin/grunt test"
   }
 }
