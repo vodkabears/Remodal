@@ -149,8 +149,8 @@ body.remodal-is-active .remodal-overlay {
     -ms-transform: scale(0.95);
     -o-transform: scale(0.95);
     transform: scale(0.95);
-    opacity: 0;
 
+    opacity: 0;
     color: #182a3c;
     background: #f4f4f4;
     background-clip: padding-box;
@@ -162,6 +162,7 @@ body.remodal-is-active .remodal {
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1);
+
     opacity: 1;
 }
 
