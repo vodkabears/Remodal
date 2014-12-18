@@ -359,6 +359,8 @@
                     $elem.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
                     instance.open();
                 }
+            } else {
+                instance = $[pluginName].lookup[$elem.data(pluginName)];
             }
         });
 
