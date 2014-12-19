@@ -1,3 +1,6 @@
+### 0.4.1
+* Constructor always returns an instance(#61).
+
 ### 0.4.0
 This version has incompatible changes!
 
