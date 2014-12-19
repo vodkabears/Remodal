@@ -20,8 +20,11 @@
      throws(block, [expected], [message])
      */
 
-    var index1, index2, $inst1, $inst2,
-        $document = $(document);
+    var $document = $(document),
+        index1,
+        index2,
+        $inst1,
+        $inst2;
 
     QUnit.begin(function() {
         index1 = $("[data-remodal-id=modal]").data("remodal");
@@ -40,8 +43,15 @@
     QUnit.test("JS-initialization", function() {
         var $inst3 = $("[data-remodal-id=modal3]").remodal();
 
-        equal($inst3.index, 2);
         ok($inst3);
+        equal($inst3.index, 2);
+    });
+
+    QUnit.test("Re-initialization", function() {
+        var $inst3 = $("[data-remodal-id=modal3]").remodal();
+
+        ok($inst3);
+        equal($inst3.index, 2);
     });
 
     QUnit.asyncTest("Hash tracking", function(assert) {
