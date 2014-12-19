@@ -1,5 +1,5 @@
 /*
- *  Remodal - v0.4.0
+ *  Remodal - v0.4.1
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -321,6 +321,7 @@
 
         if (remodal.settings.hashTracking &&
             remodal.$modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+
             location.hash = "";
             $(window).scrollTop(scrollTop);
         }
@@ -365,8 +366,11 @@
 
                 if (instance.settings.hashTracking &&
                     $elem.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+
                     instance.open();
                 }
+            } else {
+                instance = $[pluginName].lookup[$elem.data(pluginName)];
             }
         });
 
