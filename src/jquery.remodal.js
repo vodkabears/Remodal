@@ -313,6 +313,7 @@
 
         if (remodal.settings.hashTracking &&
             remodal.$modal.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+
             location.hash = "";
             $(window).scrollTop(scrollTop);
         }
@@ -357,6 +358,7 @@
 
                 if (instance.settings.hashTracking &&
                     $elem.attr("data-" + pluginName + "-id") === location.hash.substr(1)) {
+
                     instance.open();
                 }
             } else {
