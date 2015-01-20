@@ -116,12 +116,12 @@
         console.log('opened');
     });
 
-    $(document).on('close', '.remodal', function () {
-        console.log('close');
+    $(document).on('close', '.remodal', function (e) {
+        console.log('close' + (e.reason ? ', reason: ' + e.reason : ''));
     });
 
-    $(document).on('closed', '.remodal', function () {
-        console.log('closed');
+    $(document).on('closed', '.remodal', function (e) {
+        console.log('closed' + (e.reason ? ', reason: ' + e.reason : ''));
     });
 
     $(document).on('confirm', '.remodal', function () {
