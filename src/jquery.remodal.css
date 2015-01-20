@@ -6,8 +6,7 @@
 
 /* Hide scroll bar */
 
-html.remodal-is-locked,
-body.remodal-is-locked {
+html.remodal-is-locked {
     overflow: hidden;
 }
 
