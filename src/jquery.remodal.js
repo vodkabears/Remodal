@@ -117,7 +117,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").removeClass(pluginName + "-is-locked");
+        $("html").removeClass(pluginName + "-is-locked");
     }
 
     /**
