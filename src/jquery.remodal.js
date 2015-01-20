@@ -212,7 +212,7 @@
             remodal.$modal.trigger("cancel");
 
             if (remodal.settings.closeOnCancel) {
-                remodal.close();
+                remodal.close(false);
             }
         });
 
@@ -223,7 +223,7 @@
             remodal.$modal.trigger("confirm");
 
             if (remodal.settings.closeOnConfirm) {
-                remodal.close();
+                remodal.close(false);
             }
         });
 
@@ -300,14 +300,22 @@
      * Close the modal window
      * @public
      */
-    Remodal.prototype.close = function() {
+    Remodal.prototype.close = function(shouldTriggerCloseEvent) {
+        // Check if close event should be triggered
+        if (typeof(shouldTriggerCloseEvent) === "undefined") {
+            shouldTriggerCloseEvent = true;
+        }
+
         // Check if animation is complete
         if (this.busy) {
             return;
         }
 
         this.busy = true;
-        this.$modal.trigger("close");
+
+        if (shouldTriggerCloseEvent) {
+            this.$modal.trigger("close");
+        }
 
         var remodal = this;
 
