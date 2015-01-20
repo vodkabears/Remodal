@@ -9,10 +9,6 @@ Flat, responsive, lightweight, fast, easy customizable modal window plugin with 
 
 **v0.4.0 has incompatible changes.**
 
-If your page body requires `height: 100%`, your page will scroll to the top([#20](https://github.com/VodkaBears/Remodal/issues/20), [#21](https://github.com/VodkaBears/Remodal/issues/21)), because remodal sets `overflow: hidden` to the html and body to hide the scrollbar. There is no problem if your content doesn't overflow your full height body container, otherwise you should do something of this:
-* Try to set `min-height: 100%` instead of `height: 100%`. If it doesn't help, read next.
-* Set `html, body { overflow: auto !important; margin: 0; }`. Your page won't be locked and will be scrollable always.
-
 ## Notes
 * All modern browsers are supported.
 * Only webkit browsers have a blur effect in the default css theme. If you want a blur for other browsers, use this: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
@@ -86,7 +82,7 @@ You can pass additional options by the `data-remodal-options` attribute.
 #### hashTracking
 `Default: true`
 
-To open the modal without the hash, use `data-remodal-target` attribute. 
+To open the modal without the hash, use `data-remodal-target` attribute.
 ```html
 <a data-remodal-target="modal" href="#modal">Call the modal with data-remodal-id="modal"</a>
 ```
