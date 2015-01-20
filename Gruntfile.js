@@ -51,7 +51,8 @@ module.exports = function(grunt) {
                 src: "test/**/*.js"
             },
             options: {
-                preset: "jquery"
+                preset: "jquery",
+                requireSpacesInsideArrayBrackets: null
             }
         },
 
