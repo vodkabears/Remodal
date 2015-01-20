@@ -302,7 +302,8 @@
      * @param {String|undefined} reason A reason to close
      */
     Remodal.prototype.close = function(reason) {
-        // Check if animation is complete
+
+        // Check if the animation was completed
         if (this.busy) {
             return;
         }
