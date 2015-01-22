@@ -79,6 +79,11 @@ You can pass additional options by the `data-remodal-options` attribute.
 </div>
 ```
 
+#### namespace
+`Default: "remodal"`
+
+(String) Base HTML class for your modals. CSS theme will need to be updated to reflect this.
+
 #### hashTracking
 `Default: true`
 

@@ -230,6 +230,7 @@
 
     QUnit.test("Options parsing", function() {
         propEqual($inst2.settings, {
+            namespace: "remodal",
             hashTracking: false,
             closeOnConfirm: false,
             closeOnCancel: false,
