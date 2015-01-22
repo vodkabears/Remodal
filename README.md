@@ -118,12 +118,18 @@ $(document).on('opened', '.remodal', function () {
     console.log('opened');
 });
 
-$(document).on('close', '.remodal', function () {
+$(document).on('close', '.remodal', function (e) {
     console.log('close');
+
+    // "confirmation", or "cancellation", or undefined
+    console.log(e.reason);
 });
 
-$(document).on('closed', '.remodal', function () {
+$(document).on('closed', '.remodal', function (e) {
     console.log('closed');
+
+    // "confirmation", or "cancellation", or undefined
+    console.log(e.reason);
 });
 
 $(document).on('confirm', '.remodal', function () {
