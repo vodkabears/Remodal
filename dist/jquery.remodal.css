@@ -1,5 +1,5 @@
 /*
- *  Remodal - v0.4.1
+ *  Remodal - v0.5.0
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -14,8 +14,7 @@
 
 /* Hide scroll bar */
 
-html.remodal-is-locked,
-body.remodal-is-locked {
+html.remodal-is-locked {
     overflow: hidden;
 }
 

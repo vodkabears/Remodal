@@ -1,5 +1,5 @@
 /*
- *  Remodal - v0.4.1
+ *  Remodal - v0.5.0
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -111,7 +111,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").addClass(pluginName + "-is-locked");
+        $("html").addClass(pluginName + "-is-locked");
     }
 
     /**
@@ -125,7 +125,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html, body").removeClass(pluginName + "-is-locked");
+        $("html").removeClass(pluginName + "-is-locked");
     }
 
     /**
@@ -220,7 +220,7 @@
             remodal.$modal.trigger("cancel");
 
             if (remodal.settings.closeOnCancel) {
-                remodal.close();
+                remodal.close("cancellation");
             }
         });
 
@@ -231,7 +231,7 @@
             remodal.$modal.trigger("confirm");
 
             if (remodal.settings.closeOnConfirm) {
-                remodal.close();
+                remodal.close("confirmation");
             }
         });
 
@@ -307,15 +307,20 @@
     /**
      * Close the modal window
      * @public
+     * @param {String|undefined} reason A reason to close
      */
-    Remodal.prototype.close = function() {
-        // Check if animation is complete
+    Remodal.prototype.close = function(reason) {
+
+        // Check if the animation was completed
         if (this.busy) {
             return;
         }
 
         this.busy = true;
-        this.$modal.trigger("close");
+        this.$modal.trigger({
+            type: "close",
+            reason: reason
+        });
 
         var remodal = this;
 
@@ -334,7 +339,10 @@
             unlockScreen();
 
             remodal.busy = false;
-            remodal.$modal.trigger("closed");
+            remodal.$modal.trigger({
+                type: "closed",
+                reason: reason
+            });
         }, remodal.td + 50);
     };
 
