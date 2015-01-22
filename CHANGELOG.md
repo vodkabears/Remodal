@@ -1,3 +1,9 @@
+### 0.5.0
+* Fixed a scrolling to the top of a page.
+* Added the 'reason' parameter to the close/closed events.
+* Updated examples.
+* Updated dependencies.
+
 ### 0.4.1
 * Constructor always returns an instance(#61).
 
