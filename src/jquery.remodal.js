@@ -179,17 +179,17 @@
         }
 
         remodal.$bg = $("." + pluginName + "-bg");
-        remodal.$closeButton = $("<a href='#'></a>").addClass(pluginName + "-close");
+
         remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
         remodal.$modal = $modal;
         remodal.$modal.addClass(pluginName);
         remodal.$modal.css("visibility", "visible");
 
-        remodal.$modal.append(remodal.$closeButton);
         remodal.$wrapper.append(remodal.$modal);
         remodal.$body.append(remodal.$wrapper);
-        remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
-        remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
+        remodal.$closeButton = remodal.$modal.find("[data-" + pluginName + "-action='close']");
+        remodal.$confirmButton = remodal.$modal.find("[data-" + pluginName + "-action='confirm']");
+        remodal.$cancelButton = remodal.$modal.find("[data-" + pluginName + "-action='cancel']");
 
         // Calculate timeouts
         tdOverlay = getTransitionDuration(remodal.$overlay);
