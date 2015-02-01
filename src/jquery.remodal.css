@@ -168,8 +168,10 @@ body.remodal-is-active .remodal {
     transition: background 0.2s ease-out;
     text-decoration: none;
 
+    border: 0;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+    background: none;
 }
 
 .remodal-close:after {
