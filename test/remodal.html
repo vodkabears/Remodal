@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Remodal Test Suite</title>
-    
+
     <!-- Load local jQuery -->
     <script src="../libs/jquery-loader.js"></script>
-    
+
     <!-- Load local QUnit -->
     <link rel="stylesheet" href="../libs/qunit/qunit/qunit.css" media="screen">
     <script src="../libs/qunit/qunit/qunit.js"></script>
-    
+
     <!-- Load local lib and tests -->
     <link rel="stylesheet" href="../src/jquery.remodal.css">
     <script src="../src/jquery.remodal.js"></script>
@@ -30,16 +30,20 @@
 
 <a href="#" data-remodal-target="modal">Call</a>
 <div class="remodal" data-remodal-id="modal">
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+    <a data-remodal-action="close" class="remodal-close"></a>
+
+    <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+    <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
 
 <div class="remodal" data-remodal-id="modal2" data-remodal-options="hashTracking: false,closeOnConfirm:false,closeOnCancel:   false">
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+    <a data-remodal-action="close" class="remodal-close"></a>
+    <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+    <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
 
 <div data-remodal-id="modal3">
+    <a data-remodal-action="close" class="remodal-close"></a>
 </div>
 </body>
 </html>

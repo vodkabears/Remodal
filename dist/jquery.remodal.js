@@ -187,17 +187,17 @@
         }
 
         remodal.$bg = $("." + pluginName + "-bg");
-        remodal.$closeButton = $("<a href='#'></a>").addClass(pluginName + "-close");
+
         remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
         remodal.$modal = $modal;
         remodal.$modal.addClass(pluginName);
         remodal.$modal.css("visibility", "visible");
 
-        remodal.$modal.append(remodal.$closeButton);
         remodal.$wrapper.append(remodal.$modal);
         remodal.$body.append(remodal.$wrapper);
-        remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
-        remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
+        remodal.$closeButton = remodal.$modal.find("[data-" + pluginName + "-action='close']");
+        remodal.$confirmButton = remodal.$modal.find("[data-" + pluginName + "-action='confirm']");
+        remodal.$cancelButton = remodal.$modal.find("[data-" + pluginName + "-action='cancel']");
 
         // Calculate timeouts
         tdOverlay = getTransitionDuration(remodal.$overlay);
@@ -207,14 +207,14 @@
         remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
         // Add close button event listener
-        remodal.$closeButton.bind("click." + pluginName, function(e) {
+        remodal.$closeButton.on("click." + pluginName, function(e) {
             e.preventDefault();
 
             remodal.close();
         });
 
         // Add cancel button event listener
-        remodal.$cancelButton.bind("click." + pluginName, function(e) {
+        remodal.$cancelButton.on("click." + pluginName, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("cancel");
@@ -225,7 +225,7 @@
         });
 
         // Add confirm button event listener
-        remodal.$confirmButton.bind("click." + pluginName, function(e) {
+        remodal.$confirmButton.on("click." + pluginName, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("confirm");
@@ -236,14 +236,14 @@
         });
 
         // Add keyboard event listener
-        $(document).bind("keyup." + pluginName, function(e) {
+        $(document).on("keyup." + pluginName, function(e) {
             if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
                 remodal.close();
             }
         });
 
         // Add overlay event listener
-        remodal.$wrapper.bind("click." + pluginName, function(e) {
+        remodal.$wrapper.on("click." + pluginName, function(e) {
             var $target = $(e.target);
 
             if (!$target.hasClass(pluginName + "-wrapper")) {
@@ -459,6 +459,6 @@
         }
     }
 
-    $(window).bind("hashchange." + pluginName, hashHandler);
+    $(window).on("hashchange." + pluginName, hashHandler);
 
 })(window.jQuery || window.Zepto);
