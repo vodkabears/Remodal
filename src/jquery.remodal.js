@@ -7,6 +7,7 @@
      */
     var pluginName = "remodal",
         defaults = {
+            namespace: pluginName,
             hashTracking: true,
             closeOnConfirm: true,
             closeOnCancel: true,
@@ -103,7 +104,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html").addClass(pluginName + "-is-locked");
+        $("html").addClass(defaults.namespace + "-is-locked");
     }
 
     /**
@@ -117,7 +118,7 @@
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
         $body.css("padding-right", paddingRight + "px");
-        $("html").removeClass(pluginName + "-is-locked");
+        $("html").removeClass(defaults.namespace + "-is-locked");
     }
 
     /**
@@ -171,25 +172,26 @@
 
         // Build DOM
         remodal.$body = $(document.body);
-        remodal.$overlay = $("." + pluginName + "-overlay");
+        remodal.$overlay = $("." + remodal.settings.namespace + "-overlay");
 
         if (!remodal.$overlay.length) {
-            remodal.$overlay = $("<div>").addClass(pluginName + "-overlay");
+            remodal.$overlay = $("<div>").addClass(remodal.settings.namespace + "-overlay");
             remodal.$body.append(remodal.$overlay);
         }
 
-        remodal.$bg = $("." + pluginName + "-bg");
-        remodal.$closeButton = $("<a href='#'></a>").addClass(pluginName + "-close");
-        remodal.$wrapper = $("<div>").addClass(pluginName + "-wrapper");
+        remodal.$bg = $("." + remodal.settings.namespace + "-bg");
+        remodal.$closeButton = $("<a href='#'></a>")
+                               .addClass(remodal.settings.namespace + "-close");
+        remodal.$wrapper = $("<div>").addClass(remodal.settings.namespace + "-wrapper");
         remodal.$modal = $modal;
-        remodal.$modal.addClass(pluginName);
+        remodal.$modal.addClass(remodal.settings.namespace);
         remodal.$modal.css("visibility", "visible");
 
         remodal.$modal.append(remodal.$closeButton);
         remodal.$wrapper.append(remodal.$modal);
         remodal.$body.append(remodal.$wrapper);
-        remodal.$confirmButton = remodal.$modal.find("." + pluginName + "-confirm");
-        remodal.$cancelButton = remodal.$modal.find("." + pluginName + "-cancel");
+        remodal.$confirmButton = remodal.$modal.find("." + remodal.settings.namespace + "-confirm");
+        remodal.$cancelButton = remodal.$modal.find("." + remodal.settings.namespace + "-cancel");
 
         // Calculate timeouts
         tdOverlay = getTransitionDuration(remodal.$overlay);
@@ -199,14 +201,14 @@
         remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
         // Add close button event listener
-        remodal.$closeButton.bind("click." + pluginName, function(e) {
+        remodal.$closeButton.bind("click." + remodal.settings.namespace, function(e) {
             e.preventDefault();
 
             remodal.close();
         });
 
         // Add cancel button event listener
-        remodal.$cancelButton.bind("click." + pluginName, function(e) {
+        remodal.$cancelButton.bind("click." + remodal.settings.namespace, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("cancel");
@@ -217,7 +219,7 @@
         });
 
         // Add confirm button event listener
-        remodal.$confirmButton.bind("click." + pluginName, function(e) {
+        remodal.$confirmButton.bind("click." + remodal.settings.namespace, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("confirm");
@@ -228,17 +230,17 @@
         });
 
         // Add keyboard event listener
-        $(document).bind("keyup." + pluginName, function(e) {
+        $(document).bind("keyup." + remodal.settings.namespace, function(e) {
             if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
                 remodal.close();
             }
         });
 
         // Add overlay event listener
-        remodal.$wrapper.bind("click." + pluginName, function(e) {
+        remodal.$wrapper.bind("click." + remodal.settings.namespace, function(e) {
             var $target = $(e.target);
 
-            if (!$target.hasClass(pluginName + "-wrapper")) {
+            if (!$target.hasClass(remodal.settings.namespace + "-wrapper")) {
                 return;
             }
 
@@ -277,7 +279,7 @@
         if (current && current !== remodal) {
             current.$overlay.hide();
             current.$wrapper.hide();
-            current.$body.removeClass(pluginName + "-is-active");
+            current.$body.removeClass(remodal.settings.namespace + "-is-active");
         }
 
         current = remodal;
@@ -287,7 +289,7 @@
         remodal.$wrapper.show();
 
         setTimeout(function() {
-            remodal.$body.addClass(pluginName + "-is-active");
+            remodal.$body.addClass(remodal.settings.namespace + "-is-active");
 
             setTimeout(function() {
                 remodal.busy = false;
@@ -323,7 +325,7 @@
             $(window).scrollTop(scrollTop);
         }
 
-        remodal.$body.removeClass(pluginName + "-is-active");
+        remodal.$body.removeClass(remodal.settings.namespace + "-is-active");
 
         setTimeout(function() {
             remodal.$overlay.hide();
@@ -393,7 +395,7 @@
         // Auto initialization of modal windows.
         // They should have the 'remodal' class attribute.
         // Also you can write `data-remodal-options` attribute to pass params into the modal.
-        $(document).find("." + pluginName).each(function(i, container) {
+        $(document).find("." + defaults.namespace).each(function(i, container) {
             var $container = $(container),
                 options = $container.data(pluginName + "-options");
 
