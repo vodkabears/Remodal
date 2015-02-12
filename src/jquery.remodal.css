@@ -51,7 +51,7 @@ html.remodal-is-locked {
 .remodal-wrapper:after {
     display: inline-block;
 
-    height: 100%;
+    height: auto;
     margin-left: -0.05em;
 
     content: "";
