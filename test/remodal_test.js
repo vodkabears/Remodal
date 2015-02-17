@@ -228,6 +228,25 @@
         location.hash = "#modal";
     });
 
+    QUnit.asyncTest("do not lock/unlock the scroll bar twice", function(assert) {
+        $("html").addClass("remodal-is-locked");
+        $(document.body).css("height", "10000px").css("padding-right", "20px");
+
+        $document.one("opened", "[data-remodal-id=modal]", function() {
+            assert.ok($("html").hasClass("remodal-is-locked"));
+            assert.ok(parseInt($(document.body).css("padding-right")) === 20);
+            $inst1.close();
+        });
+
+        $document.one("closed", "[data-remodal-id=modal]", function() {
+            assert.ok(!$("html").hasClass("remodal-is-locked"));
+            assert.ok(parseInt($(document.body).css("padding-right")) < 20);
+            QUnit.start();
+        });
+
+        location.hash = "#modal";
+    });
+
     QUnit.test("Options parsing", function() {
         propEqual($inst2.settings, {
             namespace: "remodal",
