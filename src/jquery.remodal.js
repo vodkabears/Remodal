@@ -98,13 +98,20 @@
      * @private
      */
     function lockScreen() {
-        var $body = $(document.body),
+        var $html = $("html"),
+            lockedClass = defaults.namespace + "-is-locked",
+            $body,
+            paddingRight;
+
+        if (!$html.hasClass(lockedClass)) {
+            $body = $(document.body);
 
             // Zepto does not support '-=', '+=' in the `css` method
             paddingRight = parseInt($body.css("padding-right"), 10) + getScrollbarWidth();
 
-        $body.css("padding-right", paddingRight + "px");
-        $("html").addClass(defaults.namespace + "-is-locked");
+            $body.css("padding-right", paddingRight + "px");
+            $html.addClass(lockedClass);
+        }
     }
 
     /**
@@ -112,13 +119,20 @@
      * @private
      */
     function unlockScreen() {
-        var $body = $(document.body),
+        var $html = $("html"),
+            lockedClass = defaults.namespace + "-is-locked",
+            $body,
+            paddingRight;
+
+        if ($html.hasClass(lockedClass)) {
+            $body = $(document.body);
 
             // Zepto does not support '-=', '+=' in the `css` method
             paddingRight = parseInt($body.css("padding-right"), 10) - getScrollbarWidth();
 
-        $body.css("padding-right", paddingRight + "px");
-        $("html").removeClass(defaults.namespace + "-is-locked");
+            $body.css("padding-right", paddingRight + "px");
+            $html.removeClass(lockedClass);
+        }
     }
 
     /**
