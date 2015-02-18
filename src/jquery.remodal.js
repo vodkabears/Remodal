@@ -215,14 +215,14 @@
         remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
         // Add close button event listener
-        remodal.$closeButton.bind("click." + namespace, function(e) {
+        remodal.$wrapper.on("click." + namespace, remodal.$closeButton.selector, function(e) {
             e.preventDefault();
 
             remodal.close();
         });
 
         // Add cancel button event listener
-        remodal.$cancelButton.bind("click." + namespace, function(e) {
+        remodal.$wrapper.on("click." + namespace, remodal.$cancelButton.selector, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("cancel");
@@ -233,7 +233,7 @@
         });
 
         // Add confirm button event listener
-        remodal.$confirmButton.bind("click." + namespace, function(e) {
+        remodal.$wrapper.on("click." + namespace, remodal.$confirmButton.selector, function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("confirm");
@@ -251,7 +251,7 @@
         });
 
         // Add overlay event listener
-        remodal.$wrapper.bind("click." + namespace, function(e) {
+        remodal.$wrapper.on("click." + namespace, function(e) {
             var $target = $(e.target);
 
             if (!$target.hasClass(namespace + "-wrapper")) {
