@@ -1,3 +1,12 @@
+### 0.6.0
+* Added globals.
+* Added the ability to change the namespace for CSS and events.
+* Used '#on' instead of '#bind'.
+* Fixed double locking/unlocking issue.
+* Updated examples.
+* Updated dependencies.
+* Updated README.
+
 ### 0.5.0
 * Fixed a scrolling to the top of a page.
 * Added the 'reason' parameter to the close/closed events.
