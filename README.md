@@ -61,6 +61,27 @@ Or:
 <a data-remodal-target="modal">Call the modal with data-remodal-id="modal"</a>
 ```
 
+## Globals
+
+```html
+<script>
+    window.remodalNamespace = 'remodal';
+    window.remodalDefaults = {
+        hashTracking: false;
+    };
+</script>
+<script src="js/jquery.remodal.js"></script>
+```
+
+#### window.remodalNamespace
+`Default: "remodal"`
+
+Base HTML class for your modals. CSS theme will need to be updated to reflect this.
+
+#### window.remodalDefaults
+`Default: see - https://github.com/VodkaBears/Remodal#options`
+
+Extends default settings.
 
 ## Options
 
@@ -78,11 +99,6 @@ You can pass additional options by the `data-remodal-options` attribute.
     <a class="remodal-confirm" href="#">OK</a>
 </div>
 ```
-
-#### namespace
-`Default: "remodal"`
-
-(String) Base HTML class for your modals. CSS theme will need to be updated to reflect this.
 
 #### hashTracking
 `Default: true`
