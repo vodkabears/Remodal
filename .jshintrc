@@ -6,9 +6,6 @@
   "expr": true,
   "immed": true,
   "noarg": true,
-  "onevar": true,
-  "quotmark": "double",
-  "smarttabs": true,
-  "trailing": true,
+  "quotmark": "single",
   "unused": true
 }
