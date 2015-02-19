@@ -215,14 +215,14 @@
         remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
         // Add close button event listener
-        remodal.$wrapper.on("click." + namespace, remodal.$closeButton.selector, function(e) {
+        remodal.$wrapper.on("click." + namespace, "." + namespace + "-close", function(e) {
             e.preventDefault();
 
             remodal.close();
         });
 
         // Add cancel button event listener
-        remodal.$wrapper.on("click." + namespace, remodal.$cancelButton.selector, function(e) {
+        remodal.$wrapper.on("click." + namespace, "." + namespace + "-cancel", function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("cancel");
@@ -233,7 +233,7 @@
         });
 
         // Add confirm button event listener
-        remodal.$wrapper.on("click." + namespace, remodal.$confirmButton.selector, function(e) {
+        remodal.$wrapper.on("click." + namespace, "." + namespace + "-confirm", function(e) {
             e.preventDefault();
 
             remodal.$modal.trigger("confirm");
@@ -244,7 +244,7 @@
         });
 
         // Add keyboard event listener
-        $(document).bind("keyup." + namespace, function(e) {
+        $(document).on("keyup." + namespace, function(e) {
             if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
                 remodal.close();
             }
