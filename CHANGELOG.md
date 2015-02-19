@@ -1,3 +1,6 @@
+### 0.6.1
+* Fix '#on' event handlers.
+
 ### 0.6.0
 * Added globals.
 * Added the ability to change the namespace for CSS and events.
