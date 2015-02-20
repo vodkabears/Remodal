@@ -85,8 +85,8 @@
 
   /**
    * Get a scrollbar width
-   * @return {Number}
    * @private
+   * @return {Number}
    */
   function getScrollbarWidth() {
     if ($(document.body).height() <= $(window).height()) {
@@ -107,7 +107,7 @@
     // Force scrollbars
     outer.style.overflow = 'scroll';
 
-    // Add innerdiv
+    // Add inner div
     inner.style.width = '100%';
     outer.appendChild(inner);
 
@@ -162,10 +162,10 @@
   }
 
   /**
-   * Parse string with options
+   * Parse a string with options
+   * @private
    * @param str
    * @returns {Object}
-   * @private
    */
   function parseOptions(str) {
     var obj = {};
@@ -177,18 +177,18 @@
     // Remove spaces before and after delimiters
     str = str.replace(/\s*:\s*/g, ':').replace(/\s*,\s*/g, ',');
 
-    // Parse string
+    // Parse a string
     arr = str.split(',');
     for (i = 0, len = arr.length; i < len; i++) {
       arr[i] = arr[i].split(':');
       val = arr[i][1];
 
-      // Convert string value if it is like a boolean
+      // Convert a string value if it is like a boolean
       if (typeof val === 'string' || val instanceof String) {
         val = val === 'true' || (val === 'false' ? false : val);
       }
 
-      // Convert string value if it is like a number
+      // Convert a string value if it is like a number
       if (typeof val === 'string' || val instanceof String) {
         val = !isNaN(val) ? +val : val;
       }
@@ -242,14 +242,14 @@
     remodal.td = tdModal > tdOverlay ? tdModal : tdOverlay;
     remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
 
-    // Add close button event listener
+    // Add the close button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-close', function(e) {
       e.preventDefault();
 
       remodal.close();
     });
 
-    // Add cancel button event listener
+    // Add the cancel button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-cancel', function(e) {
       e.preventDefault();
 
@@ -260,7 +260,7 @@
       }
     });
 
-    // Add confirm button event listener
+    // Add the confirm button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-confirm', function(e) {
       e.preventDefault();
 
@@ -271,14 +271,14 @@
       }
     });
 
-    // Add keyboard event listener
+    // Add the keyboard event listener
     $(document).on('keyup.' + namespace, function(e) {
       if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
         remodal.close();
       }
     });
 
-    // Add overlay event listener
+    // Add the overlay event listener
     remodal.$wrapper.on('click.' + namespace, function(e) {
       var $target = $(e.target);
 
@@ -296,12 +296,12 @@
   }
 
   /**
-   * Open the modal window
+   * Open a modal window
    * @public
    */
   Remodal.prototype.open = function() {
 
-    // Check if animation is complete
+    // Check if the animation was completed
     if (this.busy) {
       return;
     }
@@ -342,7 +342,7 @@
   };
 
   /**
-   * Close the modal window
+   * Close a modal window
    * @public
    * @param {String|undefined} reason A reason to close
    */
@@ -385,8 +385,8 @@
 
   /**
    * Special plugin object for instances.
-   * @type {Object}
    * @public
+   * @type {Object}
    */
   $[pluginName] = {
     lookup: []
@@ -454,9 +454,9 @@
 
   /**
    * Hashchange handler
+   * @private
    * @param {Event} e
    * @param {Boolean} [closeOnEmptyHash=true]
-   * @private
    */
   function hashHandler(e, closeOnEmptyHash) {
     var id = location.hash.replace('#', '');
@@ -470,7 +470,7 @@
     if (!id) {
       if (closeOnEmptyHash) {
 
-        // Check if we have currently opened modal and animation is complete
+        // Check if we have currently opened modal and animation was completed
         if (current && !current.busy && current.settings.hashTracking) {
           current.close();
         }
