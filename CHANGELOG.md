@@ -1,3 +1,8 @@
+### 0.6.2
+* Improved the codestyle.
+* Used package.json instead of jquery.json.
+* Updated dependencies.
+
 ### 0.6.1
 * Fix '#on' event handlers.
 
