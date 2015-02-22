@@ -1,3 +1,6 @@
+### 0.6.3
+* Fix codestyle configs.
+
 ### 0.6.2
 * Improved the codestyle.
 * Used package.json instead of jquery.json.
