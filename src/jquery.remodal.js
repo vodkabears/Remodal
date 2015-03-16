@@ -239,8 +239,7 @@
     tdOverlay = getTransitionDuration(remodal.$overlay);
     tdModal = getTransitionDuration(remodal.$modal);
     tdBg = getTransitionDuration(remodal.$bg);
-    remodal.td = tdModal > tdOverlay ? tdModal : tdOverlay;
-    remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
+    remodal.td = Math.max(tdOverlay, tdModal, tdBg);
 
     // Add the close button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-close', function(e) {
