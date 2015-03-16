@@ -21,13 +21,10 @@ html.remodal-is-locked {
 
 .remodal-overlay {
     position: fixed;
-    z-index: 9999;
     top: -5000px;
     right: -5000px;
     bottom: -5000px;
     left: -5000px;
-
-    display: none;
 }
 
 /* Necessary styles of the wrapper */
@@ -123,7 +120,7 @@ body.remodal-is-active .remodal-bg {
     background: rgba(33, 36, 46, 0.95);
 }
 
-body.remodal-is-active .remodal-overlay {
+.remodal-is-opened .remodal-overlay {
     opacity: 1;
 }
 
@@ -155,7 +152,7 @@ body.remodal-is-active .remodal-overlay {
     background-clip: padding-box;
 }
 
-body.remodal-is-active .remodal {
+.remodal-is-opened .remodal {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);

@@ -253,7 +253,8 @@
       closeOnConfirm: false,
       closeOnCancel: false,
       closeOnEscape: true,
-      closeOnAnyClick: true
+      closeOnAnyClick: true,
+      stack: false
     });
   });
 
