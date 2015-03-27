@@ -98,8 +98,19 @@
   <p>
     Hello!
   </p>
+  <small>Pssst, wanna see something cool? <a href="#" id="stack-link">Click here</a></small>
+  <br>
   <br>
   <a class="remodal-confirm" href="#">Hello!</a>
+</div>
+
+<div data-remodal-id="stacked-modal" style="width: 400px;">
+  <h1>This is a stacked window</h1>
+  <p>
+    Please use me with caution, otherwise this might result in a bad UX!
+  </p>
+  <br>
+  <a class="remodal-confirm" href="#">I promise, I will!</a>
 </div>
 
 <!-- You can define the global options -->
@@ -146,6 +157,13 @@
     console.log("cancel");
   });
 
+  $('#stack-link').click(function (event) {
+    event.preventDefault();
+
+    var stackedModal = $('[data-remodal-id="stacked-modal"]').remodal({ stack: true });
+    stackedModal.open();
+  });
+
 //  You can open or close it like this:
 //  $(function () {
 //    var inst = $.remodal.lookup[$("[data-remodal-id=modal]"").data("remodal")];
@@ -155,7 +173,7 @@
 
   //  Or init in this way:
   var inst = $("[data-remodal-id=modal2]").remodal();
-  //  inst.open();
+  // inst.open();
 </script>
 </body>
 </html>
