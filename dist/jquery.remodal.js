@@ -33,15 +33,16 @@
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,
-    closeOnAnyClick: true
+    closeOnAnyClick: true,
+    stack: false
   }, window.remodalGlobals && window.remodalGlobals.defaults);
 
   /**
-   * Current modal
+   * Opened modals
    * @private
-   * @type {Remodal}
+   * @type {Array}
    */
-  var current;
+  var openedModals = [];
 
   /**
    * Scrollbar position
@@ -223,21 +224,17 @@
 
     // Build DOM
     remodal.$body = $(document.body);
-    remodal.$overlay = $('.' + namespace + '-overlay');
-
-    if (!remodal.$overlay.length) {
-      remodal.$overlay = $('<div>').addClass(namespace + '-overlay');
-      remodal.$body.append(remodal.$overlay);
-    }
 
     remodal.$bg = $('.' + namespace + '-bg');
     remodal.$closeButton = $('<a href="#"></a>').addClass(namespace + '-close');
     remodal.$wrapper = $('<div>').addClass(namespace + '-wrapper');
+    remodal.$overlay = $('<div>').addClass(namespace + '-overlay');
     remodal.$modal = $modal;
     remodal.$modal.addClass(namespace);
     remodal.$modal.css('visibility', 'visible');
 
     remodal.$modal.append(remodal.$closeButton);
+    remodal.$wrapper.append(remodal.$overlay);
     remodal.$wrapper.append(remodal.$modal);
     remodal.$body.append(remodal.$wrapper);
     remodal.$confirmButton = remodal.$modal.find('.' + namespace + '-confirm');
@@ -247,8 +244,7 @@
     tdOverlay = getTransitionDuration(remodal.$overlay);
     tdModal = getTransitionDuration(remodal.$modal);
     tdBg = getTransitionDuration(remodal.$bg);
-    remodal.td = tdModal > tdOverlay ? tdModal : tdOverlay;
-    remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
+    remodal.td = Math.max(tdOverlay, tdModal, tdBg);
 
     // Add the close button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-close', function(e) {
@@ -299,6 +295,10 @@
       }
     });
 
+    remodal.$overlay.on('click.' + namespace, function() {
+      remodal.$wrapper.click();
+    });
+
     remodal.index = $[pluginName].lookup.push(remodal) - 1;
     remodal.busy = false;
   }
@@ -327,20 +327,25 @@
       location.hash = id;
     }
 
-    if (current && current !== remodal) {
-      current.$overlay.hide();
-      current.$wrapper.hide();
-      current.$body.removeClass(namespace + '-is-active');
+    if (!remodal.settings.stack) {
+      var current = openedModals[openedModals.length - 1];
+
+      if (current && current !== remodal) {
+        current.$wrapper.hide();
+        current.$body.removeClass(namespace + '-is-active');
+      }
+
+      openedModals = [];
     }
 
-    current = remodal;
+    openedModals.push(remodal);
 
     lockScreen();
-    remodal.$overlay.show();
     remodal.$wrapper.show();
 
     setTimeout(function() {
       remodal.$body.addClass(namespace + '-is-active');
+      remodal.$wrapper.addClass(namespace + '-is-opened');
 
       setTimeout(function() {
         remodal.busy = false;
@@ -362,6 +367,7 @@
     }
 
     var remodal = this;
+    var lastModalOpen = openedModals.length === 1;
 
     remodal.busy = true;
     remodal.$modal.trigger({
@@ -376,12 +382,20 @@
       $(window).scrollTop(scrollTop);
     }
 
-    remodal.$body.removeClass(namespace + '-is-active');
+    if (lastModalOpen) {
+      remodal.$body.removeClass(namespace + '-is-active');
+    }
+
+    remodal.$wrapper.removeClass(namespace + '-is-opened');
 
     setTimeout(function() {
-      remodal.$overlay.hide();
+      if (lastModalOpen) {
+        unlockScreen();
+      }
+
+      openedModals.pop();
+
       remodal.$wrapper.hide();
-      unlockScreen();
 
       remodal.busy = false;
       remodal.$modal.trigger({
@@ -477,6 +491,7 @@
 
     if (!id) {
       if (closeOnEmptyHash) {
+        var current = openedModals[openedModals.length - 1];
 
         // Check if we have currently opened modal and animation was completed
         if (current && !current.busy && current.settings.hashTracking) {
