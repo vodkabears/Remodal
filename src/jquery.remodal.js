@@ -332,6 +332,7 @@
 
     setTimeout(function() {
       remodal.$body.addClass(namespace + '-is-active');
+      remodal.$wrapper.scrollTop(0);
 
       setTimeout(function() {
         remodal.busy = false;
