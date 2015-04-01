@@ -1,4 +1,15 @@
-!(function($) {
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], function($) {
+      return factory(root, $);
+    });
+  } else if (typeof exports === 'object') {
+    factory(root, require('jquery'));
+  } else {
+    factory(root, root.jQuery || root.Zepto);
+  }
+})(this, function(global, $) {
+
   'use strict';
 
   /**
@@ -13,7 +24,7 @@
    * @private
    * @type {String}
    */
-  var namespace = window.remodalGlobals && window.remodalGlobals.namespace || pluginName;
+  var namespace = global.remodalGlobals && global.remodalGlobals.namespace || pluginName;
 
   /**
    * Default settings
@@ -26,7 +37,7 @@
     closeOnCancel: true,
     closeOnEscape: true,
     closeOnAnyClick: true
-  }, window.remodalGlobals && window.remodalGlobals.defaults);
+  }, global.remodalGlobals && global.remodalGlobals.defaults);
 
   /**
    * Current modal
@@ -498,4 +509,4 @@
 
   $(window).bind('hashchange.' + namespace, hashHandler);
 
-})(window.jQuery || window.Zepto);
+});
