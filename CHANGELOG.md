@@ -1,3 +1,10 @@
+### 0.6.4
+* Protocol-relative URL for fonts.
+* Scroll to the top, when a modal is displayed.
+* Pixels in the media-queries.
+* Added Browserify support.
+* Updated dependencies.
+
 ### 0.6.3
 * Fix codestyle configs.
 
