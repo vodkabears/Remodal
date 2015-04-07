@@ -1,6 +1,6 @@
 {
   "name": "remodal",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.",
   "keywords": [
     "jquery-plugin",

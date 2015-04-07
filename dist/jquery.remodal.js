@@ -1,12 +1,23 @@
 /*
- *  Remodal - v0.6.3
+ *  Remodal - v0.6.4
  *  Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
  *  Made by Ilya Makarov
  *  Under MIT License
  */
-!(function($) {
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], function($) {
+      return factory(root, $);
+    });
+  } else if (typeof exports === 'object') {
+    factory(root, require('jquery'));
+  } else {
+    factory(root, root.jQuery || root.Zepto);
+  }
+})(this, function(global, $) {
+
   'use strict';
 
   /**
@@ -21,7 +32,7 @@
    * @private
    * @type {String}
    */
-  var namespace = window.remodalGlobals && window.remodalGlobals.namespace || pluginName;
+  var namespace = global.remodalGlobals && global.remodalGlobals.namespace || pluginName;
 
   /**
    * Default settings
@@ -34,7 +45,7 @@
     closeOnCancel: true,
     closeOnEscape: true,
     closeOnAnyClick: true
-  }, window.remodalGlobals && window.remodalGlobals.defaults);
+  }, global.remodalGlobals && global.remodalGlobals.defaults);
 
   /**
    * Current modal
@@ -247,8 +258,7 @@
     tdOverlay = getTransitionDuration(remodal.$overlay);
     tdModal = getTransitionDuration(remodal.$modal);
     tdBg = getTransitionDuration(remodal.$bg);
-    remodal.td = tdModal > tdOverlay ? tdModal : tdOverlay;
-    remodal.td = tdBg > remodal.td ? tdBg : remodal.td;
+    remodal.td = Math.max(tdOverlay, tdModal, tdBg);
 
     // Add the close button event listener
     remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-close', function(e) {
@@ -341,6 +351,7 @@
 
     setTimeout(function() {
       remodal.$body.addClass(namespace + '-is-active');
+      remodal.$wrapper.scrollTop(0);
 
       setTimeout(function() {
         remodal.busy = false;
@@ -369,9 +380,10 @@
       reason: reason
     });
 
-    if (remodal.settings.hashTracking &&
-      remodal.$modal.attr('data-' + pluginName + '-id') === location.hash.substr(1)) {
-
+    if (
+      remodal.settings.hashTracking &&
+      remodal.$modal.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+    ) {
       location.hash = '';
       $(window).scrollTop(scrollTop);
     }
@@ -417,9 +429,10 @@
         instance = new Remodal($elem, opts);
         $elem.data(pluginName, instance.index);
 
-        if (instance.settings.hashTracking &&
-          $elem.attr('data-' + pluginName + '-id') === location.hash.substr(1)) {
-
+        if (
+          instance.settings.hashTracking &&
+          $elem.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+        ) {
           instance.open();
         }
       } else {
@@ -506,4 +519,4 @@
 
   $(window).bind('hashchange.' + namespace, hashHandler);
 
-})(window.jQuery || window.Zepto);
+});
