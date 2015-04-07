@@ -372,9 +372,10 @@
       reason: reason
     });
 
-    if (remodal.settings.hashTracking &&
-      remodal.$modal.attr('data-' + pluginName + '-id') === location.hash.substr(1)) {
-
+    if (
+      remodal.settings.hashTracking &&
+      remodal.$modal.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+    ) {
       location.hash = '';
       $(window).scrollTop(scrollTop);
     }
@@ -420,9 +421,10 @@
         instance = new Remodal($elem, opts);
         $elem.data(pluginName, instance.index);
 
-        if (instance.settings.hashTracking &&
-          $elem.attr('data-' + pluginName + '-id') === location.hash.substr(1)) {
-
+        if (
+          instance.settings.hashTracking &&
+          $elem.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+        ) {
           instance.open();
         }
       } else {
