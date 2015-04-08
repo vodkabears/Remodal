@@ -242,7 +242,7 @@
     }
 
     remodal.$bg = $('.' + namespace + '-bg');
-    remodal.$closeButton = $('<a href="#"></a>').addClass(namespace + '-close');
+
     remodal.$wrapper = $('<div>').addClass(namespace + '-wrapper');
     remodal.$modal = $modal;
     remodal.$modal.addClass(namespace);
@@ -251,8 +251,10 @@
     remodal.$modal.append(remodal.$closeButton);
     remodal.$wrapper.append(remodal.$modal);
     remodal.$body.append(remodal.$wrapper);
-    remodal.$confirmButton = remodal.$modal.find('.' + namespace + '-confirm');
-    remodal.$cancelButton = remodal.$modal.find('.' + namespace + '-cancel');
+
+    remodal.$closeButton = remodal.$modal.find('[data-' + namespace + '-action="close"]');
+    remodal.$confirmButton = remodal.$modal.find('[data-' + namespace + '-action="confirm"]');
+    remodal.$cancelButton = remodal.$modal.find('[data-' + namespace + '-action="cancel"]');
 
     // Calculate timeouts
     tdOverlay = getTransitionDuration(remodal.$overlay);
