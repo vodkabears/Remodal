@@ -30,16 +30,20 @@
 
 <a href="#" data-remodal-target="modal">Call</a>
 <div class="remodal" data-remodal-id="modal">
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+  <a data-remodal-action="close" class="remodal-close"></a>
+
+  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
 
 <div class="remodal" data-remodal-id="modal2" data-remodal-options="hashTracking: false,closeOnConfirm:false,closeOnCancel:   false">
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+  <a data-remodal-action="close" class="remodal-close"></a>
+  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
 
 <div data-remodal-id="modal3">
+  <a data-remodal-action="close" class="remodal-close"></a>
 </div>
 </body>
 </html>
