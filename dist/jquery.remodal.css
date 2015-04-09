@@ -93,13 +93,6 @@ html.remodal-is-locked {
    Remodal default theme
    ========================================================================== */
 
-/* Default theme font */
-
-.remodal,
-.remodal * {
-    font-family: "Exo 2", sans-serif;
-}
-
 /* Background for effects */
 
 .remodal-bg {
