@@ -70,17 +70,6 @@ html.remodal-is-locked {
     display: inline-block;
 }
 
-/* Anti-zoom. Font-size should be >= 16px. */
-
-.remodal select,
-.remodal textarea,
-.remodal input,
-.remodal select:focus,
-.remodal textarea:focus,
-.remodal input:focus {
-    font-size: 16px;
-}
-
 /* ==========================================================================
    Remodal default theme
    ========================================================================== */
