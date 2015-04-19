@@ -43,6 +43,19 @@
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 
   /**
+   * States of the Remodal
+   * @private
+   * @const
+   * @enum {String}
+   */
+  var STATES = {
+    CLOSING: 'closing',
+    CLOSED: 'closed',
+    OPENING: 'opening',
+    OPENED: 'opened'
+  };
+
+  /**
    * Current modal
    * @private
    * @type {Remodal}
@@ -306,7 +319,7 @@
     });
 
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
-    remodal.busy = false;
+    remodal.state = STATES.CLOSED;
   }
 
   /**
@@ -314,16 +327,15 @@
    * @public
    */
   Remodal.prototype.open = function() {
-
-    // Check if the animation was completed
-    if (this.busy) {
-      return;
-    }
-
     var remodal = this;
     var id;
 
-    remodal.busy = true;
+    // Check if the animation was completed
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
+      return;
+    }
+
+    remodal.state = STATES.OPENING;
     remodal.$modal.trigger('open');
 
     id = remodal.$modal.attr('data-' + PLUGIN_NAME + '-id');
@@ -350,7 +362,7 @@
       remodal.$wrapper.scrollTop(0);
 
       setTimeout(function() {
-        remodal.busy = false;
+        remodal.state = STATES.OPENED;
         remodal.$modal.trigger('opened');
       }, remodal.td + 50);
     }, 25);
@@ -362,15 +374,14 @@
    * @param {String|undefined} reason A reason to close
    */
   Remodal.prototype.close = function(reason) {
+    var remodal = this;
 
     // Check if the animation was completed
-    if (this.busy) {
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
       return;
     }
 
-    var remodal = this;
-
-    remodal.busy = true;
+    remodal.state = STATES.CLOSING;
     remodal.$modal.trigger({
       type: 'close',
       reason: reason
@@ -391,12 +402,21 @@
       remodal.$wrapper.hide();
       unlockScreen();
 
-      remodal.busy = false;
+      remodal.state = STATES.CLOSED;
       remodal.$modal.trigger({
         type: 'closed',
         reason: reason
       });
     }, remodal.td + 50);
+  };
+
+  /**
+   * Return a current state of a modal
+   * @public
+   * @returns {STATES}
+   */
+  Remodal.prototype.getState = function() {
+    return this.state;
   };
 
   /**
@@ -488,7 +508,7 @@
       if (closeOnEmptyHash) {
 
         // Check if we have currently opened modal and animation was completed
-        if (current && !current.busy && current.settings.hashTracking) {
+        if (current && current.state === STATES.OPENED && current.settings.hashTracking) {
           current.close();
         }
       }
