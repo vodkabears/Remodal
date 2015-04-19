@@ -191,13 +191,21 @@
   });
 
   QUnit.asyncTest('methods', function(assert) {
+    $document.one('open', '[data-remodal-id=modal]', function() {
+      assert.equal($inst1.getState(), 'opening');
+    });
+
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'opening');
+      assert.equal($inst1.getState(), 'opened');
       $inst1.close();
     });
 
+    $document.one('close', '[data-remodal-id=modal]', function() {
+      assert.equal($inst1.getState(), 'closing');
+    });
+
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'closed');
+      assert.equal($inst1.getState(), 'closed');
       QUnit.start();
     });
 
