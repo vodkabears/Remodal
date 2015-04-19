@@ -238,11 +238,9 @@
     var tdModal;
     var tdBg;
 
-    var closeButtonSelector = '[data-' + NAMESPACE + '-action="close"]';
-    var confirmButtonSelector = '[data-' + NAMESPACE + '-action="confirm"]';
-    var cancelButtonSelector = '[data-' + NAMESPACE + '-action="cancel"]';
-
     remodal.settings = $.extend({}, DEFAULTS, options);
+    remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
+    remodal.state = STATES.CLOSED;
 
     // Build DOM
     remodal.$body = $(document.body);
@@ -254,7 +252,6 @@
     }
 
     remodal.$bg = $('.' + NAMESPACE + '-bg');
-
     remodal.$wrapper = $('<div>').addClass(NAMESPACE + '-wrapper');
     remodal.$modal = $modal;
     remodal.$modal.addClass(NAMESPACE);
@@ -270,14 +267,14 @@
     remodal.td = Math.max(tdOverlay, tdModal, tdBg);
 
     // Add the close button event listener
-    remodal.$wrapper.on('click.' + NAMESPACE, closeButtonSelector, function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
       e.preventDefault();
 
       remodal.close();
     });
 
     // Add the cancel button event listener
-    remodal.$wrapper.on('click.' + NAMESPACE, cancelButtonSelector, function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="cancel"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger('cancel');
@@ -288,7 +285,7 @@
     });
 
     // Add the confirm button event listener
-    remodal.$wrapper.on('click.' + NAMESPACE, confirmButtonSelector, function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="confirm"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger('confirm');
@@ -317,9 +314,6 @@
         remodal.close();
       }
     });
-
-    remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
-    remodal.state = STATES.CLOSED;
   }
 
   /**
