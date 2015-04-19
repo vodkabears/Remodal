@@ -70,6 +70,14 @@ html.remodal-is-locked {
     display: inline-block;
 }
 
+body.remodal-is-active .remodal {
+
+    /* Disable text resizing */
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 /* ==========================================================================
    Remodal default theme
    ========================================================================== */
