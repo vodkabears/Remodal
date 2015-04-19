@@ -300,7 +300,7 @@
 
     // Add the keyboard event listener
     $(document).on('keyup.' + NAMESPACE, function(e) {
-      if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
+      if (e.keyCode === 27 && remodal.settings.closeOnEscape && remodal.state === STATES.OPENED) {
         remodal.close();
       }
     });
