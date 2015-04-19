@@ -75,11 +75,11 @@ Or:
 <script src="js/jquery.remodal.js"></script>
 ```
 
-#### namespace
+#### NAMESPACE
 
 Base HTML class for your modals. CSS theme will need to be updated to reflect this.
 
-#### defaults
+#### DEFAULTS
 
 Extends default settings.
 
@@ -179,11 +179,21 @@ Get the instance of the modal and call a method:
 ```js
 var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
 
-// open the modal
+/**
+ * Open the modal window
+ */
 inst.open();
 
-// close the modal
+/**
+ * Close the modal window
+ */
 inst.close();
+
+/**
+ * Get a current state of the modal
+ * @returns {'closed'|'closing'|'opened'|'opening'}
+ */
+inst.getState();
 ```
 
 ## License
