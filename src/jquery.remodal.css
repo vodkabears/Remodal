@@ -1,5 +1,3 @@
-@import url(//fonts.googleapis.com/css?family=Exo+2:700,400&subset=latin,cyrillic);
-
 /* ==========================================================================
    Remodal necessary styles
    ========================================================================== */
@@ -72,27 +70,17 @@ html.remodal-is-locked {
     display: inline-block;
 }
 
-/* Anti-zoom. Font-size should be >= 16px. */
+body.remodal-is-active .remodal {
 
-.remodal select,
-.remodal textarea,
-.remodal input,
-.remodal select:focus,
-.remodal textarea:focus,
-.remodal input:focus {
-    font-size: 16px;
+    /* Disable text resizing */
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 /* ==========================================================================
    Remodal default theme
    ========================================================================== */
-
-/* Default theme font */
-
-.remodal,
-.remodal * {
-    font-family: "Exo 2", sans-serif;
-}
 
 /* Background for effects */
 

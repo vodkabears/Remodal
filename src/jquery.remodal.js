@@ -15,29 +15,45 @@
   /**
    * Name of the plugin
    * @private
+   * @const
    * @type {String}
    */
-  var pluginName = 'remodal';
+  var PLUGIN_NAME = 'remodal';
 
   /**
    * Namespace for CSS and events
    * @private
+   * @const
    * @type {String}
    */
-  var namespace = global.remodalGlobals && global.remodalGlobals.namespace || pluginName;
+  var NAMESPACE = global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.NAMESPACE || PLUGIN_NAME;
 
   /**
    * Default settings
    * @private
+   * @const
    * @type {Object}
    */
-  var defaults = $.extend({
+  var DEFAULTS = $.extend({
     hashTracking: true,
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,
     closeOnAnyClick: true
-  }, global.remodalGlobals && global.remodalGlobals.defaults);
+  }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
+
+  /**
+   * States of the Remodal
+   * @private
+   * @const
+   * @enum {String}
+   */
+  var STATES = {
+    CLOSING: 'closing',
+    CLOSED: 'closed',
+    OPENING: 'opening',
+    OPENED: 'opened'
+  };
 
   /**
    * Current modal
@@ -136,7 +152,7 @@
    */
   function lockScreen() {
     var $html = $('html');
-    var lockedClass = namespace + '-is-locked';
+    var lockedClass = NAMESPACE + '-is-locked';
     var paddingRight;
     var $body;
 
@@ -157,7 +173,7 @@
    */
   function unlockScreen() {
     var $html = $('html');
-    var lockedClass = namespace + '-is-locked';
+    var lockedClass = NAMESPACE + '-is-locked';
     var paddingRight;
     var $body;
 
@@ -222,29 +238,27 @@
     var tdModal;
     var tdBg;
 
-    remodal.settings = $.extend({}, defaults, options);
+    remodal.settings = $.extend({}, DEFAULTS, options);
+    remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
+    remodal.state = STATES.CLOSED;
 
     // Build DOM
     remodal.$body = $(document.body);
-    remodal.$overlay = $('.' + namespace + '-overlay');
+    remodal.$overlay = $('.' + NAMESPACE + '-overlay');
 
     if (!remodal.$overlay.length) {
-      remodal.$overlay = $('<div>').addClass(namespace + '-overlay');
+      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay');
       remodal.$body.append(remodal.$overlay);
     }
 
-    remodal.$bg = $('.' + namespace + '-bg');
-    remodal.$closeButton = $('<a href="#"></a>').addClass(namespace + '-close');
-    remodal.$wrapper = $('<div>').addClass(namespace + '-wrapper');
+    remodal.$bg = $('.' + NAMESPACE + '-bg');
+    remodal.$wrapper = $('<div>').addClass(NAMESPACE + '-wrapper');
     remodal.$modal = $modal;
-    remodal.$modal.addClass(namespace);
+    remodal.$modal.addClass(NAMESPACE);
     remodal.$modal.css('visibility', 'visible');
 
-    remodal.$modal.append(remodal.$closeButton);
     remodal.$wrapper.append(remodal.$modal);
     remodal.$body.append(remodal.$wrapper);
-    remodal.$confirmButton = remodal.$modal.find('.' + namespace + '-confirm');
-    remodal.$cancelButton = remodal.$modal.find('.' + namespace + '-cancel');
 
     // Calculate timeouts
     tdOverlay = getTransitionDuration(remodal.$overlay);
@@ -253,14 +267,14 @@
     remodal.td = Math.max(tdOverlay, tdModal, tdBg);
 
     // Add the close button event listener
-    remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-close', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
       e.preventDefault();
 
       remodal.close();
     });
 
     // Add the cancel button event listener
-    remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-cancel', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="cancel"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger('cancel');
@@ -271,7 +285,7 @@
     });
 
     // Add the confirm button event listener
-    remodal.$wrapper.on('click.' + namespace, '.' + namespace + '-confirm', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="confirm"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger('confirm');
@@ -282,17 +296,17 @@
     });
 
     // Add the keyboard event listener
-    $(document).on('keyup.' + namespace, function(e) {
-      if (e.keyCode === 27 && remodal.settings.closeOnEscape) {
+    $(document).on('keyup.' + NAMESPACE, function(e) {
+      if (e.keyCode === 27 && remodal.settings.closeOnEscape && remodal.state === STATES.OPENED) {
         remodal.close();
       }
     });
 
     // Add the overlay event listener
-    remodal.$wrapper.on('click.' + namespace, function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, function(e) {
       var $target = $(e.target);
 
-      if (!$target.hasClass(namespace + '-wrapper')) {
+      if (!$target.hasClass(NAMESPACE + '-wrapper')) {
         return;
       }
 
@@ -300,9 +314,6 @@
         remodal.close();
       }
     });
-
-    remodal.index = $[pluginName].lookup.push(remodal) - 1;
-    remodal.busy = false;
   }
 
   /**
@@ -310,19 +321,18 @@
    * @public
    */
   Remodal.prototype.open = function() {
-
-    // Check if the animation was completed
-    if (this.busy) {
-      return;
-    }
-
     var remodal = this;
     var id;
 
-    remodal.busy = true;
+    // Check if the animation was completed
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
+      return;
+    }
+
+    remodal.state = STATES.OPENING;
     remodal.$modal.trigger('open');
 
-    id = remodal.$modal.attr('data-' + pluginName + '-id');
+    id = remodal.$modal.attr('data-' + PLUGIN_NAME + '-id');
 
     if (id && remodal.settings.hashTracking) {
       scrollTop = $(window).scrollTop();
@@ -332,7 +342,7 @@
     if (current && current !== remodal) {
       current.$overlay.hide();
       current.$wrapper.hide();
-      current.$body.removeClass(namespace + '-is-active');
+      current.$body.removeClass(NAMESPACE + '-is-active');
     }
 
     current = remodal;
@@ -342,11 +352,11 @@
     remodal.$wrapper.show();
 
     setTimeout(function() {
-      remodal.$body.addClass(namespace + '-is-active');
+      remodal.$body.addClass(NAMESPACE + '-is-active');
       remodal.$wrapper.scrollTop(0);
 
       setTimeout(function() {
-        remodal.busy = false;
+        remodal.state = STATES.OPENED;
         remodal.$modal.trigger('opened');
       }, remodal.td + 50);
     }, 25);
@@ -358,15 +368,14 @@
    * @param {String|undefined} reason A reason to close
    */
   Remodal.prototype.close = function(reason) {
+    var remodal = this;
 
     // Check if the animation was completed
-    if (this.busy) {
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
       return;
     }
 
-    var remodal = this;
-
-    remodal.busy = true;
+    remodal.state = STATES.CLOSING;
     remodal.$modal.trigger({
       type: 'close',
       reason: reason
@@ -374,20 +383,20 @@
 
     if (
       remodal.settings.hashTracking &&
-      remodal.$modal.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+      remodal.$modal.attr('data-' + PLUGIN_NAME + '-id') === location.hash.substr(1)
     ) {
       location.hash = '';
       $(window).scrollTop(scrollTop);
     }
 
-    remodal.$body.removeClass(namespace + '-is-active');
+    remodal.$body.removeClass(NAMESPACE + '-is-active');
 
     setTimeout(function() {
       remodal.$overlay.hide();
       remodal.$wrapper.hide();
       unlockScreen();
 
-      remodal.busy = false;
+      remodal.state = STATES.CLOSED;
       remodal.$modal.trigger({
         type: 'closed',
         reason: reason
@@ -396,11 +405,20 @@
   };
 
   /**
+   * Return a current state of a modal
+   * @public
+   * @returns {STATES}
+   */
+  Remodal.prototype.getState = function() {
+    return this.state;
+  };
+
+  /**
    * Special plugin object for instances.
    * @public
    * @type {Object}
    */
-  $[pluginName] = {
+  $[PLUGIN_NAME] = {
     lookup: []
   };
 
@@ -410,25 +428,25 @@
    * @returns {JQuery}
    * @constructor
    */
-  $.fn[pluginName] = function(opts) {
+  $.fn[PLUGIN_NAME] = function(opts) {
     var instance;
     var $elem;
 
     this.each(function(index, elem) {
       $elem = $(elem);
 
-      if ($elem.data(pluginName) == null) {
+      if ($elem.data(PLUGIN_NAME) == null) {
         instance = new Remodal($elem, opts);
-        $elem.data(pluginName, instance.index);
+        $elem.data(PLUGIN_NAME, instance.index);
 
         if (
           instance.settings.hashTracking &&
-          $elem.attr('data-' + pluginName + '-id') === location.hash.substr(1)
+          $elem.attr('data-' + PLUGIN_NAME + '-id') === location.hash.substr(1)
         ) {
           instance.open();
         }
       } else {
-        instance = $[pluginName].lookup[$elem.data(pluginName)];
+        instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
       }
     });
 
@@ -438,22 +456,22 @@
   $(document).ready(function() {
 
     // data-remodal-target opens a modal window with the special Id.
-    $(document).on('click', '[data-' + pluginName + '-target]', function(e) {
+    $(document).on('click', '[data-' + PLUGIN_NAME + '-target]', function(e) {
       e.preventDefault();
 
       var elem = e.currentTarget;
-      var id = elem.getAttribute('data-' + pluginName + '-target');
-      var $target = $('[data-' + pluginName + '-id=' + id + ']');
+      var id = elem.getAttribute('data-' + PLUGIN_NAME + '-target');
+      var $target = $('[data-' + PLUGIN_NAME + '-id=' + id + ']');
 
-      $[pluginName].lookup[$target.data(pluginName)].open();
+      $[PLUGIN_NAME].lookup[$target.data(PLUGIN_NAME)].open();
     });
 
     // Auto initialization of modal windows.
     // They should have the 'remodal' class attribute.
     // Also you can write `data-remodal-options` attribute to pass params into the modal.
-    $(document).find('.' + namespace).each(function(i, container) {
+    $(document).find('.' + NAMESPACE).each(function(i, container) {
       var $container = $(container);
-      var options = $container.data(pluginName + '-options');
+      var options = $container.data(PLUGIN_NAME + '-options');
 
       if (!options) {
         options = {};
@@ -461,7 +479,7 @@
         options = parseOptions(options);
       }
 
-      $container[pluginName](options);
+      $container[PLUGIN_NAME](options);
     });
   });
 
@@ -484,7 +502,7 @@
       if (closeOnEmptyHash) {
 
         // Check if we have currently opened modal and animation was completed
-        if (current && !current.busy && current.settings.hashTracking) {
+        if (current && current.state === STATES.OPENED && current.settings.hashTracking) {
           current.close();
         }
       }
@@ -493,13 +511,13 @@
       // Catch syntax error if your hash is bad
       try {
         $elem = $(
-          '[data-' + pluginName + '-id=' +
+          '[data-' + PLUGIN_NAME + '-id=' +
           id.replace(new RegExp('/', 'g'), '\\/') + ']'
         );
       } catch (err) {}
 
       if ($elem && $elem.length) {
-        instance = $[pluginName].lookup[$elem.data(pluginName)];
+        instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
 
         if (instance && instance.settings.hashTracking) {
           instance.open();
@@ -509,6 +527,6 @@
     }
   }
 
-  $(window).bind('hashchange.' + namespace, hashHandler);
+  $(window).bind('hashchange.' + NAMESPACE, hashHandler);
 
 });

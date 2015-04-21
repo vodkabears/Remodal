@@ -83,8 +83,8 @@
   });
 
   QUnit.asyncTest('events', function(assert) {
-    var $confirmButton = $inst1.$confirmButton;
-    var $cancelButton = $inst1.$cancelButton;
+    var $confirmButton = $inst1.$body.find('[data-remodal-action="confirm"]');
+    var $cancelButton = $inst1.$body.find('[data-remodal-action="cancel"]');
 
     $document.one('open', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'opening');
@@ -125,7 +125,7 @@
   });
 
   QUnit.asyncTest('Confirm button click', function(assert) {
-    var $confirmButton = $inst1.$confirmButton;
+    var $confirmButton = $inst1.$body.find('[data-remodal-action="confirm"]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $confirmButton.click();
@@ -143,7 +143,7 @@
   });
 
   QUnit.asyncTest('Cancel button click', function(assert) {
-    var $cancelButton = $inst1.$cancelButton;
+    var $cancelButton = $inst1.$body.find('[data-remodal-action="cancel"]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $cancelButton.click();
@@ -161,7 +161,7 @@
   });
 
   QUnit.asyncTest('Close button click', function(assert) {
-    var $closeButton = $inst1.$closeButton;
+    var $closeButton = $inst1.$body.find('[data-remodal-action="close"]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $closeButton.click();
@@ -191,13 +191,21 @@
   });
 
   QUnit.asyncTest('methods', function(assert) {
+    $document.one('open', '[data-remodal-id=modal]', function() {
+      assert.equal($inst1.getState(), 'opening');
+    });
+
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'opening');
+      assert.equal($inst1.getState(), 'opened');
       $inst1.close();
     });
 
+    $document.one('close', '[data-remodal-id=modal]', function() {
+      assert.equal($inst1.getState(), 'closing');
+    });
+
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'closed');
+      assert.equal($inst1.getState(), 'closed');
       QUnit.start();
     });
 
@@ -274,7 +282,7 @@
       }, $inst2.td + 100);
     });
 
-    $inst2.$confirmButton.click();
-    $inst2.$cancelButton.click();
+    $inst2.$body.find('[data-remodal-action="confirm"]').click();
+    $inst2.$body.find('[data-remodal-action="cancel"]').click();
   });
 }(window.jQuery || window.Zepto, location, document));

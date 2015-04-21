@@ -80,6 +80,7 @@
 </div>
 
 <div class="remodal" data-remodal-id="modal">
+  <span data-remodal-action="close" class="remodal-close"></span>
   <h1>Remodal</h1>
   <p>
     Flat, responsive, lightweight, fast, easy customizable modal window plugin
@@ -89,8 +90,8 @@
     Minified version size: ~4kb
   </p>
   <br>
-  <a class="remodal-cancel" href="#">Cancel</a>
-  <a class="remodal-confirm" href="#">OK</a>
+  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
 
 <div data-remodal-id="modal2">
@@ -99,14 +100,14 @@
     Hello!
   </p>
   <br>
-  <a class="remodal-confirm" href="#">Hello!</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">Hello!</a>
 </div>
 
 <!-- You can define the global options -->
 <script>
-  // window.remodalGlobals = {
-  //   namespace: "remodal",
-  //   defaults: {
+  // window.REMODAL_GLOBALS = {
+  //   NAMESPACE: 'remodal',
+  //   DEFAULTS: {
   //     hashTracking: true,
   //     closeOnConfirm: true,
   //     closeOnCancel: true,
@@ -121,39 +122,39 @@
 
 <!-- Events -->
 <script>
-  $(document).on("open", ".remodal", function () {
-    console.log("open");
+  $(document).on('open', '.remodal', function () {
+    console.log('open');
   });
 
-  $(document).on("opened", ".remodal", function () {
-    console.log("opened");
+  $(document).on('opened', '.remodal', function () {
+    console.log('opened');
   });
 
-  $(document).on("close", ".remodal", function (e) {
-    console.log('close' + (e.reason ? ", reason: " + e.reason : ''));
+  $(document).on('close', '.remodal', function (e) {
+    console.log('close' + (e.reason ? ', reason: ' + e.reason : ''));
   });
 
-  $(document).on("closed", ".remodal", function (e) {
+  $(document).on('closed', '.remodal', function (e) {
     console.log('closed' + (e.reason ? ', reason: ' + e.reason : ''));
   });
 
-  $(document).on("confirm", ".remodal", function () {
-    console.log("confirm");
+  $(document).on('confirm', '.remodal', function () {
+    console.log('confirm');
   });
 
-  $(document).on("cancel", ".remodal", function () {
-    console.log("cancel");
+  $(document).on('cancel', '.remodal', function () {
+    console.log('cancel');
   });
 
 //  You can open or close it like this:
 //  $(function () {
-//    var inst = $.remodal.lookup[$("[data-remodal-id=modal]"").data("remodal")];
+//    var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
 //    inst.open();
 //    inst.close();
 //  });
 
   //  Or init in this way:
-  var inst = $("[data-remodal-id=modal2]").remodal();
+  var inst = $('[data-remodal-id=modal2]').remodal();
   //  inst.open();
 </script>
 </body>
