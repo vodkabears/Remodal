@@ -8,6 +8,7 @@ Flat, responsive, lightweight, fast, easy customizable modal window plugin with 
 #IMPORTANT!
 
 **v0.4.0 has incompatible changes.**
+
 **v0.7.0 will have incompatible changes...a lot of incompatible changes. Old versions won't be supported.**
 
 ## Notes
