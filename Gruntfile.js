@@ -133,7 +133,6 @@ module.exports = function(grunt) {
   // Tasks.
   grunt.registerTask('lint', ['jshint', 'jscs']);
   grunt.registerTask('test', ['connect', 'lint', 'qunit']);
-  grunt.registerTask('default', [
-    'connect', 'jshint', 'jscs', 'qunit', 'concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks'
-  ]);
+  grunt.registerTask('build', ['concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks']);
+  grunt.registerTask('default', ['test', 'build']);
 };
