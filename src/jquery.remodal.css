@@ -79,23 +79,13 @@ body.remodal-is-active .remodal {
    Remodal default theme
    ========================================================================== */
 
-/* Background for effects */
-
-.remodal-bg {
-  transition: filter 0.2s ease-out;
-}
-
-body.remodal-is-active .remodal-bg {
-  filter: blur(3px);
-}
-
 /* Default theme styles of the overlay */
 
 .remodal-overlay {
-  transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s;
 
   opacity: 0;
-  background: rgba(33, 36, 46, 0.95);
+  background: rgba(43, 46, 56, 0.9);
 }
 
 body.remodal-is-active .remodal-overlay {
@@ -105,20 +95,17 @@ body.remodal-is-active .remodal-overlay {
 /* Default theme styles of the modal dialog */
 
 .remodal {
-  font-size: 16px;
-
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
   padding: 35px;
 
-  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-  transform: scale(0.95);
+  transition: transform 0.2s, opacity 0.2s;
+  transform: scale(1.05);
 
   opacity: 0;
   color: #182a3c;
-  background: #f4f4f4;
-  background-clip: padding-box;
+  background: #fff;
 }
 
 body.remodal-is-active .remodal {
@@ -138,86 +125,96 @@ body.remodal-is-active .remodal {
 
 .remodal-close {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 0;
+  left: 0;
 
-  width: 28px;
-  height: 28px;
+  display: block;
+  overflow: visible;
 
-  transition: background 0.2s ease-out;
+  width: 35px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+
+  cursor: pointer;
+  transition: color 0.2s;
   text-decoration: none;
 
-  border-radius: 50%;
+  color: #95979c;
+  border: 0;
+  outline: 0;
+  background: transparent;
 }
 
-.remodal-close:after {
+.remodal-close:hover {
+  color: #2b2e38;
+}
+
+.remodal-close:before {
   font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important;
-  font-size: 28px;
-  line-height: 28px;
+  font-size: 25px;
+  line-height: 35px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
 
   display: block;
 
-  content: "×";
-  cursor: pointer;
-  transition: all 0.2s ease-out;
-  text-decoration: none;
+  width: 35px;
 
-  color: #3e5368;
-}
-
-.remodal-close:hover,
-.remodal-close:active {
-  background: #3e5368;
-}
-
-.remodal-close:hover.remodal-close:after,
-.remodal-close:active.remodal-close:after {
-  color: #f4f4f4;
+  content: "\00d7";
+  text-align: center;
 }
 
 /* Dialog buttons */
 
 .remodal-confirm,
 .remodal-cancel {
-  font-size: 10pt;
+  font: inherit;
 
   display: inline-block;
+  overflow: visible;
 
-  width: 120px;
-  margin: 0 0 5px 0;
-  padding: 9px 0;
+  min-width: 120px;
+  margin: 0;
+  padding: 12px 0;
 
   cursor: pointer;
-  transition: all 0.2s ease-out;
+  transition: background 0.2s;
   text-align: center;
+  vertical-align: middle;
   text-decoration: none;
 
-  border-radius: 6px;
-  background-clip: padding-box;
+  border: 0;
+  outline: 0;
 }
 
 .remodal-confirm {
-  color: #16a085;
-  border: 2px solid #16a085;
-  background: #f4f4f4;
+  color: #fff;
+  background: #81c784;
 }
 
-.remodal-confirm:hover,
-.remodal-confirm:active {
-  color: #f4f4f4;
-  background: #16a085;
+.remodal-confirm:hover {
+  background: #66bb6a;
 }
 
 .remodal-cancel {
-  color: #c0392b;
-  border: 2px solid #c0392b;
-  background: #f4f4f4;
+  color: #fff;
+  background: #e57373;
 }
 
-.remodal-cancel:hover,
-.remodal-cancel:active {
-  color: #f4f4f4;
-  background: #c0392b;
+.remodal-cancel:hover {
+  background: #ef5350;
+}
+
+/* Remove inner padding and border in Firefox 4+ for the button tag. */
+
+.remodal-confirm::-moz-focus-inner,
+.remodal-cancel::-moz-focus-inner {
+  padding: 0;
+
+  border: 0;
 }
 
 /* Media queries
@@ -228,8 +225,16 @@ body.remodal-is-active .remodal {
     max-width: 700px;
     min-height: 0;
     margin: 20px auto;
+  }
 
-    border-radius: 6px;
+  /* Background for effects */
+
+  .remodal-bg {
+    transition: filter 0.2s;
+  }
+
+  body.remodal-is-active .remodal-bg {
+    filter: blur(3px);
   }
 }
 
@@ -237,27 +242,11 @@ body.remodal-is-active .remodal {
    ========================================================================== */
 
 .lt-ie9 .remodal-overlay {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F021242E, endColorstr=#F021242E);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#e62b2e38, endColorstr=#e62b2e38);
 }
 
 .lt-ie9 .remodal {
   width: 700px;
   min-height: 0;
   margin: 20px auto;
-}
-
-.lt-ie9 .remodal-close:after {
-  margin: auto;
-
-  text-align: center;
-}
-
-.lt-ie9 .remodal-close:hover,
-.lt-ie9 .remodal-close:active {
-  background: transparent;
-}
-
-.lt-ie9 .remodal-close:hover.remodal-close:after,
-.lt-ie9 .remodal-close:active.remodal-close:after {
-  color: #3e5368;
 }
