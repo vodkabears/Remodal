@@ -27,11 +27,41 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      dist: {
+        files: {
+          'dist/jquery.remodal.js': 'src/jquery.remodal.js',
+          'dist/jquery.remodal.css': 'src/jquery.remodal.css'
+        },
+        options: {
+          banner: '<%= meta.banner %>'
+        }
+      }
+    },
+
     connect: {
       server: {
         options: {
           port: 7770
         }
+      }
+    },
+
+    csscomb: {
+      all: {
+        files: {
+          'src/jquery.remodal.css': 'src/jquery.remodal.css',
+          'dist/jquery.remodal.css': 'dist/jquery.remodal.css'
+        }
+      }
+    },
+
+    githooks: {
+      all: {
+        'pre-commit': 'lint'
+      },
+      options: {
+        command: 'node_modules/.bin/grunt'
       }
     },
 
@@ -62,15 +92,6 @@ module.exports = function(grunt) {
       }
     },
 
-    csscomb: {
-      all: {
-        files: {
-          'src/jquery.remodal.css': 'src/jquery.remodal.css',
-          'dist/jquery.remodal.css': 'dist/jquery.remodal.css'
-        }
-      }
-    },
-
     qunit: {
       all: {
         options: {
@@ -87,18 +108,6 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      dist: {
-        files: {
-          'dist/jquery.remodal.js': 'src/jquery.remodal.js',
-          'dist/jquery.remodal.css': 'src/jquery.remodal.css'
-        },
-        options: {
-          banner: '<%= meta.banner %>'
-        }
-      }
-    },
-
     uglify: {
       remodal: {
         files: {
@@ -107,15 +116,6 @@ module.exports = function(grunt) {
       },
       options: {
         banner: '<%= meta.banner %>'
-      }
-    },
-
-    githooks: {
-      all: {
-        'pre-commit': 'lint'
-      },
-      options: {
-        command: 'node_modules/.bin/grunt'
       }
     },
 
