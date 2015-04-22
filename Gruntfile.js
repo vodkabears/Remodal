@@ -117,6 +117,19 @@ module.exports = function(grunt) {
       options: {
         command: 'node_modules/.bin/grunt'
       }
+    },
+
+    watch: {
+      src: {
+        files: ['src/**/*', 'test/**/*', 'examples/**/*'],
+        tasks: ['build']
+      },
+      options: {
+        spawn: false,
+
+        // Use browser extensions of LiveReload
+        livereload: true
+      }
     }
   });
 
@@ -125,12 +138,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-csscomb');
   grunt.loadNpmTasks('grunt-githooks');
   grunt.loadNpmTasks('grunt-jscs');
 
-  // Tasks.
+  // Tasks
   grunt.registerTask('lint', ['jshint', 'jscs']);
   grunt.registerTask('test', ['connect', 'lint', 'qunit']);
   grunt.registerTask('build', ['concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks']);
