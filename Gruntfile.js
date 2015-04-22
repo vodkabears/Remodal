@@ -17,6 +17,16 @@ module.exports = function(grunt) {
         ' */\n'
     },
 
+    autoprefixer: {
+      dist: {
+        src: 'dist/jquery.remodal.css'
+      },
+      options: {
+        browsers: ['> 0.1%'],
+        cascade: false
+      }
+    },
+
     connect: {
       server: {
         options: {
@@ -55,7 +65,8 @@ module.exports = function(grunt) {
     csscomb: {
       all: {
         files: {
-          'src/jquery.remodal.css': 'src/jquery.remodal.css'
+          'src/jquery.remodal.css': 'src/jquery.remodal.css',
+          'dist/jquery.remodal.css': 'dist/jquery.remodal.css'
         }
       }
     },
@@ -114,6 +125,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-csscomb');
   grunt.loadNpmTasks('grunt-githooks');
   grunt.loadNpmTasks('grunt-jscs');
@@ -122,6 +134,6 @@ module.exports = function(grunt) {
   grunt.registerTask('lint', ['jshint', 'jscs']);
   grunt.registerTask('test', ['connect', 'lint', 'qunit']);
   grunt.registerTask('default', [
-    'connect', 'csscomb', 'jshint', 'jscs', 'qunit', 'concat', 'uglify', 'githooks'
+    'connect', 'jshint', 'jscs', 'qunit', 'concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks'
   ]);
 };
