@@ -59,7 +59,8 @@ html.remodal-is-locked {
 
 .remodal-overlay,
 .remodal-wrapper {
-    -webkit-transform: translateZ(0px);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* Necessary styles of the modal dialog */
