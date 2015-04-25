@@ -27,6 +27,18 @@ module.exports = function(grunt) {
       }
     },
 
+    browserSync: {
+      dev: {
+        bsFiles: {
+          src: ['dist/**/*', 'examples/**/*']
+        },
+        options: {
+          watchTask: true,
+          server: './'
+        }
+      }
+    },
+
     concat: {
       dist: {
         files: {
@@ -121,14 +133,11 @@ module.exports = function(grunt) {
 
     watch: {
       src: {
-        files: ['src/**/*', 'test/**/*', 'examples/**/*'],
+        files: ['src/**/*', 'examples/**/*'],
         tasks: ['build']
       },
       options: {
-        spawn: false,
-
-        // Use browser extensions of LiveReload
-        livereload: true
+        spawn: false
       }
     }
   });
@@ -140,6 +149,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-csscomb');
   grunt.loadNpmTasks('grunt-githooks');
   grunt.loadNpmTasks('grunt-jscs');
@@ -148,5 +158,6 @@ module.exports = function(grunt) {
   grunt.registerTask('lint', ['jshint', 'jscs']);
   grunt.registerTask('test', ['connect', 'lint', 'qunit']);
   grunt.registerTask('build', ['concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks']);
+  grunt.registerTask('bsync', ['browserSync', 'watch']);
   grunt.registerTask('default', ['test', 'build']);
 };
