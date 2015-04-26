@@ -70,7 +70,7 @@ html.remodal-is-locked {
   display: inline-block;
 }
 
-body.remodal-is-opening .remodal {
+.remodal.remodal-is-opening {
   /* Disable text resizing */
   text-size-adjust: 100%;
 }
@@ -85,16 +85,16 @@ body.remodal-is-opening .remodal {
   background: rgba(43, 46, 56, 0.9);
 }
 
-body.remodal-is-opening .remodal-overlay,
-body.remodal-is-closing .remodal-overlay {
+.remodal-overlay.remodal-is-opening,
+.remodal-overlay.remodal-is-closing {
   animation-fill-mode: forwards;
 }
 
-body.remodal-is-opening .remodal-overlay {
+.remodal-overlay.remodal-is-opening {
   animation: remodal-overlay-open-keyframes 0.2s;
 }
 
-body.remodal-is-closing .remodal-overlay {
+.remodal-overlay.remodal-is-closing {
   animation: remodal-overlay-close-keyframes 0.2s;
 }
 
@@ -110,16 +110,16 @@ body.remodal-is-closing .remodal-overlay {
   background: #fff;
 }
 
-body.remodal-is-opening .remodal,
-body.remodal-is-closing .remodal {
+.remodal.remodal-is-opening,
+.remodal.remodal-is-closing {
   animation-fill-mode: forwards;
 }
 
-body.remodal-is-opening .remodal {
+.remodal.remodal-is-opening {
   animation: remodal-open-keyframes 0.2s;
 }
 
-body.remodal-is-closing .remodal {
+.remodal.remodal-is-closing {
   animation: remodal-close-keyframes 0.2s;
 }
 
@@ -285,8 +285,8 @@ body.remodal-is-closing .remodal {
 
   /* Background for effects */
 
-  body.remodal-is-opening .remodal-bg,
-  body.remodal-is-opened .remodal-bg {
+  .remodal-bg.remodal-is-opening,
+  .remodal-bg.remodal-is-opened {
     filter: blur(3px);
   }
 }

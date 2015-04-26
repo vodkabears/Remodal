@@ -232,7 +232,23 @@
    * @param {String} Reason of a state change.
    */
   function setState(instance, state, isSilent, reason) {
-    instance.$body
+    instance.$bg
+      .removeClass(
+        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENED)
+      .addClass(NAMESPACE + '-is-' + state);
+
+    instance.$overlay
+      .removeClass(
+        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENED)
+      .addClass(NAMESPACE + '-is-' + state);
+
+    instance.$modal
       .removeClass(
         NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
         NAMESPACE + '-is-' + STATES.OPENING + ' ' +
@@ -274,6 +290,7 @@
       });
     });
 
+    // Check after some time if the animation is started
     setTimeout(function() {
       if (isAnimationStarted) {
         return;
