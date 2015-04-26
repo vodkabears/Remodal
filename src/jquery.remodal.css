@@ -70,7 +70,7 @@ html.remodal-is-locked {
   display: inline-block;
 }
 
-body.remodal-is-active .remodal {
+body.remodal-is-opening .remodal {
   /* Disable text resizing */
   text-size-adjust: 100%;
 }
@@ -82,14 +82,20 @@ body.remodal-is-active .remodal {
 /* Default theme styles of the overlay */
 
 .remodal-overlay {
-  transition: opacity 0.2s;
-
-  opacity: 0;
   background: rgba(43, 46, 56, 0.9);
 }
 
-body.remodal-is-active .remodal-overlay {
-  opacity: 1;
+body.remodal-is-opening .remodal-overlay,
+body.remodal-is-closing .remodal-overlay {
+  animation-fill-mode: forwards;
+}
+
+body.remodal-is-opening .remodal-overlay {
+  animation: remodal-overlay-open-keyframes 0.2s;
+}
+
+body.remodal-is-closing .remodal-overlay {
+  animation: remodal-overlay-close-keyframes 0.2s;
 }
 
 /* Default theme styles of the modal dialog */
@@ -100,18 +106,21 @@ body.remodal-is-active .remodal-overlay {
   min-height: 100%;
   padding: 35px;
 
-  transition: transform 0.2s, opacity 0.2s;
-  transform: scale(1.05);
-
-  opacity: 0;
   color: #182a3c;
   background: #fff;
 }
 
-body.remodal-is-active .remodal {
-  transform: scale(1);
+body.remodal-is-opening .remodal,
+body.remodal-is-closing .remodal {
+  animation-fill-mode: forwards;
+}
 
-  opacity: 1;
+body.remodal-is-opening .remodal {
+  animation: remodal-open-keyframes 0.2s;
+}
+
+body.remodal-is-closing .remodal {
+  animation: remodal-close-keyframes 0.2s;
 }
 
 /* Vertical align of the modal dialog */
@@ -217,6 +226,53 @@ body.remodal-is-active .remodal {
   border: 0;
 }
 
+/* Keyframes
+   ========================================================================== */
+
+@keyframes remodal-open-keyframes {
+  from {
+    transform: scale(1.05);
+
+    opacity: 0;
+  }
+  to {
+    transform: none;
+
+    opacity: 1;
+  }
+}
+
+@keyframes remodal-close-keyframes {
+  from {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.95);
+
+    opacity: 0;
+  }
+}
+
+@keyframes remodal-overlay-open-keyframes {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes remodal-overlay-close-keyframes {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* Media queries
    ========================================================================== */
 
@@ -229,11 +285,8 @@ body.remodal-is-active .remodal {
 
   /* Background for effects */
 
-  .remodal-bg {
-    transition: filter 0.2s;
-  }
-
-  body.remodal-is-active .remodal-bg {
+  body.remodal-is-opening .remodal-bg,
+  body.remodal-is-opened .remodal-bg {
     filter: blur(3px);
   }
 }

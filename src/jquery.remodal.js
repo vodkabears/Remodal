@@ -13,6 +13,22 @@
   'use strict';
 
   /**
+   * Animationend event with vendor prefixes
+   * @private
+   * @const
+   * @type {String}
+   */
+  var ANIMATIONEND_EVENTS = 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd';
+
+  /**
+   * Animationstart event with vendor prefixes
+   * @private
+   * @const
+   * @type {String}
+   */
+  var ANIMATIONSTART_EVENTS = 'animationstart webkitAnimationStart MSAnimationStart oAnimationStart';
+
+  /**
    * Name of the plugin
    * @private
    * @const
@@ -56,6 +72,17 @@
   };
 
   /**
+   * Reasons of the state change.
+   * @private
+   * @const
+   * @enum {String}
+   */
+  var STATE_CHANGE_REASONS = {
+    CONFIRMATION: 'confirmation',
+    CANCELLATION: 'cancellation'
+  };
+
+  /**
    * Current modal
    * @private
    * @type {Remodal}
@@ -70,25 +97,32 @@
   var scrollTop;
 
   /**
-   * Get a transition duration in ms
+   * Get an animation duration
    * @private
    * @param {jQuery} $elem
    * @return {Number}
    */
-  function getTransitionDuration($elem) {
-    var duration = $elem.css('transition-duration') ||
-        $elem.css('-webkit-transition-duration') ||
-        $elem.css('-moz-transition-duration') ||
-        $elem.css('-o-transition-duration') ||
-        $elem.css('-ms-transition-duration') ||
+  function getAnimationDuration($elem) {
+    var duration = $elem.css('animation-duration') ||
+        $elem.css('-webkit-animation-duration') ||
+        $elem.css('-moz-animation-duration') ||
+        $elem.css('-o-animation-duration') ||
+        $elem.css('-ms-animation-duration') ||
         '0s';
 
-    var delay = $elem.css('transition-delay') ||
-        $elem.css('-webkit-transition-delay') ||
-        $elem.css('-moz-transition-delay') ||
-        $elem.css('-o-transition-delay') ||
-        $elem.css('-ms-transition-delay') ||
+    var delay = $elem.css('animation-delay') ||
+        $elem.css('-webkit-animation-delay') ||
+        $elem.css('-moz-animation-delay') ||
+        $elem.css('-o-animation-delay') ||
+        $elem.css('-ms-animation-delay') ||
         '0s';
+
+    var iterationCount = $elem.css('animation-iteration-count') ||
+        $elem.css('-webkit-animation-iteration-count') ||
+        $elem.css('-moz-animation-iteration-count') ||
+        $elem.css('-o-animation-iteration-count') ||
+        $elem.css('-ms-animation-iteration-count') ||
+        '1';
 
     var max;
     var len;
@@ -97,17 +131,18 @@
 
     duration = duration.split(', ');
     delay = delay.split(', ');
+    iterationCount = iterationCount.split(', ');
 
-    // The duration length is the same as the delay length
+    // The 'duration' size is the same as the 'delay' size
     for (i = 0, len = duration.length, max = Number.NEGATIVE_INFINITY; i < len; i++) {
-      num = parseFloat(duration[i]) + parseFloat(delay[i]);
+      num = parseFloat(duration[i]) * parseInt(iterationCount[i]) + parseFloat(delay[i]);
 
       if (num > max) {
         max = num;
       }
     }
 
-    return num * 1000;
+    return num;
   }
 
   /**
@@ -189,6 +224,81 @@
   }
 
   /**
+   * Set state for an instance
+   * @private
+   * @param {Remodal} instance
+   * @param {STATES} state
+   * @param {Boolean} isSilent If true, Remodal does not trigger events
+   * @param {String} Reason of a state change.
+   */
+  function setState(instance, state, isSilent, reason) {
+    instance.$body
+      .removeClass(
+        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENED)
+      .addClass(NAMESPACE + '-is-' + state);
+
+    instance.state = state;
+    !isSilent && instance.$modal.trigger({
+      type: state,
+      reason: reason
+    });
+  }
+
+  /**
+   * Call a function after the animation
+   * @private
+   * @param {Function} fn
+   * @param {Remodal} instance
+   */
+  function callAfterAnimation(fn, instance) {
+
+    // Element with the longest animation
+    var $observableElement = getAnimationDuration(instance.$modal) > getAnimationDuration(instance.$overlay) ?
+      instance.$modal : instance.$overlay;
+    var isAnimationStarted = false;
+
+    $observableElement.one(ANIMATIONSTART_EVENTS, function() {
+      isAnimationStarted = true;
+
+      $observableElement.one(ANIMATIONEND_EVENTS, function(e) {
+
+        // Ignore child nodes
+        if (e.target !== this) {
+          return;
+        }
+
+        fn();
+      });
+    });
+
+    setTimeout(function() {
+      if (isAnimationStarted) {
+        return;
+      }
+
+      // If the 'animationstart' event wasn't triggered
+      $observableElement.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+      fn();
+    }, 25);
+  }
+
+  /**
+   * Close immediately
+   * @private
+   * @param {Remodal} instance
+   */
+  function halt(instance) {
+    instance.$overlay.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+    instance.$modal.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+    instance.$overlay.hide();
+    instance.$wrapper.hide();
+    setState(current, STATES.CLOSED, true);
+  }
+
+  /**
    * Parse a string with options
    * @private
    * @param str
@@ -234,9 +344,6 @@
    */
   function Remodal($modal, options) {
     var remodal = this;
-    var tdOverlay;
-    var tdModal;
-    var tdBg;
 
     remodal.settings = $.extend({}, DEFAULTS, options);
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
@@ -260,12 +367,6 @@
     remodal.$wrapper.append(remodal.$modal);
     remodal.$body.append(remodal.$wrapper);
 
-    // Calculate timeouts
-    tdOverlay = getTransitionDuration(remodal.$overlay);
-    tdModal = getTransitionDuration(remodal.$modal);
-    tdBg = getTransitionDuration(remodal.$bg);
-    remodal.td = Math.max(tdOverlay, tdModal, tdBg);
-
     // Add the close button event listener
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
       e.preventDefault();
@@ -277,10 +378,10 @@
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="cancel"]', function(e) {
       e.preventDefault();
 
-      remodal.$modal.trigger('cancel');
+      remodal.$modal.trigger(STATE_CHANGE_REASONS.CANCELLATION);
 
       if (remodal.settings.closeOnCancel) {
-        remodal.close('cancellation');
+        remodal.close(STATE_CHANGE_REASONS.CANCELLATION);
       }
     });
 
@@ -288,10 +389,10 @@
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="confirm"]', function(e) {
       e.preventDefault();
 
-      remodal.$modal.trigger('confirm');
+      remodal.$modal.trigger(STATE_CHANGE_REASONS.CONFIRMATION);
 
       if (remodal.settings.closeOnConfirm) {
-        remodal.close('confirmation');
+        remodal.close(STATE_CHANGE_REASONS.CONFIRMATION);
       }
     });
 
@@ -329,9 +430,6 @@
       return;
     }
 
-    remodal.state = STATES.OPENING;
-    remodal.$modal.trigger('open');
-
     id = remodal.$modal.attr('data-' + PLUGIN_NAME + '-id');
 
     if (id && remodal.settings.hashTracking) {
@@ -340,32 +438,25 @@
     }
 
     if (current && current !== remodal) {
-      current.$overlay.hide();
-      current.$wrapper.hide();
-      current.$body.removeClass(NAMESPACE + '-is-active');
+      halt(current);
     }
 
     current = remodal;
-
     lockScreen();
     remodal.$overlay.show();
-    remodal.$wrapper.show();
+    remodal.$wrapper.show().scrollTop(0);
 
-    setTimeout(function() {
-      remodal.$body.addClass(NAMESPACE + '-is-active');
-      remodal.$wrapper.scrollTop(0);
+    callAfterAnimation(function() {
+      setState(remodal, STATES.OPENED);
+    }, remodal);
 
-      setTimeout(function() {
-        remodal.state = STATES.OPENED;
-        remodal.$modal.trigger('opened');
-      }, remodal.td + 50);
-    }, 25);
+    setState(remodal, STATES.OPENING);
   };
 
   /**
    * Close a modal window
    * @public
-   * @param {String|undefined} reason A reason to close
+   * @param {String} reason
    */
   Remodal.prototype.close = function(reason) {
     var remodal = this;
@@ -375,12 +466,6 @@
       return;
     }
 
-    remodal.state = STATES.CLOSING;
-    remodal.$modal.trigger({
-      type: 'close',
-      reason: reason
-    });
-
     if (
       remodal.settings.hashTracking &&
       remodal.$modal.attr('data-' + PLUGIN_NAME + '-id') === location.hash.substr(1)
@@ -389,19 +474,15 @@
       $(window).scrollTop(scrollTop);
     }
 
-    remodal.$body.removeClass(NAMESPACE + '-is-active');
-
-    setTimeout(function() {
+    callAfterAnimation(function() {
       remodal.$overlay.hide();
       remodal.$wrapper.hide();
       unlockScreen();
 
-      remodal.state = STATES.CLOSED;
-      remodal.$modal.trigger({
-        type: 'closed',
-        reason: reason
-      });
-    }, remodal.td + 50);
+      setState(remodal, STATES.CLOSED, false, reason);
+    }, remodal);
+
+    setState(remodal, STATES.CLOSING, false, reason);
   };
 
   /**

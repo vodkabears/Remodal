@@ -92,7 +92,7 @@
     </p>
   </div>
   <br>
-  <button href="#" data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
   <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 
@@ -127,28 +127,28 @@
 
 <!-- Events -->
 <script>
-  $(document).on('open', '.remodal', function () {
-    console.log('open');
+  $(document).on('opening', '.remodal', function () {
+    console.log('opening');
   });
 
   $(document).on('opened', '.remodal', function () {
     console.log('opened');
   });
 
-  $(document).on('close', '.remodal', function (e) {
-    console.log('close' + (e.reason ? ', reason: ' + e.reason : ''));
+  $(document).on('closing', '.remodal', function (e) {
+    console.log('closing' + (e.reason ? ', reason: ' + e.reason : ''));
   });
 
   $(document).on('closed', '.remodal', function (e) {
     console.log('closed' + (e.reason ? ', reason: ' + e.reason : ''));
   });
 
-  $(document).on('confirm', '.remodal', function () {
-    console.log('confirm');
+  $(document).on('confirmation', '.remodal', function () {
+    console.log('confirmation');
   });
 
-  $(document).on('cancel', '.remodal', function () {
-    console.log('cancel');
+  $(document).on('cancellation', '.remodal', function () {
+    console.log('cancellation');
   });
 
 //  You can open or close it like this:
