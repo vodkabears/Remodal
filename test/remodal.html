@@ -3,25 +3,27 @@
 <head>
     <meta charset="utf-8">
     <title>Remodal Test Suite</title>
-    
+
     <!-- Load local jQuery -->
     <script src="../libs/jquery-loader.js"></script>
-    
+
     <!-- Load local QUnit -->
     <link rel="stylesheet" href="../libs/qunit/qunit/qunit.css" media="screen">
     <script src="../libs/qunit/qunit/qunit.js"></script>
-    
+
     <!-- Load local lib and tests -->
     <link rel="stylesheet" href="../src/jquery.remodal.css">
     <script src="../src/jquery.remodal.js"></script>
     <script src="remodal_test.js"></script>
     <style>
-        .remodal-overlay {
-            -webkit-transition: opacity 0.25s 0.05s linear;
-            -moz-transition: opacity 0.25s 0.05s linear;
-            -o-transition: opacity 0.25s 0.05s linear;
-            transition: opacity 0.25s 0.05s linear;
-        }
+      .remodal-overlay.remodal-is-opening,
+      .remodal-overlay.remodal-is-closing,
+      .remodal.remodal-is-opening,
+      .remodal.remodal-is-closing,
+      .remodal-bg.remodal-is-opening,
+      .remodal-bg.remodal-is-closing {
+        animation: none;
+      }
     </style>
 </head>
 <body>

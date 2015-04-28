@@ -1,4 +1,5 @@
 !(function($, location, document) {
+
   /*
    ======== A Handy Little QUnit Reference ========
    http://api.qunitjs.com/
@@ -21,37 +22,22 @@
    */
 
   var $document = $(document);
-  var index1;
-  var index2;
-  var $inst1;
-  var $inst2;
 
-  QUnit.begin(function() {
-    index1 = $('[data-remodal-id=modal]').data('remodal');
-    index2 = $('[data-remodal-id=modal2]').data('remodal');
-    $inst1 = $.remodal.lookup[index1];
-    $inst2 = $.remodal.lookup[index2];
+  QUnit.test('Auto-initialization', function(assert) {
+    var $elem1 = $('[data-remodal-id=modal]');
+    var $elem2 = $('[data-remodal-id=modal2]');
+
+    assert.equal($elem1.data('remodal'), 0, 'index is right');
+    assert.equal($elem2.data('remodal'), 1, 'index is right');
+    assert.ok($elem1.remodal(), 'instance exists');
+    assert.ok($elem2.remodal(), 'instance exists');
   });
 
-  QUnit.test('Auto-initialization', function() {
-    equal(index1, 0);
-    equal(index2, 1);
-    ok($inst1);
-    ok($inst2);
-  });
+  QUnit.test('JS-initialization', function(assert) {
+    var $elem = $('[data-remodal-id=modal3]');
 
-  QUnit.test('JS-initialization', function() {
-    var $inst3 = $('[data-remodal-id=modal3]').remodal();
-
-    ok($inst3);
-    equal($inst3.index, 2);
-  });
-
-  QUnit.test('Re-initialization', function() {
-    var $inst3 = $('[data-remodal-id=modal3]').remodal();
-
-    ok($inst3);
-    equal($inst3.index, 2);
+    assert.ok($elem.remodal(), 'instance exists');
+    assert.equal($elem.data('remodal'), 2, 'index is right');
   });
 
   QUnit.asyncTest('Hash tracking', function(assert) {
@@ -68,7 +54,7 @@
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('Opening with the `data-remodal-target` directive', function(assert) {
+  QUnit.asyncTest('`data-remodal-target` directive', function(assert) {
     $document.one('opened', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'the modal is opened');
       location.hash = '#';
@@ -82,11 +68,12 @@
     $('[data-remodal-target=modal]').click();
   });
 
-  QUnit.asyncTest('events', function(assert) {
-    var $confirmButton = $inst1.$body.find('[data-remodal-action="confirm"]');
-    var $cancelButton = $inst1.$body.find('[data-remodal-action="cancel"]');
+  QUnit.asyncTest('Events', function(assert) {
+    var remodal = $('[data-remodal-id=modal]').remodal();
+    var $confirmButton = $('[data-remodal-id=modal] [data-remodal-action=confirm]');
+    var $cancelButton = $('[data-remodal-id=modal] [data-remodal-action=cancel]');
 
-    $document.one('open', '[data-remodal-id=modal]', function() {
+    $document.one('opening', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'opening');
     });
 
@@ -95,25 +82,24 @@
       $confirmButton.click();
     });
 
-    $document.one('confirm', '[data-remodal-id=modal]', function() {
+    $document.one('confirmation', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'confirmed');
-      $confirmButton.click();
     });
 
-    $document.one('close', '[data-remodal-id=modal]', function() {
+    $document.one('closing', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'closing');
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'closed');
-      $inst1.open();
+      remodal.open();
 
       $document.one('opened', '[data-remodal-id=modal]', function() {
         $cancelButton.click();
       });
     });
 
-    $document.one('cancel', '[data-remodal-id=modal]', function() {
+    $document.one('cancellation', '[data-remodal-id=modal]', function() {
       assert.ok(true, 'canceled');
 
       $document.one('closed', '[data-remodal-id=modal]', function() {
@@ -124,59 +110,69 @@
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('Confirm button click', function(assert) {
-    var $confirmButton = $inst1.$body.find('[data-remodal-action="confirm"]');
+  QUnit.asyncTest('Click on the confirmation button', function(assert) {
+    var $confirmButton = $('[data-remodal-id=modal] [data-remodal-action=confirm]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $confirmButton.click();
     });
 
-    $document.one('confirm', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'confirm button works');
+    $document.one('confirmation', '[data-remodal-id=modal]', function() {
+      assert.ok(true, 'confirmation event is triggered');
     });
 
-    $document.one('closed', '[data-remodal-id=modal]', function() {
+    $document.one('closing', '[data-remodal-id=modal]', function(e) {
+      assert.equal(e.reason, 'confirmation', 'reason is right');
+    });
+
+    $document.one('closed', '[data-remodal-id=modal]', function(e) {
+      assert.equal(e.reason, 'confirmation', 'reason is right');
       QUnit.start();
     });
 
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('Cancel button click', function(assert) {
-    var $cancelButton = $inst1.$body.find('[data-remodal-action="cancel"]');
+  QUnit.asyncTest('Click on the cancel button', function(assert) {
+    var $cancelButton = $('[data-remodal-id=modal] [data-remodal-action=cancel]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $cancelButton.click();
     });
 
-    $document.one('cancel', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'cancel button works');
+    $document.one('cancellation', '[data-remodal-id=modal]', function() {
+      assert.ok(true, 'cancellation event is triggered');
     });
 
-    $document.one('closed', '[data-remodal-id=modal]', function() {
+    $document.one('closing', '[data-remodal-id=modal]', function(e) {
+      assert.equal(e.reason, 'cancellation', 'reason is right');
+    });
+
+    $document.one('closed', '[data-remodal-id=modal]', function(e) {
+      assert.equal(e.reason, 'cancellation', 'reason is right');
       QUnit.start();
     });
 
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('Close button click', function(assert) {
-    var $closeButton = $inst1.$body.find('[data-remodal-action="close"]');
+  QUnit.asyncTest('Click on the close button', function(assert) {
+    var $closeButton = $('[data-remodal-id=modal] [data-remodal-action=close]');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $closeButton.click();
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(true, 'Close button works');
+      assert.ok(true, 'close button works');
       QUnit.start();
     });
 
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('Wrapper click', function(assert) {
-    var $wrapper = $inst1.$wrapper;
+  QUnit.asyncTest('Click on the wrapper', function(assert) {
+    var $wrapper = $('[data-remodal-id=modal]').parent();
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
       $wrapper.click();
@@ -190,65 +186,69 @@
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('methods', function(assert) {
-    $document.one('open', '[data-remodal-id=modal]', function() {
-      assert.equal($inst1.getState(), 'opening');
+  QUnit.asyncTest('#open, #close, #getState', function(assert) {
+    var remodal = $('[data-remodal-id=modal]').remodal();
+
+    $document.one('opening', '[data-remodal-id=modal]', function() {
+      assert.equal(remodal.getState(), 'opening', 'state is "opening"');
     });
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      assert.equal($inst1.getState(), 'opened');
-      $inst1.close();
+      assert.equal(remodal.getState(), 'opened', 'state is "opened"');
+      remodal.close();
     });
 
-    $document.one('close', '[data-remodal-id=modal]', function() {
-      assert.equal($inst1.getState(), 'closing');
+    $document.one('closing', '[data-remodal-id=modal]', function() {
+      assert.equal(remodal.getState(), 'closing', 'state is "closing"');
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.equal($inst1.getState(), 'closed');
+      assert.equal(remodal.getState(), 'closed', 'state is "closed"');
       QUnit.start();
     });
 
-    $inst1.open();
+    remodal.open();
   });
 
-  QUnit.test('animation timeout', function() {
+  QUnit.asyncTest('Lock/unlock the scroll bar', function(assert) {
+    var $html = $('html');
+    var $body = $(document.body);
+    var remodal = $('[data-remodal-id=modal]').remodal();
 
-    // Check animation timeout
-    equal(~~$inst1.td, 300);
-  });
-
-  QUnit.asyncTest('lock/unlock the scroll bar', function(assert) {
-    $(document.body).css('height', '10000px');
+    $body.css('height', '10000px');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      assert.ok($('html, body').hasClass('remodal-is-locked'));
-      assert.ok(parseInt($(document.body).css('padding-right')) > 0);
-      $inst1.close();
+      assert.ok($html.hasClass('remodal-is-locked'), 'page is locked');
+      assert.ok(parseInt($body.css('padding-right')) >= 0, 'padding-right is added');
+      remodal.close();
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(!$('html, body').hasClass('remodal-is-locked'));
-      assert.ok(parseInt($(document.body).css('padding-right')) === 0);
+      assert.ok(!$html.hasClass('remodal-is-locked'), 'page isn\'t locked');
+      assert.equal(parseInt($body.css('padding-right')), 0, 'padding-right equals 0');
       QUnit.start();
     });
 
     location.hash = '#modal';
   });
 
-  QUnit.asyncTest('do not lock/unlock the scroll bar twice', function(assert) {
-    $('html').addClass('remodal-is-locked');
-    $(document.body).css('height', '10000px').css('padding-right', '20px');
+  QUnit.asyncTest('Do not lock/unlock the scroll bar twice', function(assert) {
+    var $html = $('html');
+    var $body = $(document.body);
+    var remodal = $('[data-remodal-id=modal]').remodal();
+
+    $html.addClass('remodal-is-locked');
+    $body.css('height', '10000px').css('padding-right', '20px');
 
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      assert.ok($('html').hasClass('remodal-is-locked'));
-      assert.ok(parseInt($(document.body).css('padding-right')) === 20);
-      $inst1.close();
+      assert.ok($html.hasClass('remodal-is-locked'), 'page is locked');
+      assert.equal(parseInt($body.css('padding-right')), 20, 'padding-right equals 20');
+      remodal.close();
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(!$('html').hasClass('remodal-is-locked'));
-      assert.ok(parseInt($(document.body).css('padding-right')) < 20);
+      assert.ok(!$html.hasClass('remodal-is-locked'), 'page isn\'t locked');
+      assert.ok(parseInt($body.css('padding-right')) <= 20, 'padding-right is correct');
       QUnit.start();
     });
 
@@ -256,33 +256,39 @@
   });
 
   QUnit.test('Options parsing', function() {
-    propEqual($inst2.settings, {
+    var remodal = $('[data-remodal-id=modal2]').remodal();
+
+    propEqual(remodal.settings, {
       hashTracking: false,
       closeOnConfirm: false,
       closeOnCancel: false,
       closeOnEscape: true,
       closeOnAnyClick: true
-    });
+    }, 'options are correctly parsed');
   });
 
   QUnit.asyncTest('Options', function(assert) {
-    $inst2.open();
-    assert.ok(!location.hash, 'hashTracking is disabled');
+    var $wrapper = $('[data-remodal-id=modal2]').parent();
+    var remodal = $wrapper.children().remodal();
 
-    $document.one('confirm', '[data-remodal-id=modal2]', function() {
+    remodal.open();
+    assert.ok(!location.hash, 'hash tracking is disabled');
+
+    $document.one('confirmation', '[data-remodal-id=modal2]', function() {
       setTimeout(function() {
-        assert.ok($inst2.$wrapper.css('display') === 'block');
-      }, $inst2.td + 100);
+        assert.equal($wrapper.css('display'), 'block', 'wrapper is visible');
+      }, 50);
     });
 
-    $document.one('cancel', '[data-remodal-id=modal2]', function() {
+    $document.one('cancellation', '[data-remodal-id=modal2]', function() {
       setTimeout(function() {
-        assert.ok($inst2.$wrapper.css('display') === 'block');
+        assert.equal($wrapper.css('display'), 'block', 'wrapper is visible');
         QUnit.start();
-      }, $inst2.td + 100);
+      }, 50);
     });
 
-    $inst2.$body.find('[data-remodal-action="confirm"]').click();
-    $inst2.$body.find('[data-remodal-action="cancel"]').click();
+    $wrapper.find('[data-remodal-action=confirm]').click();
+    $wrapper.find('[data-remodal-action=cancel]').click();
   });
+
 }(window.jQuery || window.Zepto, location, document));
