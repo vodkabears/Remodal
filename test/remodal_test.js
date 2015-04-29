@@ -223,6 +223,28 @@
     remodal.open();
   });
 
+  QUnit.test('#destroy', function(assert) {
+    var remodal = $('<div data-remodal-id="modal4">')
+      .appendTo($(document.body))
+      .remodal();
+
+    var instanceCount = $.remodal.lookup.filter(function(instance) {
+      return !!instance;
+    }).length;
+
+    assert.equal($('[data-remodal-id=modal4]').length, 1, 'modal exists');
+    assert.equal(instanceCount, 4, 'count of instances is right');
+
+    remodal.destroy();
+
+    instanceCount = $.remodal.lookup.filter(function(instance) {
+      return !!instance;
+    }).length;
+
+    assert.equal($('[data-remodal-id=modal4]').length, 0, 'modal does not exist');
+    assert.equal(instanceCount, 3, 'count of instances is right');
+  });
+
   QUnit.asyncTest('Lock/unlock the scroll bar', function(assert) {
     var $html = $('html');
     var $body = $(document.body);
