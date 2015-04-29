@@ -186,6 +186,19 @@
     location.hash = '#modal';
   });
 
+  QUnit.asyncTest('Esc key up', function(assert) {
+    $document.one('opened', '[data-remodal-id=modal]', function() {
+      $document.trigger($.Event('keyup', { keyCode: 27 }));
+    });
+
+    $document.one('closed', '[data-remodal-id=modal]', function() {
+      assert.ok(true, 'Esc key works');
+      QUnit.start();
+    });
+
+    location.hash = '#modal';
+  });
+
   QUnit.asyncTest('#open, #close, #getState', function(assert) {
     var remodal = $('[data-remodal-id=modal]').remodal();
 
