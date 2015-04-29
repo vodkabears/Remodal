@@ -354,6 +354,42 @@
   }
 
   /**
+   * Hashchange event handler
+   * @private
+   */
+  function handleHashChangeEvent() {
+    var id = location.hash.replace('#', '');
+    var instance;
+    var $elem;
+
+    if (!id) {
+
+      // Check if we have currently opened modal and animation was completed
+      if (current && current.state === STATES.OPENED && current.settings.hashTracking) {
+        current.close();
+      }
+    } else {
+
+      // Catch syntax error if your hash is bad
+      try {
+        $elem = $(
+          '[data-' + PLUGIN_NAME + '-id=' +
+          id.replace(new RegExp('/', 'g'), '\\/') + ']'
+        );
+      } catch (err) {}
+
+      if ($elem && $elem.length) {
+        instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
+
+        if (instance && instance.settings.hashTracking) {
+          instance.open();
+        }
+      }
+
+    }
+  }
+
+  /**
    * Remodal constructor
    * @param {jQuery} $modal
    * @param {Object} options
@@ -410,13 +446,6 @@
 
       if (remodal.settings.closeOnConfirm) {
         remodal.close(STATE_CHANGE_REASONS.CONFIRMATION);
-      }
-    });
-
-    // Add the keyboard event listener
-    $(document).on('keyup.' + NAMESPACE, function(e) {
-      if (e.keyCode === 27 && remodal.settings.closeOnEscape && remodal.state === STATES.OPENED) {
-        remodal.close();
       }
     });
 
@@ -579,52 +608,15 @@
 
       $container[PLUGIN_NAME](options);
     });
+
+    // Handle keyup event
+    $(document).on('keyup.' + NAMESPACE, function(e) {
+      if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
+        current.close();
+      }
+    });
+
+    // Handle hashchange event
+    $(window).on('hashchange.' + NAMESPACE, handleHashChangeEvent);
   });
-
-  /**
-   * Hashchange handler
-   * @private
-   * @param {Event} e
-   * @param {Boolean} [closeOnEmptyHash=true]
-   */
-  function hashHandler(e, closeOnEmptyHash) {
-    var id = location.hash.replace('#', '');
-    var instance;
-    var $elem;
-
-    if (typeof closeOnEmptyHash === 'undefined') {
-      closeOnEmptyHash = true;
-    }
-
-    if (!id) {
-      if (closeOnEmptyHash) {
-
-        // Check if we have currently opened modal and animation was completed
-        if (current && current.state === STATES.OPENED && current.settings.hashTracking) {
-          current.close();
-        }
-      }
-    } else {
-
-      // Catch syntax error if your hash is bad
-      try {
-        $elem = $(
-          '[data-' + PLUGIN_NAME + '-id=' +
-          id.replace(new RegExp('/', 'g'), '\\/') + ']'
-        );
-      } catch (err) {}
-
-      if ($elem && $elem.length) {
-        instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
-
-        if (instance && instance.settings.hashTracking) {
-          instance.open();
-        }
-      }
-
-    }
-  }
-
-  $(window).bind('hashchange.' + NAMESPACE, hashHandler);
-
 });
