@@ -308,11 +308,16 @@
    * @param {Remodal} instance
    */
   function halt(instance) {
+    if (instance.state === STATES.CLOSED) {
+      return;
+    }
+
     instance.$overlay.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
     instance.$modal.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
     instance.$overlay.hide();
     instance.$wrapper.hide();
-    setState(current, STATES.CLOSED, true);
+    unlockScreen();
+    setState(instance, STATES.CLOSED, true);
   }
 
   /**
@@ -538,6 +543,32 @@
    */
   Remodal.prototype.getState = function() {
     return this.state;
+  };
+
+  /**
+   * Destroy a modal
+   * @public
+   */
+  Remodal.prototype.destroy = function() {
+    var lookup = $[PLUGIN_NAME].lookup;
+    var instanceCount;
+
+    halt(this);
+    this.$wrapper.remove();
+
+    delete lookup[this.index];
+    instanceCount = $.grep(lookup, function(instance) {
+      return !!instance;
+    }).length;
+
+    if (instanceCount === 0) {
+      this.$overlay.remove();
+      this.$bg.removeClass(
+        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENED);
+    }
   };
 
   /**
