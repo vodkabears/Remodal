@@ -298,7 +298,8 @@
       closeOnConfirm: false,
       closeOnCancel: false,
       closeOnEscape: true,
-      closeOnAnyClick: true
+      closeOnAnyClick: true,
+      modifier: 'with-test-class1 with-test-class2'
     }, 'options are correctly parsed');
   });
 
@@ -324,6 +325,31 @@
 
     $wrapper.find('[data-remodal-action=confirm]').click();
     $wrapper.find('[data-remodal-action=cancel]').click();
+  });
+
+  QUnit.asyncTest('"modifier" option', function(assert) {
+    var $modal = $('[data-remodal-id=modal2]');
+    var $overlay = $('.remodal-overlay');
+    var $bg = $('.remodal-bg');
+    var remodal = $modal.remodal();
+
+    $document.one('opened', '[data-remodal-id=modal2]', function() {
+      assert.ok($bg.hasClass('with-test-class1 with-test-class2'), 'bg has the modifier');
+      assert.ok($overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has the modifier');
+      assert.ok($modal.hasClass('with-test-class1 with-test-class2'), 'modal has the modifier');
+
+      remodal.close();
+    });
+
+    $document.one('closed', '[data-remodal-id=modal2]', function() {
+      assert.ok(!$bg.hasClass('with-test-class1 with-test-class2'), 'bg hasn\'t the modifier');
+      assert.ok(!$overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has\'t the modifier');
+      assert.ok($modal.hasClass('with-test-class1 with-test-class2'), 'modal still has the modifier');
+
+      QUnit.start();
+    });
+
+    remodal.open();
   });
 
 }(window.jQuery || window.Zepto, location, document));
