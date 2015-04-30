@@ -98,7 +98,7 @@
   var scrollTop;
 
   /**
-   * Get an animation duration
+   * Returns an animation duration
    * @private
    * @param {jQuery} $elem
    * @return {Number}
@@ -147,7 +147,7 @@
   }
 
   /**
-   * Get a scrollbar width
+   * Returns a scrollbar width
    * @private
    * @return {Number}
    */
@@ -183,7 +183,7 @@
   }
 
   /**
-   * Lock the screen
+   * Locks the screen
    * @private
    */
   function lockScreen() {
@@ -204,7 +204,7 @@
   }
 
   /**
-   * Unlock the screen
+   * Unlocks the screen
    * @private
    */
   function unlockScreen() {
@@ -225,7 +225,7 @@
   }
 
   /**
-   * Set state for an instance
+   * Sets a state for an instance
    * @private
    * @param {Remodal} instance
    * @param {STATES} state
@@ -265,7 +265,7 @@
   }
 
   /**
-   * Call a function after the animation
+   * Calls a function after the animation
    * @private
    * @param {Function} fn
    * @param {Remodal} instance
@@ -304,7 +304,7 @@
   }
 
   /**
-   * Close immediately
+   * Closes immediately
    * @private
    * @param {Remodal} instance
    */
@@ -323,7 +323,7 @@
   }
 
   /**
-   * Parse a string with options
+   * Parses a string with options
    * @private
    * @param str
    * @returns {Object}
@@ -361,8 +361,9 @@
   }
 
   /**
-   * Hashchange event handler
+   * Handles the hashchange event
    * @private
+   * @listens hashchange
    */
   function handleHashChangeEvent() {
     var id = location.hash.replace('#', '');
@@ -398,9 +399,9 @@
 
   /**
    * Remodal constructor
+   * @constructor
    * @param {jQuery} $modal
    * @param {Object} options
-   * @constructor
    */
   function Remodal($modal, options) {
     var $body = $(document.body);
@@ -410,7 +411,6 @@
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
     remodal.state = STATES.CLOSED;
 
-    // Build DOM
     remodal.$overlay = $('.' + NAMESPACE + '-overlay');
 
     if (!remodal.$overlay.length) {
@@ -427,14 +427,14 @@
     remodal.$wrapper.append(remodal.$modal);
     $body.append(remodal.$wrapper);
 
-    // Add the close button event listener
+    // Add the event listener for the close button
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
       e.preventDefault();
 
       remodal.close();
     });
 
-    // Add the cancel button event listener
+    // Add the event listener for the cancel button
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="cancel"]', function(e) {
       e.preventDefault();
 
@@ -445,7 +445,7 @@
       }
     });
 
-    // Add the confirm button event listener
+    // Add the event listener for the confirm button
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="confirm"]', function(e) {
       e.preventDefault();
 
@@ -456,7 +456,7 @@
       }
     });
 
-    // Add the overlay event listener
+    // Add the event listener for the overlay
     remodal.$wrapper.on('click.' + NAMESPACE, function(e) {
       var $target = $(e.target);
 
@@ -471,7 +471,7 @@
   }
 
   /**
-   * Open a modal window
+   * Opens a modal window
    * @public
    */
   Remodal.prototype.open = function() {
@@ -508,7 +508,7 @@
   };
 
   /**
-   * Close a modal window
+   * Closes a modal window
    * @public
    * @param {String} reason
    */
@@ -541,7 +541,7 @@
   };
 
   /**
-   * Return a current state of a modal
+   * Returns a current state of a modal
    * @public
    * @returns {STATES}
    */
@@ -550,7 +550,7 @@
   };
 
   /**
-   * Destroy a modal
+   * Destroys a modal
    * @public
    */
   Remodal.prototype.destroy = function() {
@@ -576,7 +576,7 @@
   };
 
   /**
-   * Special plugin object for instances.
+   * Special plugin object for instances
    * @public
    * @type {Object}
    */
@@ -586,9 +586,9 @@
 
   /**
    * Plugin constructor
+   * @constructor
    * @param {Object} options
    * @returns {JQuery}
-   * @constructor
    */
   $.fn[PLUGIN_NAME] = function(opts) {
     var instance;
@@ -617,7 +617,7 @@
 
   $(document).ready(function() {
 
-    // data-remodal-target opens a modal window with the special Id.
+    // data-remodal-target opens a modal window with the special Id
     $(document).on('click', '[data-' + PLUGIN_NAME + '-target]', function(e) {
       e.preventDefault();
 
@@ -628,9 +628,9 @@
       $[PLUGIN_NAME].lookup[$target.data(PLUGIN_NAME)].open();
     });
 
-    // Auto initialization of modal windows.
-    // They should have the 'remodal' class attribute.
-    // Also you can write `data-remodal-options` attribute to pass params into the modal.
+    // Auto initialization of modal windows
+    // They should have the 'remodal' class attribute
+    // Also you can write the `data-remodal-options` attribute to pass params into the modal
     $(document).find('.' + NAMESPACE).each(function(i, container) {
       var $container = $(container);
       var options = $container.data(PLUGIN_NAME + '-options');
@@ -644,14 +644,14 @@
       $container[PLUGIN_NAME](options);
     });
 
-    // Handle keyup event
+    // Handles the keyup event
     $(document).on('keyup.' + NAMESPACE, function(e) {
       if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
         current.close();
       }
     });
 
-    // Handle hashchange event
+    // Handles the hashchange event
     $(window).on('hashchange.' + NAMESPACE, handleHashChangeEvent);
   });
 });
