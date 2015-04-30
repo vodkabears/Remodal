@@ -403,6 +403,7 @@
    * @constructor
    */
   function Remodal($modal, options) {
+    var $body = $(document.body);
     var remodal = this;
 
     remodal.settings = $.extend({}, DEFAULTS, options);
@@ -410,12 +411,11 @@
     remodal.state = STATES.CLOSED;
 
     // Build DOM
-    remodal.$body = $(document.body);
     remodal.$overlay = $('.' + NAMESPACE + '-overlay');
 
     if (!remodal.$overlay.length) {
       remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay');
-      remodal.$body.append(remodal.$overlay);
+      $body.append(remodal.$overlay);
     }
 
     remodal.$bg = $('.' + NAMESPACE + '-bg');
@@ -425,7 +425,7 @@
     remodal.$modal.css('visibility', 'visible');
 
     remodal.$wrapper.append(remodal.$modal);
-    remodal.$body.append(remodal.$wrapper);
+    $body.append(remodal.$wrapper);
 
     // Add the close button event listener
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
