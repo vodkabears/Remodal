@@ -7,10 +7,25 @@
   <meta name="description" content="Remodal example">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../dist/jquery.remodal.css">
+  <style>
+    .remodal-bg.with-red-theme.remodal-is-opening,
+    .remodal-bg.with-red-theme.remodal-is-opened {
+      filter: none;
+    }
+
+    .remodal-overlay.with-red-theme {
+      background-color: #f44336;
+    }
+
+    .remodal.with-red-theme {
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
 <div class="remodal-bg">
-  <a href="#modal">Click</a>
+  <a href="#modal">Modal №1</a><br>
+  <a href="#modal2">Modal №2</a>
   <br><br>
 
   <h1>Remodal</h1>
@@ -159,7 +174,9 @@
 //  });
 
   //  Or init in this way:
-  var inst = $('[data-remodal-id=modal2]').remodal();
+  var inst = $('[data-remodal-id=modal2]').remodal({
+    modifier: 'with-red-theme'
+  });
   //  inst.open();
 </script>
 </body>

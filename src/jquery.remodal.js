@@ -55,7 +55,8 @@
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,
-    closeOnAnyClick: true
+    closeOnAnyClick: true,
+    modifier: ''
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 
   /**
@@ -314,7 +315,8 @@
 
     instance.$overlay.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
     instance.$modal.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
-    instance.$overlay.hide();
+    instance.$bg.removeClass(instance.settings.modifier);
+    instance.$overlay.removeClass(instance.settings.modifier).hide();
     instance.$wrapper.hide();
     unlockScreen();
     setState(instance, STATES.CLOSED, true);
@@ -419,7 +421,7 @@
     remodal.$bg = $('.' + NAMESPACE + '-bg');
     remodal.$wrapper = $('<div>').addClass(NAMESPACE + '-wrapper');
     remodal.$modal = $modal;
-    remodal.$modal.addClass(NAMESPACE);
+    remodal.$modal.addClass(NAMESPACE + ' ' + remodal.settings.modifier);
     remodal.$modal.css('visibility', 'visible');
 
     remodal.$wrapper.append(remodal.$modal);
@@ -494,7 +496,8 @@
 
     current = remodal;
     lockScreen();
-    remodal.$overlay.show();
+    remodal.$bg.addClass(remodal.settings.modifier);
+    remodal.$overlay.addClass(remodal.settings.modifier).show();
     remodal.$wrapper.show().scrollTop(0);
 
     callAfterAnimation(function() {
@@ -526,7 +529,8 @@
     }
 
     callAfterAnimation(function() {
-      remodal.$overlay.hide();
+      remodal.$bg.removeClass(remodal.settings.modifier);
+      remodal.$overlay.removeClass(remodal.settings.modifier).hide();
       remodal.$wrapper.hide();
       unlockScreen();
 
