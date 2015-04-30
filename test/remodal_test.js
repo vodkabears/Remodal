@@ -259,7 +259,7 @@
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(!$html.hasClass('remodal-is-locked'), 'page isn\'t locked');
+      assert.notOk($html.hasClass('remodal-is-locked'), 'page isn\'t locked');
       assert.equal(parseInt($body.css('padding-right')), 0, 'padding-right equals 0');
       QUnit.start();
     });
@@ -282,7 +282,7 @@
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
-      assert.ok(!$html.hasClass('remodal-is-locked'), 'page isn\'t locked');
+      assert.notOk($html.hasClass('remodal-is-locked'), 'page isn\'t locked');
       assert.ok(parseInt($body.css('padding-right')) <= 20, 'padding-right is correct');
       QUnit.start();
     });
@@ -297,34 +297,98 @@
       hashTracking: false,
       closeOnConfirm: false,
       closeOnCancel: false,
-      closeOnEscape: true,
-      closeOnAnyClick: true,
+      closeOnEscape: false,
+      closeOnAnyClick: false,
       modifier: 'with-test-class1 with-test-class2'
     }, 'options are correctly parsed');
   });
 
-  QUnit.asyncTest('Options', function(assert) {
+  QUnit.test('"hashTracking" option', function(assert) {
     var $wrapper = $('[data-remodal-id=modal2]').parent();
     var remodal = $wrapper.children().remodal();
 
     remodal.open();
-    assert.ok(!location.hash, 'hash tracking is disabled');
+    assert.notOk(location.hash, 'hash tracking is disabled');
+    remodal.close();
+  });
+
+  QUnit.asyncTest('"closeOnConfirm" option', function(assert) {
+    var $wrapper = $('[data-remodal-id=modal2]').parent();
+    var remodal = $wrapper.children().remodal();
+
+    $document.one('opened', '[data-remodal-id=modal2]', function() {
+      $wrapper.find('[data-remodal-action=confirm]').click();
+    });
 
     $document.one('confirmation', '[data-remodal-id=modal2]', function() {
-      setTimeout(function() {
-        assert.equal($wrapper.css('display'), 'block', 'wrapper is visible');
-      }, 50);
+      assert.equal(remodal.getState(), 'opened', 'it is still opened');
+      remodal.close();
+    });
+
+    $document.one('closed', '[data-remodal-id=modal2]', function() {
+      QUnit.start();
+    });
+
+    remodal.open();
+  });
+
+  QUnit.asyncTest('"closeOnCancel" option', function(assert) {
+    var $wrapper = $('[data-remodal-id=modal2]').parent();
+    var remodal = $wrapper.children().remodal();
+
+    $document.one('opened', '[data-remodal-id=modal2]', function() {
+      $wrapper.find('[data-remodal-action=cancel]').click();
     });
 
     $document.one('cancellation', '[data-remodal-id=modal2]', function() {
+      assert.equal(remodal.getState(), 'opened', 'it is still opened');
+      remodal.close();
+    });
+
+    $document.one('closed', '[data-remodal-id=modal2]', function() {
+      QUnit.start();
+    });
+
+    remodal.open();
+  });
+
+  QUnit.asyncTest('"closeOnEscape" option', function(assert) {
+    var remodal = $('[data-remodal-id=modal2]').remodal();
+
+    $document.one('opened', '[data-remodal-id=modal2]', function() {
+      $document.trigger($.Event('keyup', { keyCode: 27 }));
+
       setTimeout(function() {
-        assert.equal($wrapper.css('display'), 'block', 'wrapper is visible');
-        QUnit.start();
+        assert.equal(remodal.getState(), 'opened', 'it is still opened');
+        remodal.close();
       }, 50);
     });
 
-    $wrapper.find('[data-remodal-action=confirm]').click();
-    $wrapper.find('[data-remodal-action=cancel]').click();
+    $document.one('closed', '[data-remodal-id=modal2]', function() {
+      QUnit.start();
+    });
+
+    remodal.open();
+  });
+
+  QUnit.asyncTest('"closeOnAnyClick" option', function(assert) {
+    var $wrapper = $('[data-remodal-id=modal2]').parent();
+    var remodal = $wrapper.children().remodal();
+
+    $document.one('opened', '[data-remodal-id=modal2]', function() {
+      $wrapper.click();
+
+      setTimeout(function() {
+        assert.equal(remodal.getState(), 'opened', 'it is still opened');
+        remodal.close();
+      }, 50);
+    });
+
+    $document.one('closed', '[data-remodal-id=modal2]', function() {
+      QUnit.start();
+    });
+
+    remodal.open();
   });
 
   QUnit.asyncTest('"modifier" option', function(assert) {
@@ -342,8 +406,8 @@
     });
 
     $document.one('closed', '[data-remodal-id=modal2]', function() {
-      assert.ok(!$bg.hasClass('with-test-class1 with-test-class2'), 'bg hasn\'t the modifier');
-      assert.ok(!$overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has\'t the modifier');
+      assert.notOk($bg.hasClass('with-test-class1 with-test-class2'), 'bg hasn\'t the modifier');
+      assert.notOk($overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has\'t the modifier');
       assert.ok($modal.hasClass('with-test-class1 with-test-class2'), 'modal still has the modifier');
 
       QUnit.start();
