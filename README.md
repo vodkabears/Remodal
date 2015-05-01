@@ -4,37 +4,39 @@
 [![devDependency Status](https://david-dm.org/vodkabears/remodal/dev-status.svg)](https://david-dm.org/vodkabears/remodal#info=devDependencies)
 Remodal
 =======
-Flat, responsive, lightweight, fast, easy customizable modal window plugin with declarative state notation and hash tracking.
+Responsive, lightweight, fast, fully customizable modal window plugin
+with declarative configuration and hash tracking.
 
 #IMPORTANT!
 
-**v0.4.0 has incompatible changes.**
-
-**v0.7.0 will have incompatible changes...a lot of incompatible changes. Old versions won't be supported.**
+**v1.0.0 has a lot of incompatible changes. Old versions won't be supported.**
 
 ## Notes
 * All modern browsers are supported.
-* Only webkit browsers have a blur effect in the default css theme. If you want a blur for other browsers, use this: https://github.com/Schepp/CSS-Filters-Polyfill, but it's not fast like a native css3 blur.
-* IE8+. To enable IE8 styles add `lt-ie9` class to the `html` element, as modernizr does.
-* Zepto support.
+* IE8+. To enable IE8 styles add the `lt-ie9` class to the `html` element, as modernizr does.
+* jQuery, jQuery2, Zepto support.
+* Browserify support.
 
 ## Start
 
-That's very simple to start using Remodal.
-
-[Download it](https://github.com/VodkaBears/Remodal/releases/latest). You can use bower: `bower install remodal`.
-
-Add this in the head section:
-```html
-<link rel="stylesheet" href="path/to/your/jquery.remodal.css">
+Download the latest version from [GitHub](https://github.com/VodkaBears/Remodal/releases/latest
+) or via package managers:
+```
+npm install remodal
+bower install remodal
 ```
 
-Add this before the `</body>` or in the head:
+Include the CSS file from the dist folder in the head section:
 ```html
-<script src="path/to/your/jquery.remodal.min.js"></script>
+<link rel="stylesheet" href="../dist/jquery.remodal.css">
 ```
 
-Define the background container for the modal(for effects like a blur). It can be any simple content wrapper:
+Include the JS file from the dist folder before the `</body>`:
+```html
+<script src="../dist/jquery.remodal.min.js"></script>
+```
+
+You can define the background container for the modal(for effects like a blur). It can be any simple content wrapper:
 ```html
 <div class="remodal-bg">
 ...Page content...
@@ -44,16 +46,19 @@ Define the background container for the modal(for effects like a blur). It can b
 And now create the modal dialog:
 ```html
 <div class="remodal" data-remodal-id="modal">
-    <h1>Remodal</h1>
-    <p>
-      Flat, responsive, lightweight, fast, easy customizable modal window plugin
-      with declarative state notation and hash tracking.
-    </p>
-    <br>
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1>Remodal</h1>
+  <p>
+    Responsive, lightweight, fast, fully customizable modal window plugin
+    with declarative configuration and hash tracking.
+  </p>
+  <br>
+  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 ```
+
+Don't use the `id` attribute, if you want to avoid the anchor jump, use `data-remodal-id`.
 
 So, now you can call it with the hash:
 ```html
@@ -64,140 +69,188 @@ Or:
 <a data-remodal-target="modal">Call the modal with data-remodal-id="modal"</a>
 ```
 
-## Globals
-
-```html
-<script>
-    window.REMODAL_GLOBALS = {
-        NAMESPACE: 'modal',
-        DEFAULTS: {
-            hashTracking: false
-        }
-    };
-</script>
-<script src="js/jquery.remodal.js"></script>
-```
-
-#### NAMESPACE
-
-Base HTML class for your modals. CSS theme will need to be updated to reflect this.
-
-#### DEFAULTS
-
-Extends default settings.
-
 ## Options
 
-You can pass additional options by the `data-remodal-options` attribute.
+You can pass additional options with the `data-remodal-options` attribute.
 ```html
 <div class="remodal" data-remodal-id="modal"
-    data-remodal-options="hashTracking: false">
-    <h1>Remodal</h1>
-    <p>
-      Flat, responsive, lightweight, fast, easy customizable modal window plugin
-      with declarative state notation and hash tracking.
-    </p>
-    <br>
-    <a class="remodal-cancel" href="#">Cancel</a>
-    <a class="remodal-confirm" href="#">OK</a>
+  data-remodal-options="hashTracking: false, closeOnAnyClick: false">
+
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1>Remodal</h1>
+  <p>
+    Responsive, lightweight, fast, fully customizable modal window plugin
+    with declarative configuration and hash tracking.
+  </p>
+  <br>
+  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 ```
 
 #### hashTracking
 `Default: true`
 
-To open the modal without the hash, use `data-remodal-target` attribute.
+To open the modal without the hash, use the `data-remodal-target` attribute.
 ```html
-<a data-remodal-target="modal" href="#modal">Call the modal with data-remodal-id="modal"</a>
+<a data-remodal-target="modal" href="#">Call the modal with data-remodal-id="modal"</a>
 ```
 
 #### closeOnConfirm
 `Default: true`
 
-If set to true, closes a modal window after clicking confirm button.
+If true, closes the modal window after clicking the confirm button.
 
 #### closeOnCancel
 `Default: true`
 
-If set to true, closes a modal window after clicking cancel button.
+If true, closes the modal window after clicking the cancel button.
 
 #### closeOnEscape
 `Default: true`
 
-If set to true, closes a modal window after pressing ESC button.
+If true, closes the modal window after pressing the ESC key.
 
 #### closeOnAnyClick
 `Default: true`
 
-If set to true, closes a modal window by clicking anywhere on the page.
+If true, closes the modal window by clicking anywhere on the page.
 
-## Events
+#### modifier
+`Default: ''`
 
-```js
-$(document).on('open', '.remodal', function () {
-    console.log('open');
-});
+Modifier CSS classes for the modal that is added to the overlay, modal and background (see [CSS](#css)).
 
-$(document).on('opened', '.remodal', function () {
-    console.log('opened');
-});
+## Globals
 
-$(document).on('close', '.remodal', function (e) {
-    console.log('close');
-
-    // "confirmation", or "cancellation", or undefined
-    console.log(e.reason);
-});
-
-$(document).on('closed', '.remodal', function (e) {
-    console.log('closed');
-
-    // "confirmation", or "cancellation", or undefined
-    console.log(e.reason);
-});
-
-$(document).on('confirm', '.remodal', function () {
-    console.log('confirm');
-});
-
-$(document).on('cancel', '.remodal', function () {
-    console.log('cancel');
-});
-```
-
-## Cool bro! But i don't like declarative style!
-
-Ok, don't set the class attribute and write something like this:
 ```html
 <script>
+window.REMODAL_GLOBALS = {
+  NAMESPACE: 'modal',
+  DEFAULTS: {
+    hashTracking: false
+  }
+};
+</script>
+<script src="../dist/jquery.remodal.js"></script>
+```
+
+#### NAMESPACE
+
+Base HTML class for your modals. CSS theme should be updated to reflect this.
+
+#### DEFAULTS
+
+Extends the default settings.
+
+## Initialization with JavaScript
+
+Do not set the 'remodal' class, if you prefer a JS initialization.
+```html
+<div data-remodal-id="modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1>Remodal</h1>
+  <p>
+    Responsive, lightweight, fast, fully customizable modal window plugin
+    with declarative configuration and hash tracking.
+  </p>
+</div>
+<script>
     var options = {...};
-    $('[data-remodal-id=modal]').remodal(options).open();
+
+    $('[data-remodal-id=modal]').remodal(options);
 </script>
 ```
-Don't use `id` attribute, if you want to avoid the anchor jump.
 
 ## Methods
 
 Get the instance of the modal and call a method:
 ```js
-var inst = $.remodal.lookup[$('[data-remodal-id=modal]').data('remodal')];
+var inst = $('[data-remodal-id=modal]').remodal();
 
 /**
- * Open the modal window
+ * Opens the modal window
  */
 inst.open();
 
 /**
- * Close the modal window
+ * Closes the modal window
  */
 inst.close();
 
 /**
- * Get a current state of the modal
+ * Returns a current state of the modal
  * @returns {'closed'|'closing'|'opened'|'opening'}
  */
 inst.getState();
+
+/**
+ * Destroys the modal window
+ */
+inst.destroy();
 ```
+
+## Events
+
+```js
+$(document).on('opening', '.remodal', function () {
+  console.log('Modal is opening');
+});
+
+$(document).on('opened', '.remodal', function () {
+  console.log('Modal is opened');
+});
+
+$(document).on('closing', '.remodal', function (e) {
+
+  // Reason: 'confirmation', 'cancellation'
+  console.log('Modal is closing' + (e.reason ? ', reason: ' + e.reason : ''));
+});
+
+$(document).on('closed', '.remodal', function (e) {
+
+  // Reason: 'confirmation', 'cancellation'
+  console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
+});
+
+$(document).on('confirmation', '.remodal', function () {
+  console.log('Confirmation button is clicked');
+});
+
+$(document).on('cancellation', '.remodal', function () {
+  console.log('Cancel button is clicked');
+});
+```
+
+## CSS
+
+#### Classes
+
+`.remodal` – the default class of modal dialogs
+
+`.remodal-wrapper` – the additional wrapper for the `.remodal`, it is not the overlay and used for the alignment
+
+`.remodal-overlay` – the overlay of modal dialogs
+
+`.remodal-bg` – the background of modal dialogs, it is under the overlay and usually it is the wrapper of your content. You should add it on your own.
+
+The `remodal` prefix can be changed in the global settings. See [the `NAMESPACE` option](#namespace).
+
+#### States
+
+States are added to the `.remodal`, `.remodal-overlay`, `.remodal-bg` classes.
+
+List:
+```
+.remodal-is-opening
+.remodal-is-opened
+.remodal-is-closing
+.remodal-is-closed
+```
+
+#### Modifier
+
+A modifier that is specified in the [options](#options) is added to the `.remodal`, `.remodal-overlay`, `.remodal-bg` classes.
 
 ## License
 
