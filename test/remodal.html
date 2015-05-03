@@ -16,12 +16,12 @@
     <script src="../src/jquery.remodal.js"></script>
     <script src="remodal_test.js"></script>
     <style>
-      .remodal-overlay.remodal-is-opening,
-      .remodal-overlay.remodal-is-closing,
-      .remodal.remodal-is-opening,
-      .remodal.remodal-is-closing,
-      .remodal-bg.remodal-is-opening,
-      .remodal-bg.remodal-is-closing {
+      .remodal-overlay.without-animation.remodal-is-opening,
+      .remodal-overlay.without-animation.remodal-is-closing,
+      .remodal.without-animation.remodal-is-opening,
+      .remodal.without-animation.remodal-is-closing,
+      .remodal-bg.without-animation.remodal-is-opening,
+      .remodal-bg.without-animation.remodal-is-closing {
         animation: none;
       }
     </style>
@@ -43,7 +43,7 @@
 <div class="remodal" data-remodal-id="modal2"
   data-remodal-options="hashTracking: false,
     closeOnConfirm:false,closeOnCancel:  false, closeOnEscape: false , closeOnAnyClick: false,
-    modifier : with-test-class1 with-test-class2">
+    modifier : without-animation with-test-class">
 
   <a data-remodal-action="close" class="remodal-close"></a>
   <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>

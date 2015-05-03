@@ -299,7 +299,7 @@
       closeOnCancel: false,
       closeOnEscape: false,
       closeOnAnyClick: false,
-      modifier: 'with-test-class1 with-test-class2'
+      modifier: 'without-animation with-test-class'
     }, 'options are correctly parsed');
   });
 
@@ -398,17 +398,17 @@
     var remodal = $modal.remodal();
 
     $document.one('opened', '[data-remodal-id=modal2]', function() {
-      assert.ok($bg.hasClass('with-test-class1 with-test-class2'), 'bg has the modifier');
-      assert.ok($overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has the modifier');
-      assert.ok($modal.hasClass('with-test-class1 with-test-class2'), 'modal has the modifier');
+      assert.ok($bg.hasClass('without-animation with-test-class'), 'bg has the modifier');
+      assert.ok($overlay.hasClass('without-animation with-test-class'), 'overlay has the modifier');
+      assert.ok($modal.hasClass('without-animation with-test-class'), 'modal has the modifier');
 
       remodal.close();
     });
 
     $document.one('closed', '[data-remodal-id=modal2]', function() {
-      assert.notOk($bg.hasClass('with-test-class1 with-test-class2'), 'bg hasn\'t the modifier');
-      assert.notOk($overlay.hasClass('with-test-class1 with-test-class2'), 'overlay has\'t the modifier');
-      assert.ok($modal.hasClass('with-test-class1 with-test-class2'), 'modal still has the modifier');
+      assert.notOk($bg.hasClass('without-animation with-test-class'), 'bg hasn\'t the modifier');
+      assert.notOk($overlay.hasClass('without-animation with-test-class'), 'overlay has\'t the modifier');
+      assert.ok($modal.hasClass('without-animation with-test-class'), 'modal still has the modifier');
 
       QUnit.start();
     });

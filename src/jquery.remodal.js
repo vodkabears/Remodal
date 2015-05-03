@@ -13,22 +13,6 @@
   'use strict';
 
   /**
-   * Animationend event with vendor prefixes
-   * @private
-   * @const
-   * @type {String}
-   */
-  var ANIMATIONEND_EVENTS = 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd';
-
-  /**
-   * Animationstart event with vendor prefixes
-   * @private
-   * @const
-   * @type {String}
-   */
-  var ANIMATIONSTART_EVENTS = 'animationstart webkitAnimationStart MSAnimationStart oAnimationStart';
-
-  /**
    * Name of the plugin
    * @private
    * @const
@@ -43,6 +27,36 @@
    * @type {String}
    */
   var NAMESPACE = global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.NAMESPACE || PLUGIN_NAME;
+
+  /**
+   * Animationstart event with vendor prefixes
+   * @private
+   * @const
+   * @type {String}
+   */
+  var ANIMATIONSTART_EVENTS = $.map(
+    ['animationstart', 'webkitAnimationStart', 'MSAnimationStart', 'oAnimationStart'],
+
+    function(eventName) {
+      return eventName + '.' + NAMESPACE;
+    }
+
+  ).join(' ');
+
+  /**
+   * Animationend event with vendor prefixes
+   * @private
+   * @const
+   * @type {String}
+   */
+  var ANIMATIONEND_EVENTS = $.map(
+    ['animationend', 'webkitAnimationEnd', 'MSAnimationEnd', 'oAnimationEnd'],
+
+    function(eventName) {
+      return eventName + '.' + NAMESPACE;
+    }
+
+  ).join(' ');
 
   /**
    * Default settings
@@ -84,6 +98,22 @@
   };
 
   /**
+   * Is animation supported?
+   * @private
+   * @const
+   * @type {Boolean}
+   */
+  var IS_ANIMATION = (function() {
+    var style = document.createElement('div').style;
+
+    return style.animationName !== undefined ||
+      style.WebkitAnimationName !== undefined ||
+      style.MozAnimationName !== undefined ||
+      style.msAnimationName !== undefined ||
+      style.OAnimationName !== undefined;
+  })();
+
+  /**
    * Current modal
    * @private
    * @type {Remodal}
@@ -101,9 +131,20 @@
    * Returns an animation duration
    * @private
    * @param {jQuery} $elem
-   * @return {Number}
+   * @returns {Number}
    */
   function getAnimationDuration($elem) {
+    if (
+      IS_ANIMATION &&
+      $elem.css('animation-name') === 'none' &&
+      $elem.css('-webkit-animation-name') === 'none' &&
+      $elem.css('-moz-animation-name') === 'none' &&
+      $elem.css('-o-animation-name') === 'none' &&
+      $elem.css('-ms-animation-name') === 'none'
+    ) {
+      return 0;
+    }
+
     var duration = $elem.css('animation-duration') ||
         $elem.css('-webkit-animation-duration') ||
         $elem.css('-moz-animation-duration') ||
@@ -136,7 +177,7 @@
 
     // The 'duration' size is the same as the 'delay' size
     for (i = 0, len = duration.length, max = Number.NEGATIVE_INFINITY; i < len; i++) {
-      num = parseFloat(duration[i]) * parseInt(iterationCount[i]) + parseFloat(delay[i]);
+      num = parseFloat(duration[i]) * parseInt(iterationCount[i], 10) + parseFloat(delay[i]);
 
       if (num > max) {
         max = num;
@@ -149,7 +190,7 @@
   /**
    * Returns a scrollbar width
    * @private
-   * @return {Number}
+   * @returns {Number}
    */
   function getScrollbarWidth() {
     if ($(document.body).height() <= $(window).height()) {
@@ -265,42 +306,60 @@
   }
 
   /**
-   * Calls a function after the animation
-   * @private
-   * @param {Function} fn
+   * Synchronizes with the animation
+   * @param {Function} doBeforeAnimation
+   * @param {Function} doAfterAnimation
    * @param {Remodal} instance
    */
-  function callAfterAnimation(fn, instance) {
+  function syncWithAnimation(doBeforeAnimation, doAfterAnimation, instance) {
+    var runningAnimationsCount = 0;
 
-    // Element with the longest animation
-    var $observableElement = getAnimationDuration(instance.$modal) > getAnimationDuration(instance.$overlay) ?
-      instance.$modal : instance.$overlay;
-    var isAnimationStarted = false;
-
-    $observableElement.one(ANIMATIONSTART_EVENTS, function() {
-      isAnimationStarted = true;
-
-      $observableElement.one(ANIMATIONEND_EVENTS, function(e) {
-
-        // Ignore child nodes
-        if (e.target !== this) {
-          return;
-        }
-
-        fn();
-      });
-    });
-
-    // Check after some time if the animation is started
-    setTimeout(function() {
-      if (isAnimationStarted) {
+    var handleAnimationStart = function(e) {
+      if (e.target !== this) {
         return;
       }
 
-      // If the 'animationstart' event wasn't triggered
-      $observableElement.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
-      fn();
-    }, 25);
+      runningAnimationsCount++;
+    };
+
+    var handleAnimationEnd = function(e) {
+      if (e.target !== this) {
+        return;
+      }
+
+      if (--runningAnimationsCount === 0) {
+
+        // Remove event listeners
+        $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+          instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+        });
+
+        doAfterAnimation();
+      }
+    };
+
+    $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+      instance[elemName]
+        .on(ANIMATIONSTART_EVENTS, handleAnimationStart)
+        .on(ANIMATIONEND_EVENTS, handleAnimationEnd);
+    });
+
+    doBeforeAnimation();
+
+    // If the animation is not supported by a browser or its duration is 0
+    if (
+      getAnimationDuration(instance.$bg) === 0 &&
+      getAnimationDuration(instance.$overlay) === 0 &&
+      getAnimationDuration(instance.$modal) === 0
+    ) {
+
+      // Remove event listeners
+      $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+        instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+      });
+
+      doAfterAnimation();
+    }
   }
 
   /**
@@ -313,8 +372,10 @@
       return;
     }
 
-    instance.$overlay.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
-    instance.$modal.off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+    $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+      instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
+    });
+
     instance.$bg.removeClass(instance.settings.modifier);
     instance.$overlay.removeClass(instance.settings.modifier).hide();
     instance.$wrapper.hide();
@@ -500,11 +561,16 @@
     remodal.$overlay.addClass(remodal.settings.modifier).show();
     remodal.$wrapper.show().scrollTop(0);
 
-    callAfterAnimation(function() {
-      setState(remodal, STATES.OPENED);
-    }, remodal);
+    syncWithAnimation(
+      function() {
+        setState(remodal, STATES.OPENING);
+      },
 
-    setState(remodal, STATES.OPENING);
+      function() {
+        setState(remodal, STATES.OPENED);
+      },
+
+      remodal);
   };
 
   /**
@@ -528,16 +594,21 @@
       $(window).scrollTop(scrollTop);
     }
 
-    callAfterAnimation(function() {
-      remodal.$bg.removeClass(remodal.settings.modifier);
-      remodal.$overlay.removeClass(remodal.settings.modifier).hide();
-      remodal.$wrapper.hide();
-      unlockScreen();
+    syncWithAnimation(
+      function() {
+        setState(remodal, STATES.CLOSING, false, reason);
+      },
 
-      setState(remodal, STATES.CLOSED, false, reason);
-    }, remodal);
+      function() {
+        remodal.$bg.removeClass(remodal.settings.modifier);
+        remodal.$overlay.removeClass(remodal.settings.modifier).hide();
+        remodal.$wrapper.hide();
+        unlockScreen();
 
-    setState(remodal, STATES.CLOSING, false, reason);
+        setState(remodal, STATES.CLOSED, false, reason);
+      },
+
+      remodal);
   };
 
   /**
