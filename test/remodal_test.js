@@ -228,7 +228,7 @@
       .appendTo($(document.body))
       .remodal();
 
-    var instanceCount = $.remodal.lookup.filter(function(instance) {
+    var instanceCount = $.grep($.remodal.lookup, function(instance) {
       return !!instance;
     }).length;
 
@@ -237,7 +237,7 @@
 
     remodal.destroy();
 
-    instanceCount = $.remodal.lookup.filter(function(instance) {
+    instanceCount = $.grep($.remodal.lookup, function(instance) {
       return !!instance;
     }).length;
 
