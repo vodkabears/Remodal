@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Remodal necessary styles
+   Remodal's necessary styles
    ========================================================================== */
 
 /* Hide scroll bar */
@@ -76,7 +76,7 @@ html.remodal-is-locked {
 }
 
 /* ==========================================================================
-   Remodal default theme
+   Remodal's default mobile first theme
    ========================================================================== */
 
 /* Default theme styles of the overlay */
@@ -91,11 +91,17 @@ html.remodal-is-locked {
 }
 
 .remodal-overlay.remodal-is-opening {
-  animation: remodal-overlay-open-keyframes 0.2s;
+  animation: remodal-overlay-opening-keyframes 0.2s;
 }
 
 .remodal-overlay.remodal-is-closing {
-  animation: remodal-overlay-close-keyframes 0.2s;
+  animation: remodal-overlay-closing-keyframes 0.2s;
+}
+
+/* Default theme styles of the wrapper */
+
+.remodal-wrapper {
+  padding: 10px 10px 0;
 }
 
 /* Default theme styles of the modal dialog */
@@ -103,7 +109,7 @@ html.remodal-is-locked {
 .remodal {
   box-sizing: border-box;
   width: 100%;
-  min-height: 100%;
+  margin-bottom: 10px;
   padding: 35px;
 
   color: #182a3c;
@@ -116,11 +122,11 @@ html.remodal-is-locked {
 }
 
 .remodal.remodal-is-opening {
-  animation: remodal-open-keyframes 0.2s;
+  animation: remodal-opening-keyframes 0.2s;
 }
 
 .remodal.remodal-is-closing {
-  animation: remodal-close-keyframes 0.2s;
+  animation: remodal-closing-keyframes 0.2s;
 }
 
 /* Vertical align of the modal dialog */
@@ -185,7 +191,7 @@ html.remodal-is-locked {
   display: inline-block;
   overflow: visible;
 
-  min-width: 120px;
+  min-width: 110px;
   margin: 0;
   padding: 12px 0;
 
@@ -229,7 +235,7 @@ html.remodal-is-locked {
 /* Keyframes
    ========================================================================== */
 
-@keyframes remodal-open-keyframes {
+@keyframes remodal-opening-keyframes {
   from {
     transform: scale(1.05);
 
@@ -242,7 +248,7 @@ html.remodal-is-locked {
   }
 }
 
-@keyframes remodal-close-keyframes {
+@keyframes remodal-closing-keyframes {
   from {
     transform: scale(1);
 
@@ -255,7 +261,7 @@ html.remodal-is-locked {
   }
 }
 
-@keyframes remodal-overlay-open-keyframes {
+@keyframes remodal-overlay-opening-keyframes {
   from {
     opacity: 0;
   }
@@ -264,7 +270,7 @@ html.remodal-is-locked {
   }
 }
 
-@keyframes remodal-overlay-close-keyframes {
+@keyframes remodal-overlay-closing-keyframes {
   from {
     opacity: 1;
   }
@@ -280,7 +286,6 @@ html.remodal-is-locked {
   .remodal {
     max-width: 700px;
     min-height: 0;
-    margin: 20px auto;
   }
 
   /* Background for effects */
