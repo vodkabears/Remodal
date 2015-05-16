@@ -75,7 +75,7 @@ Or:
 You can pass additional options with the `data-remodal-options` attribute.
 ```html
 <div class="remodal" data-remodal-id="modal"
-  data-remodal-options="hashTracking: false, closeOnAnyClick: false">
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
 
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1>Remodal</h1>
@@ -112,7 +112,7 @@ If true, closes the modal window after clicking the cancel button.
 
 If true, closes the modal window after pressing the ESC key.
 
-#### closeOnAnyClick
+#### closeOnOutsideClick
 `Default: true`
 
 If true, closes the modal window by clicking anywhere on the page.

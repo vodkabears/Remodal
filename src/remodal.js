@@ -69,7 +69,7 @@
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,
-    closeOnAnyClick: true,
+    closeOnOutsideClick: true,
     modifier: ''
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 
@@ -534,7 +534,7 @@
         return;
       }
 
-      if (remodal.settings.closeOnAnyClick) {
+      if (remodal.settings.closeOnOutsideClick) {
         remodal.close();
       }
     });

@@ -298,7 +298,7 @@
       closeOnConfirm: false,
       closeOnCancel: false,
       closeOnEscape: false,
-      closeOnAnyClick: false,
+      closeOnOutsideClick: false,
       modifier: 'without-animation with-test-class'
     }, 'options are correctly parsed');
   });
@@ -371,7 +371,7 @@
     remodal.open();
   });
 
-  QUnit.asyncTest('"closeOnAnyClick" option', function(assert) {
+  QUnit.asyncTest('"closeOnOutsideClick" option', function(assert) {
     var $wrapper = $('[data-remodal-id=modal2]').parent();
     var remodal = $wrapper.children().remodal();
 
