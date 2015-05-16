@@ -208,7 +208,6 @@
 @media only screen and (min-width: 641px) {
   .remodal {
     max-width: 700px;
-    min-height: 0;
   }
 
   /* Background for effects */
@@ -228,6 +227,4 @@
 
 .lt-ie9 .remodal {
   width: 700px;
-  min-height: 0;
-  margin: 20px auto;
 }
