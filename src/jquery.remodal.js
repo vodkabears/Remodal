@@ -290,6 +290,14 @@
         NAMESPACE + '-is-' + STATES.OPENED)
       .addClass(NAMESPACE + '-is-' + state);
 
+    instance.$wrapper
+      .removeClass(
+        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
+        NAMESPACE + '-is-' + STATES.OPENED)
+      .addClass(NAMESPACE + '-is-' + state);
+
     instance.$modal
       .removeClass(
         NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
@@ -377,8 +385,7 @@
     });
 
     instance.$bg.removeClass(instance.settings.modifier);
-    instance.$overlay.removeClass(instance.settings.modifier).hide();
-    instance.$wrapper.hide();
+    instance.$overlay.removeClass(instance.settings.modifier);
     unlockScreen();
     setState(instance, STATES.CLOSED, true);
   }
@@ -475,17 +482,19 @@
     remodal.$overlay = $('.' + NAMESPACE + '-overlay');
 
     if (!remodal.$overlay.length) {
-      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay');
+      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay ' + NAMESPACE + '-is-' + STATES.CLOSED);
       $body.append(remodal.$overlay);
     }
 
-    remodal.$bg = $('.' + NAMESPACE + '-bg');
-    remodal.$wrapper = $('<div>').addClass(NAMESPACE + '-wrapper');
+    remodal.$bg = $('.' + NAMESPACE + '-bg').addClass(NAMESPACE + '-is-' + STATES.CLOSED);
     remodal.$modal = $modal;
-    remodal.$modal.addClass(NAMESPACE + ' ' + remodal.settings.modifier);
+    remodal.$modal.addClass(NAMESPACE + ' ' + remodal.settings.modifier + ' ' + NAMESPACE + '-is-' + STATES.CLOSED);
     remodal.$modal.css('visibility', 'visible');
-
-    remodal.$wrapper.append(remodal.$modal);
+    remodal.$wrapper = $('<div>')
+      .addClass(
+        NAMESPACE + '-wrapper ' + remodal.settings.modifier + ' ' +
+        NAMESPACE + '-is-' + STATES.CLOSED)
+      .append(remodal.$modal);
     $body.append(remodal.$wrapper);
 
     // Add the event listener for the close button
@@ -558,8 +567,8 @@
     current = remodal;
     lockScreen();
     remodal.$bg.addClass(remodal.settings.modifier);
-    remodal.$overlay.addClass(remodal.settings.modifier).show();
-    remodal.$wrapper.show().scrollTop(0);
+    remodal.$overlay.addClass(remodal.settings.modifier);
+    remodal.$wrapper.scrollTop(0);
 
     syncWithAnimation(
       function() {
@@ -601,8 +610,7 @@
 
       function() {
         remodal.$bg.removeClass(remodal.settings.modifier);
-        remodal.$overlay.removeClass(remodal.settings.modifier).hide();
-        remodal.$wrapper.hide();
+        remodal.$overlay.removeClass(remodal.settings.modifier);
         unlockScreen();
 
         setState(remodal, STATES.CLOSED, false, reason);
