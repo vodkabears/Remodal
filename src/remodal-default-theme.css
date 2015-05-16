@@ -2,6 +2,13 @@
    Remodal's default mobile first theme
    ========================================================================== */
 
+/* Default theme styles for the background */
+
+.remodal-bg.remodal-is-opening,
+.remodal-bg.remodal-is-opened {
+  filter: blur(3px);
+}
+
 /* Default theme styles of the overlay */
 
 .remodal-overlay {
@@ -14,11 +21,11 @@
 }
 
 .remodal-overlay.remodal-is-opening {
-  animation: remodal-overlay-opening-keyframes 0.2s;
+  animation: remodal-overlay-opening-keyframes 0.3s;
 }
 
 .remodal-overlay.remodal-is-closing {
-  animation: remodal-overlay-closing-keyframes 0.2s;
+  animation: remodal-overlay-closing-keyframes 0.3s;
 }
 
 /* Default theme styles of the wrapper */
@@ -35,7 +42,7 @@
   margin-bottom: 10px;
   padding: 35px;
 
-  color: #182a3c;
+  color: #2b2e38;
   background: #fff;
 }
 
@@ -45,11 +52,11 @@
 }
 
 .remodal.remodal-is-opening {
-  animation: remodal-opening-keyframes 0.2s;
+  animation: remodal-opening-keyframes 0.3s;
 }
 
 .remodal.remodal-is-closing {
-  animation: remodal-closing-keyframes 0.2s;
+  animation: remodal-closing-keyframes 0.3s;
 }
 
 /* Vertical align of the modal dialog */
@@ -208,13 +215,6 @@
 @media only screen and (min-width: 641px) {
   .remodal {
     max-width: 700px;
-  }
-
-  /* Background for effects */
-
-  .remodal-bg.remodal-is-opening,
-  .remodal-bg.remodal-is-opened {
-    filter: blur(3px);
   }
 }
 
