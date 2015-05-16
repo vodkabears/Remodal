@@ -7,8 +7,9 @@
   ],
   "description": "Responsive, lightweight, fast, fully customizable modal window plugin with declarative configuration and hash tracking.",
   "main": [
-    "dist/jquery.remodal.js",
-    "dist/jquery.remodal.css"
+    "dist/remodal.js",
+    "dist/remodal.css",
+    "dist/remodal-default-theme.css"
   ],
   "ignore": [
     "**/.*",
@@ -18,8 +19,7 @@
     "test/",
     "*.md",
     "Gruntfile.js",
-    "package.json",
-    "remodal.jquery.json"
+    "package.json"
   ],
   "keywords": [
     "jquery",

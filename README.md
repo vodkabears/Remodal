@@ -26,14 +26,15 @@ npm install remodal
 bower install remodal
 ```
 
-Include the CSS file from the dist folder in the head section:
+Include the CSS files from the dist folder in the head section:
 ```html
-<link rel="stylesheet" href="../dist/jquery.remodal.css">
+<link rel="stylesheet" href="../dist/remodal.css">
+<link rel="stylesheet" href="../dist/remodal-default-theme.css">
 ```
 
 Include the JS file from the dist folder before the `</body>`:
 ```html
-<script src="../dist/jquery.remodal.min.js"></script>
+<script src="../dist/remodal.min.js"></script>
 ```
 
 You can define the background container for the modal(for effects like a blur). It can be any simple content wrapper:
@@ -132,7 +133,7 @@ window.REMODAL_GLOBALS = {
   }
 };
 </script>
-<script src="../dist/jquery.remodal.js"></script>
+<script src="../dist/remodal.js"></script>
 ```
 
 #### NAMESPACE

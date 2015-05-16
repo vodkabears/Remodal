@@ -42,9 +42,9 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         files: {
-          'dist/jquery.remodal.js': 'src/jquery.remodal.js',
-          'dist/jquery.remodal.css': 'src/jquery.remodal.css',
-          'dist/jquery.remodal-default-theme.css': 'src/jquery.remodal-default-theme.css'
+          'dist/remodal.js': 'src/remodal.js',
+          'dist/remodal.css': 'src/remodal.css',
+          'dist/remodal-default-theme.css': 'src/remodal-default-theme.css'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -63,10 +63,10 @@ module.exports = function(grunt) {
     csscomb: {
       all: {
         files: {
-          'src/jquery.remodal.css': 'src/jquery.remodal.css',
-          'src/jquery.remodal-default-theme.css': 'src/jquery.remodal-default-theme.css',
-          'dist/jquery.remodal.css': 'dist/jquery.remodal.css',
-          'dist/jquery.remodal-default-theme.css': 'dist/jquery.remodal-default-theme.css'
+          'src/remodal.css': 'src/remodal.css',
+          'src/remodal-default-theme.css': 'src/remodal-default-theme.css',
+          'dist/remodal.css': 'dist/remodal.css',
+          'dist/remodal-default-theme.css': 'dist/remodal-default-theme.css'
         }
       }
     },
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
     uglify: {
       remodal: {
         files: {
-          'dist/jquery.remodal.min.js': 'src/jquery.remodal.js'
+          'dist/remodal.min.js': 'src/remodal.js'
         }
       },
       options: {

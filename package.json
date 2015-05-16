@@ -31,7 +31,7 @@
   },
   "homepage": "http://vodkabears.github.io/remodal/",
   "license": "MIT",
-  "main": "dist/jquery.remodal.js",
+  "main": "dist/remodal.js",
   "dependencies": {
     "jquery": "*"
   },
