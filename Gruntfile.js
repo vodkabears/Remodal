@@ -14,12 +14,12 @@ module.exports = function(grunt) {
         ' *\n' +
         ' *  Made by <%= pkg.author.name %>\n' +
         ' *  Under <%= pkg.license %> License\n' +
-        ' */\n'
+        ' */\n\n'
     },
 
     autoprefixer: {
       dist: {
-        src: 'dist/jquery.remodal.css'
+        src: 'dist/**/*.css'
       },
       options: {
         browsers: ['> 0.1%'],
@@ -43,7 +43,8 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/jquery.remodal.js': 'src/jquery.remodal.js',
-          'dist/jquery.remodal.css': 'src/jquery.remodal.css'
+          'dist/jquery.remodal.css': 'src/jquery.remodal.css',
+          'dist/jquery.remodal-default-theme.css': 'src/jquery.remodal-default-theme.css'
         },
         options: {
           banner: '<%= meta.banner %>'
@@ -63,7 +64,9 @@ module.exports = function(grunt) {
       all: {
         files: {
           'src/jquery.remodal.css': 'src/jquery.remodal.css',
-          'dist/jquery.remodal.css': 'dist/jquery.remodal.css'
+          'src/jquery.remodal-default-theme.css': 'src/jquery.remodal-default-theme.css',
+          'dist/jquery.remodal.css': 'dist/jquery.remodal.css',
+          'dist/jquery.remodal-default-theme.css': 'dist/jquery.remodal-default-theme.css'
         }
       }
     },
