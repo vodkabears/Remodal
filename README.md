@@ -4,12 +4,13 @@
 [![devDependency Status](https://david-dm.org/vodkabears/remodal/dev-status.svg)](https://david-dm.org/vodkabears/remodal#info=devDependencies)
 Remodal
 =======
-Responsive, lightweight, fast, fully customizable modal window plugin
-with declarative configuration and hash tracking.
+Responsive, lightweight, fast, fully customizable modal window plugin with declarative configuration and hash tracking.
+
+![logo](https://raw.githubusercontent.com/VodkaBears/vodkabears.github.com/master/remodal/remodal.png)
 
 #IMPORTANT!
 
-**v1.0.0 has a lot of incompatible changes. Old versions won't be supported.**
+**v1.0.0 has a lot of incompatible changes.**
 
 ## Notes
 * All modern browsers are supported.
@@ -120,7 +121,7 @@ If true, closes the modal window by clicking anywhere on the page.
 #### modifier
 `Default: ''`
 
-Modifier CSS classes for the modal that is added to the overlay, modal and background (see [CSS](#css)).
+Modifier CSS classes for the modal that is added to the overlay, modal, background and wrapper (see [CSS](#css)).
 
 ## Globals
 
@@ -227,11 +228,11 @@ $(document).on('cancellation', '.remodal', function () {
 
 #### Classes
 
-`.remodal` – the default class of modal dialogs
+`.remodal` – the default class of modal dialogs.
 
-`.remodal-wrapper` – the additional wrapper for the `.remodal`, it is not the overlay and used for the alignment
+`.remodal-wrapper` – the additional wrapper for the `.remodal`, it is not the overlay and used for the alignment.
 
-`.remodal-overlay` – the overlay of modal dialogs
+`.remodal-overlay` – the overlay of modal dialogs, it is under the wrapper.
 
 `.remodal-bg` – the background of modal dialogs, it is under the overlay and usually it is the wrapper of your content. You should add it on your own.
 
@@ -239,7 +240,7 @@ The `remodal` prefix can be changed in the global settings. See [the `NAMESPACE`
 
 #### States
 
-States are added to the `.remodal`, `.remodal-overlay`, `.remodal-bg` classes.
+States are added to the `.remodal`, `.remodal-overlay`, `.remodal-bg`, `.remodal-wrapper` classes.
 
 List:
 ```
@@ -251,7 +252,7 @@ List:
 
 #### Modifier
 
-A modifier that is specified in the [options](#options) is added to the `.remodal`, `.remodal-overlay`, `.remodal-bg` classes.
+A modifier that is specified in the [options](#options) is added to the `.remodal`, `.remodal-overlay`, `.remodal-bg`, `.remodal-wrapper` classes.
 
 ## License
 
