@@ -1,3 +1,26 @@
+### 1.0.0
+* Renamed the 'closeOnAnyClick' property to the 'closeOnOutsideClick'.
+* Separated base and theme styles.
+* Renamed the base files.
+* Added the ability to use CSS mixins.
+* Added `#destroy`.
+* Renamed the events.
+* Used states and CSS animations.
+* Made restyling of the default theme.
+* Added the watch task for Grunt.
+* Added Autoprefixer.
+* Used `backface-visibility` for the hardware acceleration instead of `translateZ`.
+* Disabled the auto-resizing of text on mobile devices.
+* Fixed the triggering of the close event, even if a modal is not opened.
+* Added '#getState'.
+* Changed names for the constants.
+* Removed the default custom font.
+* Introduced the `data-remodal-action` attribute.
+* Made code refactoring.
+* Updated examples.
+* Updated tests.
+* Updated dependencies.
+
 ### 0.6.4
 * Protocol-relative URL for fonts.
 * Scroll to the top, when a modal is displayed.
