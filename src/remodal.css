@@ -70,6 +70,11 @@ html.remodal-is-locked {
   display: inline-block;
 }
 
+.remodal-is-initialized {
+  /* Disable Anti-FOUC */
+  visibility: visible;
+}
+
 .remodal.remodal-is-opening {
   /* Disable text resizing */
   text-size-adjust: 100%;

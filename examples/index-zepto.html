@@ -205,11 +205,11 @@
   <br>
 </div>
 
-<div class="remodal" data-remodal-id="modal">
-  <button data-remodal-action="close" class="remodal-close"></button>
+<div class="remodal" data-remodal-id="modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+  <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
   <div>
-    <h2>Remodal</h2>
-    <p>
+    <h2 id="modal1Title">Remodal</h2>
+    <p id="modal1Desc">
       Responsive, lightweight, fast, fully customizable modal window plugin
       with declarative state notation and hash tracking.
     </p>
@@ -219,10 +219,10 @@
   <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 
-<div data-remodal-id="modal2">
+<div data-remodal-id="modal2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
   <div>
-    <h2>Another one window</h2>
-    <p>
+    <h2 id="modal2Title">Another one window</h2>
+    <p id="modal2Desc">
       Hello!
     </p>
   </div>

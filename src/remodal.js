@@ -484,18 +484,22 @@
     remodal.$overlay = $('.' + NAMESPACE + '-overlay');
 
     if (!remodal.$overlay.length) {
-      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay ' + NAMESPACE + '-is-' + STATES.CLOSED);
+      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay ' + NAMESPACE + '-is-' + STATES.CLOSED).hide();
       $body.append(remodal.$overlay);
     }
 
     remodal.$bg = $('.' + NAMESPACE + '-bg').addClass(NAMESPACE + '-is-' + STATES.CLOSED);
     remodal.$modal = $modal;
-    remodal.$modal.addClass(NAMESPACE + ' ' + remodal.settings.modifier + ' ' + NAMESPACE + '-is-' + STATES.CLOSED);
-    remodal.$modal.css('visibility', 'visible');
+    remodal.$modal.addClass(
+      NAMESPACE + '-is-initialized' + ' ' +
+      NAMESPACE + ' ' + remodal.settings.modifier + ' ' +
+      NAMESPACE + '-is-' + STATES.CLOSED);
+
     remodal.$wrapper = $('<div>')
       .addClass(
         NAMESPACE + '-wrapper ' + remodal.settings.modifier + ' ' +
         NAMESPACE + '-is-' + STATES.CLOSED)
+      .hide()
       .append(remodal.$modal);
     $body.append(remodal.$wrapper);
 
