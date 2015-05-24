@@ -4,7 +4,7 @@
 [![devDependency Status](https://david-dm.org/vodkabears/remodal/dev-status.svg)](https://david-dm.org/vodkabears/remodal#info=devDependencies)
 Remodal
 =======
-Responsive, lightweight, fast, fully customizable modal window plugin with declarative configuration and hash tracking.
+Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
 
 ![logo](https://raw.githubusercontent.com/VodkaBears/vodkabears.github.com/master/remodal/remodal.png)
 
@@ -51,8 +51,7 @@ And now create the modal dialog:
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1>Remodal</h1>
   <p>
-    Responsive, lightweight, fast, fully customizable modal window plugin
-    with declarative configuration and hash tracking.
+    Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
   </p>
   <br>
   <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
@@ -81,8 +80,7 @@ You can pass additional options with the `data-remodal-options` attribute.
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1>Remodal</h1>
   <p>
-    Responsive, lightweight, fast, fully customizable modal window plugin
-    with declarative configuration and hash tracking.
+    Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
   </p>
   <br>
   <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
@@ -153,8 +151,7 @@ Do not set the 'remodal' class, if you prefer a JS initialization.
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1>Remodal</h1>
   <p>
-    Responsive, lightweight, fast, fully customizable modal window plugin
-    with declarative configuration and hash tracking.
+    Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
   </p>
 </div>
 <script>
