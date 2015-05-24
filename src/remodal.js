@@ -146,25 +146,25 @@
     }
 
     var duration = $elem.css('animation-duration') ||
-        $elem.css('-webkit-animation-duration') ||
-        $elem.css('-moz-animation-duration') ||
-        $elem.css('-o-animation-duration') ||
-        $elem.css('-ms-animation-duration') ||
-        '0s';
+      $elem.css('-webkit-animation-duration') ||
+      $elem.css('-moz-animation-duration') ||
+      $elem.css('-o-animation-duration') ||
+      $elem.css('-ms-animation-duration') ||
+      '0s';
 
     var delay = $elem.css('animation-delay') ||
-        $elem.css('-webkit-animation-delay') ||
-        $elem.css('-moz-animation-delay') ||
-        $elem.css('-o-animation-delay') ||
-        $elem.css('-ms-animation-delay') ||
-        '0s';
+      $elem.css('-webkit-animation-delay') ||
+      $elem.css('-moz-animation-delay') ||
+      $elem.css('-o-animation-delay') ||
+      $elem.css('-ms-animation-delay') ||
+      '0s';
 
     var iterationCount = $elem.css('animation-iteration-count') ||
-        $elem.css('-webkit-animation-iteration-count') ||
-        $elem.css('-moz-animation-iteration-count') ||
-        $elem.css('-o-animation-iteration-count') ||
-        $elem.css('-ms-animation-iteration-count') ||
-        '1';
+      $elem.css('-webkit-animation-iteration-count') ||
+      $elem.css('-moz-animation-iteration-count') ||
+      $elem.css('-o-animation-iteration-count') ||
+      $elem.css('-ms-animation-iteration-count') ||
+      '1';
 
     var max;
     var len;
