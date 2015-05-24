@@ -385,7 +385,8 @@
     });
 
     instance.$bg.removeClass(instance.settings.modifier);
-    instance.$overlay.removeClass(instance.settings.modifier);
+    instance.$overlay.removeClass(instance.settings.modifier).hide();
+    instance.$wrapper.hide();
     unlockScreen();
     setState(instance, STATES.CLOSED, true);
   }
@@ -567,8 +568,8 @@
     current = remodal;
     lockScreen();
     remodal.$bg.addClass(remodal.settings.modifier);
-    remodal.$overlay.addClass(remodal.settings.modifier);
-    remodal.$wrapper.scrollTop(0);
+    remodal.$overlay.addClass(remodal.settings.modifier).show();
+    remodal.$wrapper.show().scrollTop(0);
 
     syncWithAnimation(
       function() {
@@ -610,7 +611,8 @@
 
       function() {
         remodal.$bg.removeClass(remodal.settings.modifier);
-        remodal.$overlay.removeClass(remodal.settings.modifier);
+        remodal.$overlay.removeClass(remodal.settings.modifier).hide();
+        remodal.$wrapper.hide();
         unlockScreen();
 
         setState(remodal, STATES.CLOSED, false, reason);
