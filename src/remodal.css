@@ -68,14 +68,11 @@ html.remodal-is-locked {
   position: relative;
 
   display: inline-block;
+
+  text-size-adjust: 100%;
 }
 
 .remodal-is-initialized {
   /* Disable Anti-FOUC */
   visibility: visible;
-}
-
-.remodal.remodal-is-opening {
-  /* Disable text resizing */
-  text-size-adjust: 100%;
 }
