@@ -338,7 +338,7 @@
       if (--runningAnimationsCount === 0) {
 
         // Remove event listeners
-        $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+        $.each(['$bg', '$overlay', '$wrapper', '$modal'], function(index, elemName) {
           instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
         });
 
@@ -346,7 +346,7 @@
       }
     };
 
-    $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+    $.each(['$bg', '$overlay', '$wrapper', '$modal'], function(index, elemName) {
       instance[elemName]
         .on(ANIMATIONSTART_EVENTS, handleAnimationStart)
         .on(ANIMATIONEND_EVENTS, handleAnimationEnd);
@@ -358,11 +358,12 @@
     if (
       getAnimationDuration(instance.$bg) === 0 &&
       getAnimationDuration(instance.$overlay) === 0 &&
+      getAnimationDuration(instance.$wrapper) === 0 &&
       getAnimationDuration(instance.$modal) === 0
     ) {
 
       // Remove event listeners
-      $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+      $.each(['$bg', '$overlay', '$wrapper', '$modal'], function(index, elemName) {
         instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
       });
 
@@ -380,7 +381,7 @@
       return;
     }
 
-    $.each(['$bg', '$overlay', '$modal'], function(index, elemName) {
+    $.each(['$bg', '$overlay', '$wrapper', '$modal'], function(index, elemName) {
       instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
     });
 
