@@ -310,7 +310,7 @@
     !isSilent && instance.$modal.trigger({
       type: state,
       reason: reason
-    });
+    }, [{ reason: reason }]);
   }
 
   /**
