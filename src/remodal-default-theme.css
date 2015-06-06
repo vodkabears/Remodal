@@ -224,7 +224,7 @@
    ========================================================================== */
 
 .lt-ie9 .remodal-overlay {
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#e62b2e38, endColorstr=#e62b2e38);
+  background: #2b2e38;
 }
 
 .lt-ie9 .remodal {
