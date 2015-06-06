@@ -12,7 +12,7 @@ html.remodal-is-locked {
 
 .remodal,
 [data-remodal-id] {
-  visibility: hidden;
+  display: none;
 }
 
 /* Necessary styles of the overlay */
@@ -67,12 +67,10 @@ html.remodal-is-locked {
 .remodal {
   position: relative;
 
-  display: inline-block;
-
   text-size-adjust: 100%;
 }
 
 .remodal-is-initialized {
   /* Disable Anti-FOUC */
-  visibility: visible;
+  display: inline-block;
 }
