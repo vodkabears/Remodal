@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "qunit": "~1.18.0",
-    "jquery": "jquery#^1.11.1",
-    "jquery2": "jquery#^2.1.1",
-    "zepto": "~1.1.4"
+    "jquery": "jquery#^1.11.3",
+    "jquery2": "jquery#^2.1.4",
+    "zepto": "~1.1.6"
   }
 }
