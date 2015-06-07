@@ -1,14 +1,15 @@
 {
   "name": "remodal",
-  "version": "0.6.4",
+  "version": "1.0.0",
   "homepage": "http://vodkabears.github.io/remodal/",
   "authors": [
     "Ilya Makarov <dfrost.00@gmail.com>"
   ],
-  "description": "Flat, responsive, lightweight, easy customizable modal window plugin with declarative state notation and hash tracking.",
+  "description": "Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.",
   "main": [
-    "dist/jquery.remodal.js",
-    "dist/jquery.remodal.css"
+    "dist/remodal.js",
+    "dist/remodal.css",
+    "dist/remodal-default-theme.css"
   ],
   "ignore": [
     "**/.*",
@@ -18,8 +19,7 @@
     "test/",
     "*.md",
     "Gruntfile.js",
-    "package.json",
-    "remodal.jquery.json"
+    "package.json"
   ],
   "keywords": [
     "jquery",
@@ -34,16 +34,18 @@
     "popin",
     "lightbox",
     "ui",
-    "zepto"
+    "zepto",
+    "synchronized",
+    "animations"
   ],
   "license": "MIT",
   "dependencies": {
     "jquery": "*"
   },
   "devDependencies": {
-    "qunit": "~1.15.0",
-    "jquery": "jquery#^1.11.1",
-    "jquery2": "jquery#^2.1.1",
-    "zepto": "~1.1.4"
+    "qunit": "~1.18.0",
+    "jquery": "jquery#^1.11.3",
+    "jquery2": "jquery#^2.1.4",
+    "zepto": "~1.1.6"
   }
 }

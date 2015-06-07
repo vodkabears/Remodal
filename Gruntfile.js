@@ -14,7 +14,42 @@ module.exports = function(grunt) {
         ' *\n' +
         ' *  Made by <%= pkg.author.name %>\n' +
         ' *  Under <%= pkg.license %> License\n' +
-        ' */\n'
+        ' */\n\n'
+    },
+
+    autoprefixer: {
+      dist: {
+        src: 'dist/**/*.css'
+      },
+      options: {
+        browsers: ['> 0.1%'],
+        cascade: false
+      }
+    },
+
+    browserSync: {
+      dev: {
+        bsFiles: {
+          src: ['dist/**/*', 'examples/**/*']
+        },
+        options: {
+          watchTask: true,
+          server: './'
+        }
+      }
+    },
+
+    concat: {
+      dist: {
+        files: {
+          'dist/remodal.js': 'src/remodal.js',
+          'dist/remodal.css': 'src/remodal.css',
+          'dist/remodal-default-theme.css': 'src/remodal-default-theme.css'
+        },
+        options: {
+          banner: '<%= meta.banner %>'
+        }
+      }
     },
 
     connect: {
@@ -22,6 +57,26 @@ module.exports = function(grunt) {
         options: {
           port: 7770
         }
+      }
+    },
+
+    csscomb: {
+      all: {
+        files: {
+          'src/remodal.css': 'src/remodal.css',
+          'src/remodal-default-theme.css': 'src/remodal-default-theme.css',
+          'dist/remodal.css': 'dist/remodal.css',
+          'dist/remodal-default-theme.css': 'dist/remodal-default-theme.css'
+        }
+      }
+    },
+
+    githooks: {
+      all: {
+        'pre-commit': 'lint'
+      },
+      options: {
+        command: 'node_modules/.bin/grunt'
       }
     },
 
@@ -33,7 +88,7 @@ module.exports = function(grunt) {
         src: 'src/**/*.js'
       },
       test: {
-        src: 'test/**/*.js'
+        src: ['test/**/*.js', 'libs/jquery-loader.js']
       },
       options: {
         jshintrc: '.jshintrc'
@@ -48,15 +103,7 @@ module.exports = function(grunt) {
         src: 'src/**/*.js'
       },
       test: {
-        src: 'test/**/*.js'
-      }
-    },
-
-    csscomb: {
-      all: {
-        files: {
-          'src/jquery.remodal.css': 'src/jquery.remodal.css'
-        }
+        src: ['test/**/*.js', 'libs/jquery-loader.js']
       }
     },
 
@@ -76,22 +123,10 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      dist: {
-        files: {
-          'dist/jquery.remodal.js': 'src/jquery.remodal.js',
-          'dist/jquery.remodal.css': 'src/jquery.remodal.css'
-        },
-        options: {
-          banner: '<%= meta.banner %>'
-        }
-      }
-    },
-
     uglify: {
       remodal: {
         files: {
-          'dist/jquery.remodal.min.js': 'src/jquery.remodal.js'
+          'dist/remodal.min.js': 'src/remodal.js'
         }
       },
       options: {
@@ -99,12 +134,13 @@ module.exports = function(grunt) {
       }
     },
 
-    githooks: {
-      all: {
-        'pre-commit': 'lint'
+    watch: {
+      src: {
+        files: ['src/**/*', 'examples/**/*'],
+        tasks: ['build']
       },
       options: {
-        command: 'node_modules/.bin/grunt'
+        spawn: false
       }
     }
   });
@@ -114,14 +150,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-csscomb');
   grunt.loadNpmTasks('grunt-githooks');
   grunt.loadNpmTasks('grunt-jscs');
 
-  // Tasks.
+  // Tasks
   grunt.registerTask('lint', ['jshint', 'jscs']);
   grunt.registerTask('test', ['connect', 'lint', 'qunit']);
-  grunt.registerTask('default', [
-    'connect', 'csscomb', 'jshint', 'jscs', 'qunit', 'concat', 'uglify', 'githooks'
-  ]);
+  grunt.registerTask('build', ['concat', 'autoprefixer', 'csscomb', 'uglify', 'githooks']);
+  grunt.registerTask('bsync', ['browserSync', 'watch']);
+  grunt.registerTask('default', ['test', 'build']);
 };
