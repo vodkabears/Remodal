@@ -1,7 +1,6 @@
 [![NPM version](https://img.shields.io/npm/v/remodal.svg?style=flat)](https://npmjs.org/package/remodal)
 [![Bower version](https://badge.fury.io/bo/remodal.svg)](http://badge.fury.io/bo/remodal)
 [![Travis](https://travis-ci.org/VodkaBears/Remodal.svg?branch=master)](https://travis-ci.org/VodkaBears/Remodal)
-[![devDependency Status](https://david-dm.org/vodkabears/remodal/dev-status.svg)](https://david-dm.org/vodkabears/remodal#info=devDependencies)
 Remodal
 =======
 Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
