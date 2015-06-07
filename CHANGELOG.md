@@ -17,6 +17,7 @@
 * Removed the default custom font.
 * Introduced the `data-remodal-action` attribute.
 * Made code refactoring.
+* Improved anti-FOUC.
 * Updated examples.
 * Updated tests.
 * Updated dependencies.
