@@ -1,3 +1,6 @@
+### 1.0.1
+* Do not use namespaces in data attributes (fix).
+
 ### 1.0.0
 * Renamed the 'closeOnAnyClick' property to the 'closeOnOutsideClick'.
 * Separated base and theme styles.
