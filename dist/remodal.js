@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.0
+ *  Remodal - v1.0.1
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -513,14 +513,14 @@
     $body.append(remodal.$wrapper);
 
     // Add the event listener for the close button
-    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="close"]', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + PLUGIN_NAME + '-action="close"]', function(e) {
       e.preventDefault();
 
       remodal.close();
     });
 
     // Add the event listener for the cancel button
-    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="cancel"]', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + PLUGIN_NAME + '-action="cancel"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger(STATE_CHANGE_REASONS.CANCELLATION);
@@ -531,7 +531,7 @@
     });
 
     // Add the event listener for the confirm button
-    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + NAMESPACE + '-action="confirm"]', function(e) {
+    remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + PLUGIN_NAME + '-action="confirm"]', function(e) {
       e.preventDefault();
 
       remodal.$modal.trigger(STATE_CHANGE_REASONS.CONFIRMATION);
