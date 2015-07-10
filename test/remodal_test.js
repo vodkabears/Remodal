@@ -188,7 +188,7 @@
 
   QUnit.asyncTest('Esc key up', function(assert) {
     $document.one('opened', '[data-remodal-id=modal]', function() {
-      $document.trigger($.Event('keyup', { keyCode: 27 }));
+      $document.trigger($.Event('keydown', { keyCode: 27 }));
     });
 
     $document.one('closed', '[data-remodal-id=modal]', function() {
@@ -356,7 +356,7 @@
     var remodal = $('[data-remodal-id=modal2]').remodal();
 
     $document.one('opened', '[data-remodal-id=modal2]', function() {
-      $document.trigger($.Event('keyup', { keyCode: 27 }));
+      $document.trigger($.Event('keydown', { keyCode: 27 }));
 
       setTimeout(function() {
         assert.equal(remodal.getState(), 'opened', 'it is still opened');

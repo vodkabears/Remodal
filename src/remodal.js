@@ -739,8 +739,8 @@
       $container[PLUGIN_NAME](options);
     });
 
-    // Handles the keyup event
-    $(document).on('keyup.' + NAMESPACE, function(e) {
+    // Handles the keydown event
+    $(document).on('keydown.' + NAMESPACE, function(e) {
       if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
         current.close();
       }
