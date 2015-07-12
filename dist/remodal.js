@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.1
+ *  Remodal - v1.0.2
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -238,7 +238,7 @@
    */
   function lockScreen() {
     var $html = $('html');
-    var lockedClass = NAMESPACE + '-is-locked';
+    var lockedClass = namespacify('is-locked');
     var paddingRight;
     var $body;
 
@@ -259,7 +259,7 @@
    */
   function unlockScreen() {
     var $html = $('html');
-    var lockedClass = NAMESPACE + '-is-locked';
+    var lockedClass = namespacify('is-locked');
     var paddingRight;
     var $body;
 
@@ -283,37 +283,28 @@
    * @param {String} Reason of a state change.
    */
   function setState(instance, state, isSilent, reason) {
+
+    var newState = namespacify('is', state);
+    var allStates = [namespacify('is', STATES.CLOSING),
+                     namespacify('is', STATES.OPENING),
+                     namespacify('is', STATES.CLOSED),
+                     namespacify('is', STATES.OPENED)].join(' ');
+
     instance.$bg
-      .removeClass(
-        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENED)
-      .addClass(NAMESPACE + '-is-' + state);
+      .removeClass(allStates)
+      .addClass(newState);
 
     instance.$overlay
-      .removeClass(
-        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENED)
-      .addClass(NAMESPACE + '-is-' + state);
+      .removeClass(allStates)
+      .addClass(newState);
 
     instance.$wrapper
-      .removeClass(
-        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENED)
-      .addClass(NAMESPACE + '-is-' + state);
+      .removeClass(allStates)
+      .addClass(newState);
 
     instance.$modal
-      .removeClass(
-        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENED)
-      .addClass(NAMESPACE + '-is-' + state);
+      .removeClass(allStates)
+      .addClass(newState);
 
     instance.state = state;
     !isSilent && instance.$modal.trigger({
@@ -440,6 +431,22 @@
   }
 
   /**
+   * Generates a string separated by dashes and prefixed with NAMESPACE
+   * @private
+   * @param {...String}
+   * @returns {String}
+   */
+  function namespacify() {
+    var result = NAMESPACE;
+
+    for (var i = 0; i < arguments.length; ++i) {
+      result += '-' + arguments[i];
+    }
+
+    return result;
+  }
+
+  /**
    * Handles the hashchange event
    * @private
    * @listens hashchange
@@ -490,24 +497,26 @@
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
     remodal.state = STATES.CLOSED;
 
-    remodal.$overlay = $('.' + NAMESPACE + '-overlay');
+    remodal.$overlay = $('.' + namespacify('overlay'));
 
     if (!remodal.$overlay.length) {
-      remodal.$overlay = $('<div>').addClass(NAMESPACE + '-overlay ' + NAMESPACE + '-is-' + STATES.CLOSED).hide();
+      remodal.$overlay = $('<div>').addClass(namespacify('overlay') + ' ' + namespacify('is', STATES.CLOSED)).hide();
       $body.append(remodal.$overlay);
     }
 
-    remodal.$bg = $('.' + NAMESPACE + '-bg').addClass(NAMESPACE + '-is-' + STATES.CLOSED);
+    remodal.$bg = $('.' + namespacify('bg')).addClass(namespacify('is', STATES.CLOSED));
     remodal.$modal = $modal;
     remodal.$modal.addClass(
-      NAMESPACE + '-is-initialized' + ' ' +
-      NAMESPACE + ' ' + remodal.settings.modifier + ' ' +
-      NAMESPACE + '-is-' + STATES.CLOSED);
+      NAMESPACE + ' ' +
+      namespacify('is-initialized') + ' ' +
+      remodal.settings.modifier + ' ' +
+      namespacify('is', STATES.CLOSED));
 
     remodal.$wrapper = $('<div>')
       .addClass(
-        NAMESPACE + '-wrapper ' + remodal.settings.modifier + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED)
+        namespacify('wrapper') + ' ' +
+        remodal.settings.modifier + ' ' +
+        namespacify('is', STATES.CLOSED))
       .hide()
       .append(remodal.$modal);
     $body.append(remodal.$wrapper);
@@ -545,7 +554,7 @@
     remodal.$wrapper.on('click.' + NAMESPACE, function(e) {
       var $target = $(e.target);
 
-      if (!$target.hasClass(NAMESPACE + '-wrapper')) {
+      if (!$target.hasClass(namespacify('wrapper'))) {
         return;
       }
 
@@ -663,10 +672,10 @@
     if (instanceCount === 0) {
       this.$overlay.remove();
       this.$bg.removeClass(
-        NAMESPACE + '-is-' + STATES.CLOSING + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENING + ' ' +
-        NAMESPACE + '-is-' + STATES.CLOSED + ' ' +
-        NAMESPACE + '-is-' + STATES.OPENED);
+        namespacify('is', STATES.CLOSING) + ' ' +
+        namespacify('is', STATES.OPENING) + ' ' +
+        namespacify('is', STATES.CLOSED) + ' ' +
+        namespacify('is', STATES.OPENED));
     }
   };
 
@@ -739,8 +748,8 @@
       $container[PLUGIN_NAME](options);
     });
 
-    // Handles the keyup event
-    $(document).on('keyup.' + NAMESPACE, function(e) {
+    // Handles the keydown event
+    $(document).on('keydown.' + NAMESPACE, function(e) {
       if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
         current.close();
       }
