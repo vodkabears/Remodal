@@ -1,3 +1,8 @@
+### 1.0.2
+* Handle keydown event instead of keyup for "Esc" key.
+* Code improvements.
+* Update dependencies.
+
 ### 1.0.1
 * Do not use namespaces in data attributes (fix).
 
