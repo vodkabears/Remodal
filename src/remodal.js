@@ -70,7 +70,8 @@
     closeOnCancel: true,
     closeOnEscape: true,
     closeOnOutsideClick: true,
-    modifier: ''
+    modifier: '',
+    stack: false
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 
   /**
@@ -122,11 +123,11 @@
   var IS_IOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
   /**
-   * Current modal
+   * Current open modals
    * @private
-   * @type {Remodal}
+   * @type {Array}
    */
-  var current;
+  var openModals = [];
 
   /**
    * Scrollbar position
@@ -392,10 +393,16 @@
       instance[elemName].off(ANIMATIONSTART_EVENTS + ' ' + ANIMATIONEND_EVENTS);
     });
 
+    removeModal(instance);
+
     instance.$bg.removeClass(instance.settings.modifier);
     instance.$overlay.removeClass(instance.settings.modifier).hide();
     instance.$wrapper.hide();
-    unlockScreen();
+
+    if (openModals.length === 0) {
+      unlockScreen();
+    }
+
     setState(instance, STATES.CLOSED, true);
   }
 
@@ -462,6 +469,9 @@
     var id = location.hash.replace('#', '');
     var instance;
     var $elem;
+    var current = currentModal();
+
+    console.log('handleHashChangeEvent');
 
     if (!id) {
 
@@ -470,22 +480,44 @@
         current.close();
       }
     } else {
+      if (!current || current.id !== id) {
+        // Catch syntax error if your hash is bad
+        try {
+          $elem = $(
+            '[data-' + PLUGIN_NAME + '-id="' + id + '"]'
+          );
+        } catch (err) {}
 
-      // Catch syntax error if your hash is bad
-      try {
-        $elem = $(
-          '[data-' + PLUGIN_NAME + '-id="' + id + '"]'
-        );
-      } catch (err) {}
+        if ($elem && $elem.length) {
+          instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
 
-      if ($elem && $elem.length) {
-        instance = $[PLUGIN_NAME].lookup[$elem.data(PLUGIN_NAME)];
-
-        if (instance && instance.settings.hashTracking) {
-          instance.open();
+          if (instance && instance.settings.hashTracking) {
+            instance.open();
+          }
         }
       }
+    }
+  }
 
+  /**
+   * Returns the current open modal
+   * @private
+   * @returns {Remodal}
+   */
+  function currentModal() {
+    return openModals[openModals.length - 1];
+  }
+
+  /**
+   * Removes specified modal from the list of modals
+   * @private
+   * @param {Remodal} remodal
+   */
+  function removeModal(remodal) {
+    var index = openModals.indexOf(remodal);
+
+    if (index >= 0) {
+      openModals.splice(index, 1);
     }
   }
 
@@ -499,13 +531,14 @@
     var $body = $(document.body);
     var remodal = this;
 
+    remodal.id = $modal.attr('data-' + PLUGIN_NAME + '-id');
     remodal.settings = $.extend({}, DEFAULTS, options);
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
     remodal.state = STATES.CLOSED;
 
-    remodal.$overlay = $('.' + namespacify('overlay'));
+    // remodal.$overlay = $('.' + namespacify('overlay'));
 
-    if (!remodal.$overlay.length) {
+    if (!remodal.$overlay) {
       remodal.$overlay = $('<div>').addClass(namespacify('overlay') + ' ' + namespacify('is', STATES.CLOSED)).hide();
       $body.append(remodal.$overlay);
     }
@@ -578,25 +611,33 @@
    */
   Remodal.prototype.open = function() {
     var remodal = this;
-    var id;
+    var current;
+    var modalCount;
 
     // Check if the animation was completed
     if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
       return;
     }
 
-    id = remodal.$modal.attr('data-' + PLUGIN_NAME + '-id');
-
-    if (id && remodal.settings.hashTracking) {
+    if (remodal.id && remodal.settings.hashTracking) {
       scrollTop = $(window).scrollTop();
-      location.hash = id;
+      location.hash = remodal.id;
     }
 
-    if (current && current !== remodal) {
-      halt(current);
+    if (!remodal.settings.stack) {
+      current = currentModal();
+
+      if (current && current !== remodal) {
+        halt(current);
+      }
     }
 
-    current = remodal;
+    // Setting z-index of the overlay and wrapper based on the modal's position in openModals array
+    modalCount = openModals.push(remodal);
+    remodal.$overlay.css('z-index', function(_, value) { return parseInt(value, 10) + modalCount; });
+
+    remodal.$wrapper.css('z-index', function(_, value) { return parseInt(value, 10) + modalCount; });
+
     lockScreen();
     remodal.$bg.addClass(remodal.settings.modifier);
     remodal.$overlay.addClass(remodal.settings.modifier).show();
@@ -622,18 +663,27 @@
    */
   Remodal.prototype.close = function(reason) {
     var remodal = this;
+    var current;
 
     // Check if the animation was completed
     if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
       return;
     }
 
+    removeModal(remodal);
+
     if (
       remodal.settings.hashTracking &&
-      remodal.$modal.attr('data-' + PLUGIN_NAME + '-id') === location.hash.substr(1)
+      remodal.id === location.hash.substr(1)
     ) {
-      location.hash = '';
-      $(window).scrollTop(scrollTop);
+
+      current = currentModal();
+      if (current) {
+        location.hash = current.id;
+      } else {
+        location.hash = '';
+        $(window).scrollTop(scrollTop);
+      }
     }
 
     syncWithAnimation(
@@ -645,7 +695,10 @@
         remodal.$bg.removeClass(remodal.settings.modifier);
         remodal.$overlay.removeClass(remodal.settings.modifier).hide();
         remodal.$wrapper.hide();
-        unlockScreen();
+
+        if (openModals.length === 0) {
+          unlockScreen();
+        }
 
         setState(remodal, STATES.CLOSED, false, reason);
       },
@@ -716,7 +769,7 @@
 
         if (
           instance.settings.hashTracking &&
-          $elem.attr('data-' + PLUGIN_NAME + '-id') === location.hash.substr(1)
+          instance.id === location.hash.substr(1)
         ) {
           instance.open();
         }
@@ -759,6 +812,8 @@
 
     // Handles the keydown event
     $(document).on('keydown.' + NAMESPACE, function(e) {
+      var current = currentModal();
+
       if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
         current.close();
       }
