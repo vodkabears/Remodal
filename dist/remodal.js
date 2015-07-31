@@ -511,15 +511,23 @@
       namespacify('is-initialized') + ' ' +
       remodal.settings.modifier + ' ' +
       namespacify('is', STATES.CLOSED));
-
-    remodal.$wrapper = $('<div>')
-      .addClass(
-        namespacify('wrapper') + ' ' +
+    var $existingWrapper = remodal.$modal.parent('.' + namespacify('wrapper'));
+    if ($existingWrapper.length === 0) {
+      remodal.$wrapper = $('<div>')
+        .addClass(
+          namespacify('wrapper') + ' ' +
+          remodal.settings.modifier + ' ' +
+          namespacify('is', STATES.CLOSED))
+        .hide()
+        .append(remodal.$modal);
+      $body.append(remodal.$wrapper);
+    } else {
+      remodal.$wrapper = $existingWrapper;
+      remodal.$wrapper.addClass(
         remodal.settings.modifier + ' ' +
-        namespacify('is', STATES.CLOSED))
-      .hide()
-      .append(remodal.$modal);
-    $body.append(remodal.$wrapper);
+        namespacify('is', STATES.CLOSED)
+      );
+    }
 
     // Add the event listener for the close button
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + PLUGIN_NAME + '-action="close"]', function(e) {

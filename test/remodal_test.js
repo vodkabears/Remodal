@@ -37,7 +37,13 @@
     var $elem = $('[data-remodal-id=modal3]');
 
     assert.ok($elem.remodal(), 'instance exists');
-    assert.equal($elem.data('remodal'), 2, 'index is right');
+  });
+
+  QUnit.test('Existing wrapper', function(assert) {
+    var $modal = $('[data-remodal-id=modal5]');
+    var $existingWrapper = $modal.parent();
+    var remodal = $modal.remodal();
+    assert.ok($existingWrapper.get(0) === remodal.$wrapper.get(0), 'existing wrapper was used');
   });
 
   QUnit.asyncTest('Hash tracking', function(assert) {
@@ -233,7 +239,7 @@
     }).length;
 
     assert.equal($('[data-remodal-id=modal4]').length, 1, 'modal exists');
-    assert.equal(instanceCount, 4, 'count of instances is right');
+    assert.equal(instanceCount, 5, 'count of instances is right');
 
     remodal.destroy();
 
@@ -242,7 +248,7 @@
     }).length;
 
     assert.equal($('[data-remodal-id=modal4]').length, 0, 'modal does not exist');
-    assert.equal(instanceCount, 3, 'count of instances is right');
+    assert.equal(instanceCount, 4, 'count of instances is right');
   });
 
   QUnit.asyncTest('Lock/unlock the scroll bar', function(assert) {
