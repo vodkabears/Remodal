@@ -250,6 +250,20 @@ List:
 
 A modifier that is specified in the [options](#options) is added to the `.remodal`, `.remodal-overlay`, `.remodal-bg`, `.remodal-wrapper` classes.
 
+### Advanced Usage
+
+By default Remodal will move the `.remodal` container within the DOM to enclose
+it in the `.remodal-wrapper`. This may cause issues with event listeners. To
+prevent this behaviour you can create the wrapper manually. For example:
+
+```html
+<div class="remodal-wrapper">
+  <div class="remodal" data-remodal-id="modal">
+   ...
+  </div>
+</div>
+```
+
 ## License
 
 ```

@@ -43,6 +43,7 @@
     var $modal = $('[data-remodal-id=modal5]');
     var $existingWrapper = $modal.parent();
     var remodal = $modal.remodal();
+
     assert.ok($existingWrapper.get(0) === remodal.$wrapper.get(0), 'existing wrapper was used');
   });
 

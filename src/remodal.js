@@ -483,6 +483,7 @@
   function Remodal($modal, options) {
     var $body = $(document.body);
     var remodal = this;
+    var $existingWrapper;
 
     remodal.settings = $.extend({}, DEFAULTS, options);
     remodal.index = $[PLUGIN_NAME].lookup.push(remodal) - 1;
@@ -502,7 +503,7 @@
       namespacify('is-initialized') + ' ' +
       remodal.settings.modifier + ' ' +
       namespacify('is', STATES.CLOSED));
-    var $existingWrapper = remodal.$modal.parent('.' + namespacify('wrapper'));
+    $existingWrapper = remodal.$modal.parent('.' + namespacify('wrapper'));
     if ($existingWrapper.length === 0) {
       remodal.$wrapper = $('<div>')
         .addClass(
