@@ -4,7 +4,7 @@
   "authors": [
     "Ilya Makarov <dfrost.00@gmail.com>"
   ],
-  "description": "Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.",
+  "description": "Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with hash tracking.",
   "main": [
     "dist/remodal.js",
     "dist/remodal.css",
