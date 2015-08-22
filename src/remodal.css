@@ -67,6 +67,8 @@ html.remodal-is-locked {
 .remodal {
   position: relative;
 
+  outline: none;
+
   text-size-adjust: 100%;
 }
 
