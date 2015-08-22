@@ -496,12 +496,14 @@
     }
 
     remodal.$bg = $('.' + namespacify('bg')).addClass(namespacify('is', STATES.CLOSED));
-    remodal.$modal = $modal;
-    remodal.$modal.addClass(
-      NAMESPACE + ' ' +
-      namespacify('is-initialized') + ' ' +
-      remodal.settings.modifier + ' ' +
-      namespacify('is', STATES.CLOSED));
+
+    remodal.$modal = $modal
+      .addClass(
+        NAMESPACE + ' ' +
+        namespacify('is-initialized') + ' ' +
+        remodal.settings.modifier + ' ' +
+        namespacify('is', STATES.CLOSED))
+      .attr('tabindex', '-1');
 
     remodal.$wrapper = $('<div>')
       .addClass(
@@ -584,6 +586,7 @@
     remodal.$bg.addClass(remodal.settings.modifier);
     remodal.$overlay.addClass(remodal.settings.modifier).show();
     remodal.$wrapper.show().scrollTop(0);
+    remodal.$modal.focus();
 
     syncWithAnimation(
       function() {
