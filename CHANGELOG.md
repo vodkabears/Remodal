@@ -1,3 +1,8 @@
+### 1.0.3
+* Migrate from legacy to container-based infrastructure on Travis.
+* Fix keyboard navigation accessibility issue.
+* Shorten the description for Bower.
+
 ### 1.0.2
 * Handle keydown event instead of keyup for "Esc" key.
 * Code improvements.
