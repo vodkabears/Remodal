@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.2
+ *  Remodal - v1.0.3
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -112,7 +112,8 @@
   background: transparent;
 }
 
-.remodal-close:hover {
+.remodal-close:hover,
+.remodal-close:focus {
   color: #2b2e38;
 }
 
@@ -162,7 +163,8 @@
   background: #81c784;
 }
 
-.remodal-confirm:hover {
+.remodal-confirm:hover,
+.remodal-confirm:focus {
   background: #66bb6a;
 }
 
@@ -171,14 +173,16 @@
   background: #e57373;
 }
 
-.remodal-cancel:hover {
+.remodal-cancel:hover,
+.remodal-cancel:focus {
   background: #ef5350;
 }
 
 /* Remove inner padding and border in Firefox 4+ for the button tag. */
 
 .remodal-confirm::-moz-focus-inner,
-.remodal-cancel::-moz-focus-inner {
+.remodal-cancel::-moz-focus-inner,
+.remodal-close::-moz-focus-inner {
   padding: 0;
 
   border: 0;
