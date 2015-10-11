@@ -114,6 +114,14 @@
   })();
 
   /**
+   * Is iOS?
+   * @private
+   * @const
+   * @type {Boolean}
+   */
+  var IS_IOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+  /**
    * Current modal
    * @private
    * @type {Remodal}
@@ -228,6 +236,10 @@
    * @private
    */
   function lockScreen() {
+    if (IS_IOS) {
+      return;
+    }
+
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
     var paddingRight;
@@ -249,6 +261,10 @@
    * @private
    */
   function unlockScreen() {
+    if (IS_IOS) {
+      return;
+    }
+
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
     var paddingRight;
