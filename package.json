@@ -38,20 +38,20 @@
     "jquery": "*"
   },
   "devDependencies": {
-    "bower": "^1.4.1",
+    "bower": "^1.5.3",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.3",
     "grunt-browser-sync": "^2.1.3",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-connect": "^0.10.1",
-    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-qunit": "^0.7.0",
-    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-uglify": "^0.9.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-csscomb": "3.0.0",
     "grunt-githooks": "^0.3.1",
-    "grunt-jscs": "^1.8.0"
+    "grunt-jscs": "^2.1.0"
   },
   "scripts": {
     "start": "npm install && ./node_modules/.bin/bower install && ./node_modules/.bin/grunt githooks",
