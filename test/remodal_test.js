@@ -37,7 +37,6 @@
     var $elem = $('[data-remodal-id=modal3]');
 
     assert.ok($elem.remodal(), 'instance exists');
-    assert.equal($elem.data('remodal'), 2, 'index is right');
   });
 
   QUnit.asyncTest('Hash tracking', function(assert) {
@@ -52,6 +51,19 @@
     });
 
     location.hash = '#modal';
+  });
+
+  QUnit.asyncTest('Support of special symbols in the id attribute', function(assert) {
+    $document.one('opened', '[data-remodal-id="!modal4/test"]', function() {
+      assert.ok(true, 'the modal is opened');
+      location.hash = '#';
+    });
+
+    $document.one('closed', '[data-remodal-id="!modal4/test"]', function() {
+      QUnit.start();
+    });
+
+    location.hash = '#!modal4/test';
   });
 
   QUnit.asyncTest('`data-remodal-target` directive', function(assert) {
@@ -233,7 +245,7 @@
     }).length;
 
     assert.equal($('[data-remodal-id=modal4]').length, 1, 'modal exists');
-    assert.equal(instanceCount, 4, 'count of instances is right');
+    assert.equal(instanceCount, 5, 'count of instances is right');
 
     remodal.destroy();
 
@@ -242,7 +254,7 @@
     }).length;
 
     assert.equal($('[data-remodal-id=modal4]').length, 0, 'modal does not exist');
-    assert.equal(instanceCount, 3, 'count of instances is right');
+    assert.equal(instanceCount, 4, 'count of instances is right');
   });
 
   QUnit.asyncTest('Lock/unlock the scroll bar', function(assert) {
