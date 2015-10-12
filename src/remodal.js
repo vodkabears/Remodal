@@ -474,8 +474,7 @@
       // Catch syntax error if your hash is bad
       try {
         $elem = $(
-          '[data-' + PLUGIN_NAME + '-id=' +
-          id.replace(new RegExp('/', 'g'), '\\/') + ']'
+          '[data-' + PLUGIN_NAME + '-id="' + id + '"]'
         );
       } catch (err) {}
 
@@ -737,7 +736,7 @@
 
       var elem = e.currentTarget;
       var id = elem.getAttribute('data-' + PLUGIN_NAME + '-target');
-      var $target = $('[data-' + PLUGIN_NAME + '-id=' + id + ']');
+      var $target = $('[data-' + PLUGIN_NAME + '-id="' + id + '"]');
 
       $[PLUGIN_NAME].lookup[$target.data(PLUGIN_NAME)].open();
     });
