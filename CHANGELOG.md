@@ -1,3 +1,7 @@
+### 1.0.4
+* Fix IOS 9 safari scaling issues.
+* Update dependencies.
+
 ### 1.0.3
 * Migrate from legacy to container-based infrastructure on Travis.
 * Fix keyboard navigation accessibility issue.

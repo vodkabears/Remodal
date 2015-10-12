@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.3
+ *  Remodal - v1.0.4
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -123,6 +123,14 @@
   })();
 
   /**
+   * Is iOS?
+   * @private
+   * @const
+   * @type {Boolean}
+   */
+  var IS_IOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
+  /**
    * Current modal
    * @private
    * @type {Remodal}
@@ -237,6 +245,10 @@
    * @private
    */
   function lockScreen() {
+    if (IS_IOS) {
+      return;
+    }
+
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
     var paddingRight;
@@ -258,6 +270,10 @@
    * @private
    */
   function unlockScreen() {
+    if (IS_IOS) {
+      return;
+    }
+
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
     var paddingRight;
