@@ -1,3 +1,6 @@
+### 1.0.5
+* Support special symbols in the 'id' attribute.
+
 ### 1.0.4
 * Fix IOS 9 safari scaling issues.
 * Update dependencies.
