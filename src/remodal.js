@@ -11,9 +11,9 @@
 })(this, function(global, $) {
 
   'use strict';
-  
+
   global = global || {};
-  
+
   /**
    * Name of the plugin
    * @private
