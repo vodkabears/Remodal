@@ -17,15 +17,16 @@
 
 .remodal-overlay.remodal-is-opening,
 .remodal-overlay.remodal-is-closing {
+  animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
 
 .remodal-overlay.remodal-is-opening {
-  animation: remodal-overlay-opening-keyframes 0.3s;
+  animation-name: remodal-overlay-opening-keyframes;
 }
 
 .remodal-overlay.remodal-is-closing {
-  animation: remodal-overlay-closing-keyframes 0.3s;
+  animation-name: remodal-overlay-closing-keyframes;
 }
 
 /* Default theme styles of the wrapper */
@@ -50,15 +51,16 @@
 
 .remodal.remodal-is-opening,
 .remodal.remodal-is-closing {
+  animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
 
 .remodal.remodal-is-opening {
-  animation: remodal-opening-keyframes 0.3s;
+  animation-name: remodal-opening-keyframes;
 }
 
 .remodal.remodal-is-closing {
-  animation: remodal-closing-keyframes 0.3s;
+  animation-name: remodal-closing-keyframes;
 }
 
 /* Vertical align of the modal dialog */
