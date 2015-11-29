@@ -6,6 +6,7 @@
 
 html.remodal-is-locked {
   overflow: hidden;
+
   touch-action: none;
 }
 
