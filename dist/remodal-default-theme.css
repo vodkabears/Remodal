@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.5
+ *  Remodal - v1.0.6
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -27,18 +27,20 @@
 
 .remodal-overlay.remodal-is-opening,
 .remodal-overlay.remodal-is-closing {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 
 .remodal-overlay.remodal-is-opening {
-  -webkit-animation: remodal-overlay-opening-keyframes 0.3s;
-  animation: remodal-overlay-opening-keyframes 0.3s;
+  -webkit-animation-name: remodal-overlay-opening-keyframes;
+  animation-name: remodal-overlay-opening-keyframes;
 }
 
 .remodal-overlay.remodal-is-closing {
-  -webkit-animation: remodal-overlay-closing-keyframes 0.3s;
-  animation: remodal-overlay-closing-keyframes 0.3s;
+  -webkit-animation-name: remodal-overlay-closing-keyframes;
+  animation-name: remodal-overlay-closing-keyframes;
 }
 
 /* Default theme styles of the wrapper */
@@ -65,18 +67,20 @@
 
 .remodal.remodal-is-opening,
 .remodal.remodal-is-closing {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 
 .remodal.remodal-is-opening {
-  -webkit-animation: remodal-opening-keyframes 0.3s;
-  animation: remodal-opening-keyframes 0.3s;
+  -webkit-animation-name: remodal-opening-keyframes;
+  animation-name: remodal-opening-keyframes;
 }
 
 .remodal.remodal-is-closing {
-  -webkit-animation: remodal-closing-keyframes 0.3s;
-  animation: remodal-closing-keyframes 0.3s;
+  -webkit-animation-name: remodal-closing-keyframes;
+  animation-name: remodal-closing-keyframes;
 }
 
 /* Vertical align of the modal dialog */

@@ -1,3 +1,7 @@
+### 1.0.6
+* Fixed Bug on IE11 #173.
+* Fixed scroll bugs in WP8.
+
 ### 1.0.5
 * Support special symbols in the 'id' attribute.
 

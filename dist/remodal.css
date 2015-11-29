@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.0.5
+ *  Remodal - v1.0.6
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -15,6 +15,9 @@
 
 html.remodal-is-locked {
   overflow: hidden;
+
+  -ms-touch-action: none;
+  touch-action: none;
 }
 
 /* Anti FOUC */
