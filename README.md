@@ -250,6 +250,14 @@ List:
 
 A modifier that is specified in the [options](#options) is added to the `.remodal`, `.remodal-overlay`, `.remodal-bg`, `.remodal-wrapper` classes.
 
+## Using with other javascript libraries
+
+Remodal has wrappers that make it easy to use with other javascript libraries:
+ 
+### Ember
+
+* [ember-remodal](https://github.com/sethbrasile/ember-remodal)
+
 ## License
 
 ```
