@@ -192,7 +192,7 @@
       }
     }
 
-    return num;
+    return max;
   }
 
   /**
