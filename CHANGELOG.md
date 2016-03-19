@@ -1,3 +1,6 @@
+### 1.0.7
+* Fixed getAnimationDuration
+
 ### 1.0.6
 * Fixed Bug on IE11 #173.
 * Fixed scroll bugs in WP8.
