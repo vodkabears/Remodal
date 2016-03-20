@@ -6,7 +6,7 @@
   <title>Remodal example</title>
   <meta name="description" content="Remodal example">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../dist/remodal.css">
+  <link rel="stylesheet" href="../src/remodal.css">
   <link rel="stylesheet" href="../dist/remodal-default-theme.css">
   <style>
     .remodal-bg.with-red-theme.remodal-is-opening,
@@ -15,7 +15,7 @@
     }
 
     .remodal-overlay.with-red-theme {
-      background-color: #f44336;
+      background-color: rgba(244, 67, 54, 0.3);
     }
 
     .remodal.with-red-theme {
@@ -225,9 +225,21 @@
     <p id="modal2Desc">
       Hello!
     </p>
+    <small>Pssst, wanna see something cool? <a href="#" id="stack-link">Click here!</a></small>
   </div>
   <br>
   <button data-remodal-action="confirm" class="remodal-confirm">Hello!</button>
+</div>
+
+<div data-remodal-id="stacking-modal" role="dialog" aria-labelledby="stackingModalTitle" aria-describedby="stackingModalDesc" style="width: 300px;">
+  <div>
+    <h2 id="stackingModalTitle">This is a special modal, it can stack!</h2>
+    <p id="stackingModalDesc">
+      Hello!
+    </p>
+  </div>
+  <br>
+  <button data-remodal-action="confirm" class="remodal-confirm">Close</button>
 </div>
 
 <!-- You can define the global options -->
@@ -247,7 +259,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../libs/jquery/dist/jquery.min.js"><\/script>')</script>
-<script src="../dist/remodal.js"></script>
+<script src="../src/remodal.js"></script>
 
 <!-- Events -->
 <script>
@@ -286,6 +298,13 @@
 //    inst.getState();
 //    inst.destroy();
 //  });
+
+  $('#stack-link').click(function (event) {
+    event.preventDefault();
+
+    var stackedModal = $('[data-remodal-id="stacking-modal"]').remodal({ stack: true });
+    stackedModal.open();
+  });
 
   //  The second way to initialize:
   $('[data-remodal-id=modal2]').remodal({
