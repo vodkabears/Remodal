@@ -311,7 +311,8 @@
       closeOnCancel: false,
       closeOnEscape: false,
       closeOnOutsideClick: false,
-      modifier: 'without-animation with-test-class'
+      modifier: 'without-animation with-test-class',
+      appendTo: null
     }, 'options are correctly parsed');
   });
 
@@ -424,6 +425,27 @@
       assert.notOk($overlay.hasClass('without-animation with-test-class'), 'overlay has\'t the modifier');
       assert.ok($wrapper.hasClass('without-animation with-test-class'), 'wrapper still has the modifier');
       assert.ok($modal.hasClass('without-animation with-test-class'), 'modal still has the modifier');
+
+      QUnit.start();
+    });
+
+    remodal.open();
+  });
+
+  QUnit.asyncTest('"appendTo" option', function(assert) {
+    var $elem = $('[data-remodal-id=modal5]');
+    var $target = $('#target');
+    var remodal = $elem.remodal({
+      appendTo: $target
+    });
+
+    $document.one('opened', '[data-remodal-id=modal5]', function() {
+      var $wrapper = $('[data-remodal-id=modal5]').parent();
+      var $appendTo = $wrapper.parent();
+
+      assert.equal($appendTo.attr('id'), 'target', 'modal appended to target');
+
+      remodal.close();
 
       QUnit.start();
     });
