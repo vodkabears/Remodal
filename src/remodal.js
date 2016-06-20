@@ -70,7 +70,8 @@
     closeOnCancel: true,
     closeOnEscape: true,
     closeOnOutsideClick: true,
-    modifier: ''
+    modifier: '',
+    appendTo: null
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 
   /**
@@ -497,6 +498,7 @@
    */
   function Remodal($modal, options) {
     var $body = $(document.body);
+    var $appendTo = $body;
     var remodal = this;
 
     remodal.settings = $.extend({}, DEFAULTS, options);
@@ -505,9 +507,13 @@
 
     remodal.$overlay = $('.' + namespacify('overlay'));
 
+    if (remodal.settings.appendTo !== null && remodal.settings.appendTo.length) {
+      $appendTo = $(remodal.settings.appendTo);
+    }
+
     if (!remodal.$overlay.length) {
       remodal.$overlay = $('<div>').addClass(namespacify('overlay') + ' ' + namespacify('is', STATES.CLOSED)).hide();
-      $body.append(remodal.$overlay);
+      $appendTo.append(remodal.$overlay);
     }
 
     remodal.$bg = $('.' + namespacify('bg')).addClass(namespacify('is', STATES.CLOSED));
@@ -527,7 +533,7 @@
         namespacify('is', STATES.CLOSED))
       .hide()
       .append(remodal.$modal);
-    $body.append(remodal.$wrapper);
+    $appendTo.append(remodal.$wrapper);
 
     // Add the event listener for the close button
     remodal.$wrapper.on('click.' + NAMESPACE, '[data-' + PLUGIN_NAME + '-action="close"]', function(e) {
