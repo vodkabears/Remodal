@@ -1,3 +1,6 @@
+### 1.1.0
+* Add `appendTo` option (#238)
+
 ### 1.0.7
 * Fixed getAnimationDuration
 
