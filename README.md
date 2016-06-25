@@ -120,6 +120,9 @@ If true, closes the modal window by clicking anywhere on the page.
 
 Modifier CSS classes for the modal that is added to the overlay, modal, background and wrapper (see [CSS](#css)).
 
+#### appendTo
+`Default: document.body`
+
 ## Globals
 
 ```html
