@@ -18,6 +18,7 @@ Responsive, lightweight, fast, synchronized with CSS animations, fully customiza
 * Browserify support.
 
 ## Start
+For Ruby on Rails implementation, use the [remodal-rails](https://github.com/kamok/remodal_rails) gem for a quickstart.
 
 Download the latest version from [GitHub](https://github.com/VodkaBears/Remodal/releases/latest
 ) or via package managers:
