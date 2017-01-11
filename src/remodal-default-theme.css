@@ -181,9 +181,10 @@
   }
   to {
     transform: none;
-    filter: blur(0);
 
     opacity: 1;
+
+    filter: blur(0);
   }
 }
 
@@ -195,9 +196,10 @@
   }
   to {
     transform: scale(0.95);
-    filter: blur(0);
 
     opacity: 0;
+
+    filter: blur(0);
   }
 }
 

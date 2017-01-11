@@ -1,5 +1,5 @@
 /*
- *  Remodal - v1.1.0
+ *  Remodal - v1.1.1
  *  Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.
  *  http://vodkabears.github.io/remodal/
  *
@@ -211,7 +211,7 @@
    * @returns {Number}
    */
   function getScrollbarWidth() {
-    if ($(document.body).height() <= $(window).height()) {
+    if ($(document).height() <= $(window).height()) {
       return 0;
     }
 
@@ -639,7 +639,7 @@
     var remodal = this;
 
     // Check if the animation was completed
-    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING || remodal.state === STATES.CLOSED) {
       return;
     }
 

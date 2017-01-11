@@ -1,3 +1,8 @@
+### 1.1.1
+* Fix the blurry text issue at animation end
+* Fix function getScrollbarWidth
+* Fix issue caused by calling remodal.close() when it is already closed
+
 ### 1.1.0
 * Add `appendTo` option (#238)
 
