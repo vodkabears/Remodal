@@ -202,7 +202,7 @@
    * @returns {Number}
    */
   function getScrollbarWidth() {
-    if ($(document.body).height() <= $(window).height()) {
+    if ($(document).height() <= $(window).height()) {
       return 0;
     }
 
