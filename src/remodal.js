@@ -630,7 +630,7 @@
     var remodal = this;
 
     // Check if the animation was completed
-    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING) {
+    if (remodal.state === STATES.OPENING || remodal.state === STATES.CLOSING || remodal.state === STATES.CLOSED) {
       return;
     }
 
