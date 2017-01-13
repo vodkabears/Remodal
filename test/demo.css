@@ -1,0 +1,46 @@
+.rmdemo {
+  background: #f1f1f1;
+  font-family: Georgia;
+  font-size: 16px;
+  line-height: 26px;
+}
+.rmdemo-container {
+  background: #FFFFFF;
+  width: 960px;
+  padding: 48px;
+  margin: 0 auto;
+  margin-top: 48px;
+}
+
+.rmdemo-section {
+  margin-top: 48px;
+  border-top: 1px solid #f1f1f1;
+  padding-top: 24px;
+}
+
+.rmdemo-section:first-child {
+  margin-top: 0px;
+}
+
+.rmdemo span {
+  background: #f1f1f1;
+  color: #666;
+  padding: 2px 3px;
+}
+
+.rmdemo .rmdemo-btn {
+  text-decoration: none;
+  background: #EF5350;
+  padding: 8px 18px;
+  color: #FFFFFF;
+  display: table;
+  border-radius: 2px;
+}
+
+
+@media only screen and (max-width : 960px) {
+  .rmdemo-container {
+    width: auto;
+    padding: 24px;
+  }
+}

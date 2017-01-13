@@ -26,37 +26,61 @@
         animation: none;
       }
     </style>
+
+    <!-- Demo Page Styles - no need to load this on your project -->
+    <link rel="stylesheet" href="demo.css">
 </head>
-<body>
-
-<div class="remodal-bg">
+<body class="rmdemo">
+  <div class="remodal-bg">
   <div id="qunit"></div>
-  <a href="#" data-remodal-target="modal">Call</a>
+  <div class="rmdemo-container">
+    <h1>Remodal</h1>
+    <p>Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.</p>
+
+    <div class="rmdemo-section"></div>
+
+    <h2>Modal 1</h2>
+    <p>Simple modal window with <span>cancel</span> and <span>confirm</span> buttons.</p>
+
+    <a class="rmdemo-btn" href="#" data-remodal-target="modal">Modal 1</a>
+    <div class="remodal" data-remodal-id="modal">
+      <a data-remodal-action="close" class="remodal-close"></a>
+      <h2>Modal 1</h2>
+      <p>Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.</p>
+      <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+      <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
+    </div>
+
+    <div class="rmdemo-section"></div>
+
+    <h2>Modal 2</h2>
+    <p>Simple modal window with <span>data-remodal-options</span> applied via HTML.</p>
+
+
+    <a class="rmdemo-btn" href="#" data-remodal-target="modal2">Modal 2</a>
+    <div class="remodal" data-remodal-id="modal2"
+      data-remodal-options="hashTracking: false,
+        closeOnConfirm:false,closeOnCancel:  false, closeOnEscape: false , closeOnOutsideClick: false,
+        modifier : without-animation with-test-class">
+      <a data-remodal-action="close" class="remodal-close"></a>
+      <h2>Modal 2</h2>
+      <p>Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.</p>
+      <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+      <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
+    </div>
+
+    <div class="rmdemo-section"></div>
+
+    <h2>Modal 3</h2>
+    <p>Simple modal window with just the <span>remodal-close</span> button.</p>
+
+    <a class="rmdemo-btn" href="#" data-remodal-target="modal3">Modal 3</a>
+    <div class="remodal" data-remodal-id="modal3">
+      <a data-remodal-action="close" class="remodal-close"></a>
+      <h2>Modal 3</h2>
+      <p>Responsive, lightweight, fast, synchronized with CSS animations, fully customizable modal window plugin with declarative configuration and hash tracking.</p>
+    </div>
 </div>
-
-<div class="remodal" data-remodal-id="modal">
-  <a data-remodal-action="close" class="remodal-close"></a>
-
-  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
-  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
-</div>
-
-<div class="remodal" data-remodal-id="modal2"
-  data-remodal-options="hashTracking: false,
-    closeOnConfirm:false,closeOnCancel:  false, closeOnEscape: false , closeOnOutsideClick: false,
-    modifier : without-animation with-test-class">
-
-  <a data-remodal-action="close" class="remodal-close"></a>
-  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
-  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
-</div>
-
-<div data-remodal-id="modal3">
-  <a data-remodal-action="close" class="remodal-close"></a>
-</div>
-
-<div class="remodal" data-remodal-id="!modal4/test">
-  <a data-remodal-action="close" class="remodal-close"></a>
 </div>
 
 <div data-remodal-id="modal5">
