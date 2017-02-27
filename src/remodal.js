@@ -404,7 +404,7 @@
 
     instance.$bg.removeClass(instance.settings.modifier);
     instance.$overlay.removeClass(instance.settings.modifier).hide();
-    instance.$wrapper.hide();
+    instance.$wrapper.hide().attr('aria-hidden', 'true');
     unlockScreen();
     setState(instance, STATES.CLOSED, true);
   }
@@ -585,6 +585,7 @@
         remodal.settings.modifier + ' ' +
         namespacify('is', STATES.CLOSED))
       .hide()
+      .attr('aria-hidden', 'true')
       .append(remodal.$modal);
     $appendTo.append(remodal.$wrapper);
 
@@ -659,7 +660,7 @@
     lockScreen();
     remodal.$bg.addClass(remodal.settings.modifier);
     remodal.$overlay.addClass(remodal.settings.modifier).show();
-    remodal.$wrapper.show().scrollTop(0);
+    remodal.$wrapper.show().attr('aria-hidden', 'false').scrollTop(0);
     remodal.$modal.focus();
 
     syncWithAnimation(
@@ -703,7 +704,7 @@
       function() {
         remodal.$bg.removeClass(remodal.settings.modifier);
         remodal.$overlay.removeClass(remodal.settings.modifier).hide();
-        remodal.$wrapper.hide();
+        remodal.$wrapper.hide().attr('aria-hidden', 'true');
         unlockScreen();
 
         setState(remodal, STATES.CLOSED, false, reason);
