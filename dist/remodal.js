@@ -252,16 +252,20 @@
 
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
+    var scrollbarWidth;
     var paddingRight;
     var $body;
 
     if (!$html.hasClass(lockedClass)) {
       $body = $(document.body);
 
+      scrollbarWidth = getScrollbarWidth();
+
       // Zepto does not support '-=', '+=' in the `css` method
-      paddingRight = parseInt($body.css('padding-right'), 10) + getScrollbarWidth();
+      paddingRight = parseInt($body.css('padding-right'), 10) + scrollbarWidth;
 
       $body.css('padding-right', paddingRight + 'px');
+      $body.attr('data-scrollbar-width', scrollbarWidth);
       $html.addClass(lockedClass);
     }
   }
@@ -277,16 +281,20 @@
 
     var $html = $('html');
     var lockedClass = namespacify('is-locked');
+    var scrollbarWidth;
     var paddingRight;
     var $body;
 
     if ($html.hasClass(lockedClass)) {
       $body = $(document.body);
 
-      // Zepto does not support '-=', '+=' in the `css` method
-      paddingRight = parseInt($body.css('padding-right'), 10) - getScrollbarWidth();
+      scrollbarWidth = Number($body.attr('data-scrollbar-width')) || 0;
 
-      $body.css('padding-right', paddingRight + 'px');
+      // Zepto does not support '-=', '+=' in the `css` method
+      paddingRight = parseInt($body.css('padding-right'), 10) - scrollbarWidth;
+
+      $body.css('padding-right', paddingRight ? paddingRight + 'px' : '');
+      $body.removeAttr('data-scrollbar-width');
       $html.removeClass(lockedClass);
     }
   }
