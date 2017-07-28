@@ -193,6 +193,34 @@ inst.destroy();
 ## Events
 
 ```js
+var inst = $('[data-remodal-id=modal]').remodal();
+
+inst.on('opening', function () {
+  console.log('Modal is opening');
+});
+
+inst.on('opened', function () {
+  console.log('Modal is opened');
+});
+
+inst.on('closing', function (e) {
+  // Reason: 'confirmation', 'cancellation'
+  console.log('Modal is closing' + (e.reason ? ', reason: ' + e.reason : ''));
+});
+
+inst.on('closed', function (e) {
+  // Reason: 'confirmation', 'cancellation'
+  console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
+});
+
+inst.on('confirmation', function () {
+  console.log('Confirmation button is clicked');
+});
+
+inst.on('cancellation', function () {
+  console.log('Cancel button is clicked');
+});
+
 $(document).on('opening', '.remodal', function () {
   console.log('Modal is opening');
 });
