@@ -290,10 +290,10 @@
 
       scrollbarWidth = Number($body.attr('data-scrollbar-width')) || 0;
 
-      // Zepto does not support '-=', '+=' in the `css` method
-      paddingRight = parseInt($body.css('padding-right'), 10) - scrollbarWidth;
+      paddingRight = parseInt($body[0].style.paddingRight, 10) - scrollbarWidth;
+      paddingRight = (paddingRight > 0) ? paddingRight + 'px' : '';
 
-      $body.css('padding-right', paddingRight ? paddingRight + 'px' : '');
+      $body.css('padding-right', paddingRight);
       $body.removeAttr('data-scrollbar-width');
       $html.removeClass(lockedClass);
     }
