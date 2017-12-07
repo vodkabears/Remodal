@@ -3,5 +3,3 @@
 node_modules/
 libs/
 !libs/jquery-loader.js
-yarn.lock
-package-lock.json
