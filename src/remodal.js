@@ -99,6 +99,15 @@
   };
 
   /**
+   * A list of focusable elements.
+   * @private
+   * @type {Array}
+   */
+  var FOCUSABLE_ELEMENTS = [
+      'a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex^="-"])'
+  ];
+
+  /**
    * Is animation supported?
    * @private
    * @const
@@ -403,7 +412,7 @@
 
     instance.$bg.removeClass(instance.settings.modifier);
     instance.$overlay.removeClass(instance.settings.modifier).hide();
-    instance.$wrapper.hide();
+    instance.$wrapper.hide().attr('aria-hidden', 'true');
     unlockScreen();
     setState(instance, STATES.CLOSED, true);
   }
@@ -499,6 +508,50 @@
   }
 
   /**
+   * Get the focusable children of the given element
+   * @private
+   * @return {Array}
+   */
+  function getFocusableChildren(children) {
+    var focusableChildren = [];
+
+    children.each(function() {
+      if ($(this).is(FOCUSABLE_ELEMENTS.join(', '))) {
+        focusableChildren.push(this);
+      }
+    });
+
+    return focusableChildren;
+  }
+
+  /**
+   * Trap the focus inside the given element
+   * @private
+   * @param {Remodal} instance
+   * @param {Event} e
+   */
+  function trapTabKey(instance, e) {
+    var focusableChildren = getFocusableChildren(instance.$modal.children());
+    var focusedItemIndex = focusableChildren.indexOf(document.activeElement);
+
+    if (focusableChildren.length) {
+      if (e.shiftKey && focusedItemIndex === 0) {
+        // If when using SHIFT TAB (moving backwards) the focus is on the first element,
+        // move to the last element of the modal
+        e.preventDefault();
+
+        focusableChildren[focusableChildren.length - 1].focus();
+      } else if (!e.shiftKey && focusedItemIndex === focusableChildren.length - 1) {
+        // If focus is on the last element and SHIFT is not being used,
+        // move focus to the first element
+        e.preventDefault();
+
+        focusableChildren[0].focus();
+      }
+    }
+  }
+
+  /**
    * Remodal constructor
    * @constructor
    * @param {jQuery} $modal
@@ -540,6 +593,7 @@
         remodal.settings.modifier + ' ' +
         namespacify('is', STATES.CLOSED))
       .hide()
+      .attr('aria-hidden', 'true')
       .append(remodal.$modal);
     $appendTo.append(remodal.$wrapper);
 
@@ -614,7 +668,7 @@
     lockScreen();
     remodal.$bg.addClass(remodal.settings.modifier);
     remodal.$overlay.addClass(remodal.settings.modifier).show();
-    remodal.$wrapper.show().scrollTop(0);
+    remodal.$wrapper.show().attr('aria-hidden', 'false').scrollTop(0);
     remodal.$modal.focus();
 
     syncWithAnimation(
@@ -658,7 +712,7 @@
       function() {
         remodal.$bg.removeClass(remodal.settings.modifier);
         remodal.$overlay.removeClass(remodal.settings.modifier).hide();
-        remodal.$wrapper.hide();
+        remodal.$wrapper.hide().attr('aria-hidden', 'true');
         unlockScreen();
 
         setState(remodal, STATES.CLOSED, false, reason);
@@ -775,6 +829,12 @@
     $(document).on('keydown.' + NAMESPACE, function(e) {
       if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
         current.close();
+      }
+
+      // If the modal is shown and the TAB key is being pressed, make sure the
+      // focus stays trapped within the modal
+      if (current && current.state === STATES.OPENED && e.keyCode === 9) {
+        trapTabKey(current, e);
       }
     });
 
