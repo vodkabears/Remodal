@@ -574,7 +574,7 @@
     });
 
     // Add the event listener for the overlay
-    remodal.$wrapper.on('click.' + NAMESPACE, function(e) {
+    remodal.$wrapper.on('mousedown.' + NAMESPACE, function(e) {
       var $target = $(e.target);
 
       if (!$target.hasClass(namespacify('wrapper'))) {
